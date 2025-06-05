@@ -1,0 +1,15 @@
+[project]
+name = "autumn"
+version = "0.1.0a"
+description = "A thin wrapper around Autumn's REST API"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.11.5",
+    "requests>=2.32.3",
+]
+
+[project.optional-dependencies]
+aio = [
+    "aiohttp>=3.12.8",
+]
