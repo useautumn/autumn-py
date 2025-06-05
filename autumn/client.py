@@ -33,6 +33,7 @@ class Client:
         features: Optional[List[Feature]] = None,
         entity_id: Optional[str] = None,
         customer_data: Optional[Customer] = None,
+        free_trial: Optional[bool] = None,
     ) -> AttachResponse:
         assert product_id is not None or product_ids is not None, (
             "Either product_id or product_ids must be provided"
