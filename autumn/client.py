@@ -35,7 +35,7 @@ class Client:
         customer_data: Optional[Customer] = None,
     ) -> AttachResponse:
         payload = _build_payload(locals(), self.attach)
-        return self.http.request("POST", "/attach", AttachResponse, json=payload)  # type: ignore
+        return self.http.request("POST", "/attach", AttachResponse, json=payload)
 
     def check(
         self,
@@ -54,7 +54,7 @@ class Client:
         )
 
         payload = _build_payload(locals(), self.check)
-        return self.http.request("POST", "/check", CheckResponse, json=payload)  # type: ignore
+        return self.http.request("POST", "/check", CheckResponse, json=payload)
 
     def track(
         self,
@@ -69,4 +69,4 @@ class Client:
         customer_data: Optional[Customer] = None,
     ) -> TrackResponse:
         payload = _build_payload(locals(), self.track)
-        return self.http.request("POST", "/track", TrackResponse, json=payload)  # type: ignore
+        return self.http.request("POST", "/track", TrackResponse, json=payload)
