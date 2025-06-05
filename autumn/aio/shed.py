@@ -3,6 +3,9 @@ import typing
 from ..types import Feature, Customer, AttachResponse, CheckResponse, TrackResponse
 
 
+__all__ = ("AttachParams", "CheckParams", "TrackParams")
+
+
 class AttachParams(typing.Protocol):
     def __call__(
         self,

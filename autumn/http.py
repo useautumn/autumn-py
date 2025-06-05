@@ -1,12 +1,15 @@
 import sys
-from typing import Dict
+from typing import Dict, Type, TypeVar
 
 import requests
 from pydantic import BaseModel
 
-from . import __version__
+from .utils import _build_model
+from .error import AutumnError
 
 __all__ = ("HTTPClient",)
+
+T = TypeVar("T", bound=BaseModel)
 
 
 class HTTPClient:
@@ -23,6 +26,8 @@ class HTTPClient:
 
     @staticmethod
     def _build_headers(token: str) -> Dict[str, str]:
+        from . import __version__
+
         v_info = sys.version_info
         user_agent = (
             f"autumn.py/{__version__} (https://github.com/justanotherbyte/autumn)"
@@ -40,13 +45,24 @@ class HTTPClient:
         self,
         method: str,
         path: str,
-        type_: BaseModel,
+        type_: Type[T],
         **kwargs,
-    ) -> BaseModel:
+    ) -> T:
+        if self.session is None:
+            raise AutumnError(
+                "Session is not initialized. You may have closed the client accidentally.",
+                "session_not_initialized",
+            )
+
         url = self._build_url(self.base_url, self.version, path)
         resp = self.session.request(method, url, headers=self._headers, **kwargs)
 
         resp.raise_for_status()
 
         data = resp.json()
-        return type_.model_validate_json(data)
+        return _build_model(type_, data)
+
+    def close(self):
+        if self.session is not None:
+            self.session.close()
+            self.session = None

@@ -1,7 +1,6 @@
-from typing import Optional, List, Any, Dict, Callable
+from typing import Optional, List, Any, Dict
 
-from pydantic import BaseModel
-
+from .customers import Customers
 from .http import HTTPClient
 from .types import (
     AttachResponse,
@@ -10,28 +9,18 @@ from .types import (
     CheckResponse,
     TrackResponse,
 )
+from .utils import _build_payload
 
 
-BASE_URL = "https://api.useautumn.com"
-VERSION = "v1"
-
-
-def _build_payload(scope: Dict[str, Any], method: Callable) -> Dict[str, Any]:
-    params = method.__code__.co_varnames
-    payload: Dict[str, Any] = {}
-
-    for key, value in scope.items():
-        if key != "self" and key in params:
-            payload[key] = (
-                value.model_dump_json() if isinstance(value, BaseModel) else value
-            )
-
-    return payload
+__all__ = ("Client",)
 
 
 class Client:
     def __init__(self, token: str):
+        from . import BASE_URL, VERSION
+
         self.http = HTTPClient(BASE_URL, VERSION, token)
+        self.customers = Customers(self.http)
 
     def attach(
         self,

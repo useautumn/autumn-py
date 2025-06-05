@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Literal
 
 from pydantic import BaseModel
 
@@ -29,3 +29,13 @@ class TrackResponse(BaseModel):
     code: str
     customer_id: str
     feature_id: str
+
+
+class CreateCustomerResponse(BaseModel):
+    id: str
+    created_at: int
+    name: str
+    email: str
+    fingerprint: Optional[str] = None
+    stripe_id: Optional[str] = None
+    env: Literal["production", "sandbox"]
