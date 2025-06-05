@@ -1,3 +1,1 @@
-from .client import AsyncClient
-
-__all__ = ("AsyncClient",)
+from .client import *  # noqa: F403
