@@ -167,7 +167,7 @@ class Client:
         required_balance: Optional[int]
             The required balance to check.
         send_event: bool
-            Whether to send an event to the API.
+            Whether to record a usage event with checking access. The ```required_balance`` field will be used as the usage ``value``.
         with_preview: bool
             If true, the response will include a ``preview`` object, which can be used to display information such as a paywall or upgrade confirmation.
         entity_id: Optional[str]
