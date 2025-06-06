@@ -2,6 +2,9 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
+from .meta import AppEnv
+from .products import ProductItem, FreeTrial
+
 __all__ = ("AttachResponse", "CheckResponse")
 
 
@@ -42,3 +45,37 @@ class UsageResponse(BaseModel):
 class BillingPortalResponse(BaseModel):
     url: str
     customer_id: str
+
+
+class CreateProductResponse(BaseModel):
+    autumn_id: str
+    created_at: int
+    id: str
+    name: str
+    env: AppEnv
+    is_add_on: bool
+    is_default: bool
+    items: List[ProductItem]
+    free_trial: Optional[FreeTrial] = None
+
+
+GetProductResponse = CreateProductResponse
+
+
+class ReferralCodeResponse(BaseModel):
+    code: str
+    customer_id: str
+    created_at: int
+
+
+class ReferralRedeemResponse(BaseModel):
+    id: str
+    customer_id: str
+    reward_id: str
+
+
+class ProductCancelResponse(BaseModel):
+    success: bool
+    message: str
+    customer_id: str
+    product_id: str
