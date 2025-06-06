@@ -1,15 +1,20 @@
-from typing import Optional, List, Any, Dict
+from __future__ import annotations
+
+from typing import Optional, List, Any, Dict, TYPE_CHECKING
 
 from .customers import Customers
 from .http import HTTPClient
-from .types import (
-    AttachResponse,
-    Feature,
-    Customer,
-    CheckResponse,
-    TrackResponse,
-)
 from .utils import _build_payload
+from .types.meta import AttachOption
+
+if TYPE_CHECKING:
+    from .types.features import Feature
+    from .types.meta import CustomerData
+    from .types.response import (
+        AttachResponse,
+        CheckResponse,
+        TrackResponse,
+    )
 
 
 __all__ = ("Client",)
@@ -32,8 +37,9 @@ class Client:
         force_checkout: bool = False,
         features: Optional[List[Feature]] = None,
         entity_id: Optional[str] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
         free_trial: Optional[bool] = None,
+        options: Optional[List[AttachOption]] = None,
     ) -> AttachResponse:
         assert product_id is not None or product_ids is not None, (
             "Either product_id or product_ids must be provided"
@@ -58,7 +64,7 @@ class Client:
         send_event: bool = False,
         with_preview: bool = False,
         entity_id: Optional[str] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
     ) -> CheckResponse:
         assert product_id is not None or feature_id is not None, (
             "Either product_id or feature_id must be provided"
@@ -77,7 +83,7 @@ class Client:
         event_name: Optional[str] = None,
         idempotency_key: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
     ) -> TrackResponse:
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)

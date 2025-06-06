@@ -1,6 +1,19 @@
+from enum import StrEnum
 from typing import Literal, List
 
 from pydantic import BaseModel
+
+
+class ProductItemInterval(StrEnum):
+    MINUTE = "minute"
+    HOUR = "hour"
+    DAY = "day"
+    WEEK = "week"
+    MONTH = "month"
+    QUARTER = "quarter"
+    SEMI_ANNUAL = "semi_annual"
+    YEAR = "year"
+    MULTIPLE = "multiple"
 
 
 class PriceCurrencyPair(BaseModel):

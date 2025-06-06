@@ -12,6 +12,7 @@ from typing import (
 )
 
 from .types.customers import Customer
+from .types.response import BillingPortalResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -68,3 +69,70 @@ class Customers(Generic[T_HttpClient]):
     ):
         payload = _build_payload(locals(), self.create)  # type: ignore
         return self._http.request("POST", "/customers", Customer, json=payload)
+
+    @overload
+    def update(
+        self: "Customers[HTTPClient]",
+        customer_id: str,
+        *,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        fingerprint: Optional[str] = None,
+    ) -> Customer: ...
+
+    @overload
+    def update(
+        self: "Customers[AsyncHTTPClient]",
+        customer_id: str,
+        *,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        fingerprint: Optional[str] = None,
+    ) -> Coroutine[Any, Any, Customer]: ...
+
+    def update(
+        self,
+        customer_id: str,
+        *,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        fingerprint: Optional[str] = None,
+    ):
+        payload = _build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
+        return self._http.request(
+            "POST", f"/customers/{customer_id}", Customer, json=payload
+        )
+
+    @overload
+    def get_billing_portal(
+        self: "Customers[HTTPClient]",
+        customer_id: str,
+        *,
+        return_url: Optional[str] = None,
+    ) -> BillingPortalResponse: ...
+
+    @overload
+    def get_billing_portal(
+        self: "Customers[AsyncHTTPClient]",
+        customer_id: str,
+        *,
+        return_url: Optional[str] = None,
+    ) -> Coroutine[Any, Any, BillingPortalResponse]: ...
+
+    def get_billing_portal(
+        self,
+        customer_id: str,
+        *,
+        return_url: Optional[str] = None,
+    ):
+        payload = _build_payload(
+            locals(),
+            self.get_billing_portal,  # type: ignore
+            ignore={"customer_id"},
+        )
+        return self._http.request(
+            "POST",
+            f"/customers/{customer_id}/billing_portal",
+            BillingPortalResponse,
+            json=payload,
+        )
