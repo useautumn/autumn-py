@@ -9,6 +9,7 @@ This exists because I preferred `async` support, which the official SDK does not
 ## Features
 - Modern Pythonic API using `async` and `await`.
 - Support for synchronous and asynchronous contexts.
+- Fully typed.
 
 ## Quickstart
 
