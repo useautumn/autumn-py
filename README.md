@@ -1,6 +1,6 @@
 # autumn.py
 
-A thin wrapper around [Autumn](https://useautumn.com)'s REST API.
+A thin wrapper around [Autumn](https://github.com/useautumn/autumn)'s REST API.
 
 This exists because I preferred `async` support, which the official SDK does not have.
 
