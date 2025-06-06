@@ -1,7 +1,9 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class Balance(BaseModel):
     feature_id: str
-    required_balance: int
     balance: int
+    required_balance: Optional[int] = None

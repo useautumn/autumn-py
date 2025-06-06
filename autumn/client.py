@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional, List, Any, Dict, TYPE_CHECKING
 
 from .customers import Customers
+from .features import Features
 from .http import HTTPClient
 from .utils import _build_payload
 from .types.meta import AttachOption
@@ -26,6 +27,7 @@ class Client:
 
         self.http = HTTPClient(BASE_URL, VERSION, token)
         self.customers = Customers(self.http)
+        self.features = Features(self.http)
 
     def attach(
         self,

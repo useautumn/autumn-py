@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from .http import AsyncHTTPClient
 from ..client import Client
+from ..features import Features
 from ..customers import Customers
 
 if TYPE_CHECKING:
@@ -22,6 +23,7 @@ class AsyncClient(Client):
 
         self.http = AsyncHTTPClient(BASE_URL, VERSION, token)
         self.customers = Customers(self.http)
+        self.features = Features(self.http)
 
     async def close(self):
         await self.http.close()

@@ -11,6 +11,9 @@ if TYPE_CHECKING:
     Metadata = Dict[str, Any]
 
 
+class Empty(BaseModel): ...
+
+
 class AppEnv(StrEnum):
     PRODUCTION = "production"
     SANDBOX = "sandbox"
