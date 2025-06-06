@@ -74,7 +74,6 @@ Getting Help
    :maxdepth: 2
    :caption: Contents:
 
-   usage
    asyncio_
    api
 

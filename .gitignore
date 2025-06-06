@@ -14,3 +14,5 @@ tests.py
 uv.lock
 .python-version
 .ruff_cache/
+
+.DS_Store
