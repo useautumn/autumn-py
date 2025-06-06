@@ -7,9 +7,24 @@ This exists because I preferred `async` support, which the official SDK does not
 ***This is not installation ready yet, nor will this be published on the PyPi index.***
 
 ## Features
+
 - Modern Pythonic API using `async` and `await`.
 - Support for synchronous and asynchronous contexts.
 - Fully typed.
+
+## Installation
+
+```bash
+pip install git+https://github.com/justanotherbyte/autumn
+```
+
+If you want `async` support, you need to install `aiohttp`. Yes, this doesn't just run `requests` in an executor.
+```bash
+pip install aiohttp
+
+# Optionally
+pip install aiohttp[speedups]
+```
 
 ## Quickstart
 
