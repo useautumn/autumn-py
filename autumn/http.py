@@ -4,7 +4,7 @@ from typing import Dict, Type, TypeVar
 import requests
 from pydantic import BaseModel
 
-from .utils import _build_model
+from .utils import _build_model, _check_response
 from .error import AutumnError
 
 __all__ = ("HTTPClient",)
@@ -57,9 +57,10 @@ class HTTPClient:
         url = self._build_url(self.base_url, self.version, path)
         resp = self.session.request(method, url, headers=self._headers, **kwargs)
 
-        resp.raise_for_status()
-
         data = resp.json()
+        print(data)
+
+        _check_response(resp.status_code, data)
         return _build_model(type_, data)
 
     def close(self):
