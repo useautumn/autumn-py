@@ -25,6 +25,13 @@ __all__ = ("Customers",)
 
 
 class Customers(Generic[T_HttpClient]):
+    """An interface to Autumn's customer API.
+
+    .. warning::
+        This class is not intended for public use. It is used internally by the :class:`autumn.Client` class.
+        Do not initialize this class directly.
+    """
+
     def __init__(self, http: T_HttpClient):
         self._http = http
 
@@ -37,6 +44,20 @@ class Customers(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, Customer]: ...
 
     def get(self, customer_id):
+        """Get a customer by their ID.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to get.
+
+        Returns
+        -------
+        :class:`~autumn.types.customers.Customer`
+            The customer.
+        """
         return self._http.request("GET", f"/customers/{customer_id}", Customer)
 
     @overload
@@ -67,6 +88,26 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ):
+        """Create a new customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        id: str
+            The ID of the customer to create.
+        email: Optional[str]
+            The customer's email address.
+        name: Optional[str]
+            The customer's name.
+        metadata: Optional[Dict[str, Any]]
+            Additional metadata to attach to the customer.
+
+        Returns
+        -------
+        :class:`~autumn.types.customers.Customer`
+            The created customer.
+        """
         payload = _build_payload(locals(), self.create)  # type: ignore
         return self._http.request("POST", "/customers", Customer, json=payload)
 
@@ -98,6 +139,26 @@ class Customers(Generic[T_HttpClient]):
         email: Optional[str] = None,
         fingerprint: Optional[str] = None,
     ):
+        """Update a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to update.
+        name: Optional[str]
+            The customer's new name.
+        email: Optional[str]
+            The customer's new email address.
+        fingerprint: Optional[str]
+            The customer's new fingerprint.
+
+        Returns
+        -------
+        :class:`~autumn.types.customers.Customer`
+            The updated customer.
+        """
         payload = _build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST", f"/customers/{customer_id}", Customer, json=payload
@@ -125,6 +186,22 @@ class Customers(Generic[T_HttpClient]):
         *,
         return_url: Optional[str] = None,
     ):
+        """Get a billing portal URL for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to get a billing portal URL for.
+        return_url: Optional[str]
+            The URL to return to after the customer has completed the billing portal.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.BillingPortalResponse`
+            The billing portal URL.
+        """
         payload = _build_payload(
             locals(),
             self.get_billing_portal,  # type: ignore

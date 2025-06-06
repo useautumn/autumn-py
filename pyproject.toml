@@ -13,3 +13,7 @@ dependencies = [
 aio = [
     "aiohttp>=3.12.8",
 ]
+docs = [
+    "furo>=2024.8.6",
+    "sphinx>=8.2.3",
+]

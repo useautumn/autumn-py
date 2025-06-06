@@ -29,6 +29,29 @@ T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
 
 
 class Products(Generic[T_HttpClient]):
+    """An interface to Autumn's product API.
+
+    .. warning::
+        This class is not intended for public use. It is used internally by the :class:`autumn.Client` class.
+        Do not initialize this class directly.
+
+    Example:
+
+    .. code-block:: python
+
+        import autumn
+
+        client = autumn.Client(token="your_api_key")
+
+        product = client.products.create_product(
+            id="chat_messages",
+            name="Chat Messages"
+        )
+
+        print(product.name) # Chat Messages
+
+    """
+
     def __init__(self, http: T_HttpClient):
         self._http = http
 
@@ -66,6 +89,30 @@ class Products(Generic[T_HttpClient]):
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
     ):
+        """Create a new product.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        id: str
+            The ID of the product.
+        name: str
+            The name of the product.
+        is_add_on: bool
+            Whether the product is an add-on.
+        is_default: bool
+            Whether the product is a default product.
+        items: Optional[List[ProductItem]]
+            The items of the product.
+        free_trial: Optional[FreeTrial]
+            The free trial configuration of the product.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.CreateProductResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.create_product)  # type: ignore
         return self._http.request(
             "POST", "/products", CreateProductResponse, json=payload
@@ -84,6 +131,20 @@ class Products(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, GetProductResponse]: ...
 
     def get_product(self, id: str):
+        """Get a product by its ID.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        id: str
+            The ID of the product to get.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.GetProductResponse`
+            The response from the API.
+        """
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
 
     @overload
@@ -105,6 +166,23 @@ class Products(Generic[T_HttpClient]):
         customer_id: str,
         program_id: str,
     ):
+        """Get a referral code for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to get a referral code for.
+        program_id: str
+            The ID of the program to get a referral code for.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.ReferralCodeResponse`
+            The response from the API.
+        """
+
         payload = _build_payload(locals(), self.get_referral_code)  # type: ignore
         return self._http.request(
             "POST",
@@ -135,6 +213,24 @@ class Products(Generic[T_HttpClient]):
         customer_id: str,
         reward_id: str,
     ):
+        """Redeem a referral code for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        code: str
+            The code to redeem.
+        customer_id: str
+            The ID of the customer to redeem the code for.
+        reward_id: str
+            The ID of the reward to redeem.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.ReferralRedeemResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.redeem_referral_code)  # type: ignore
         return self._http.request(
             "POST",
@@ -165,6 +261,24 @@ class Products(Generic[T_HttpClient]):
         product_id: str,
         entity_id: Optional[str] = None,
     ):
+        """Cancel a product for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to cancel the product for.
+        product_id: str
+            The ID of the product to cancel.
+        entity_id: Optional[str]
+            The ID of the entity to cancel the product for.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.ProductCancelResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.cancel_product)  # type: ignore
         return self._http.request(
             "POST",

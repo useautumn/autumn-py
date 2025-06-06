@@ -4,6 +4,7 @@ from typing import Optional, List, Any, Dict, TYPE_CHECKING
 
 from .customers import Customers
 from .features import Features
+from .products import Products
 from .http import HTTPClient
 from .utils import _build_payload
 from .types.meta import AttachOption
@@ -22,12 +23,64 @@ __all__ = ("Client",)
 
 
 class Client:
+    """
+    The main client class for interacting with the Autumn API.
+
+    Example:
+
+    .. code-block:: python
+
+        import autumn
+
+        client = autumn.Client(token="your_api_key")
+
+        # Attach a customer to a product
+        client.attach(
+            customer_id="john_doe",
+            product_id="chat_messages",
+        )
+
+    .. note::
+        This client should not be used in async contexts. Use :class:`autumn.aio.Client` instead.
+        The :class:`~autumn.aio.Client` class is a *wrapper* around the :class:`~autumn.Client` class that provides async support.
+        It works the same, but you must ``await`` your method calls.
+
+        .. code-block:: python
+
+            import asyncio
+
+            from autumn.aio import Client
+
+            async def main():
+                client = Client(token="your_api_key")
+                await client.attach(customer_id="john_doe", product_id="chat_messages")
+
+            asyncio.run(main())
+
+        The async client requires ``aiohttp`` to be installed. You can install it via: ``pip install aiohttp``.
+
+    Parameters
+    ----------
+    token: str
+        The API key to use for authentication.
+
+    Attributes
+    ----------
+    customers: :class:`~autumn.customers.Customers`
+        An interface to Autumn's customer API.
+    features: :class:`~autumn.features.Features`
+        An interface to Autumn's feature API.
+    products: :class:`~autumn.products.Products`
+        An interface to Autumn's product API.
+    """
+
     def __init__(self, token: str):
         from . import BASE_URL, VERSION
 
         self.http = HTTPClient(BASE_URL, VERSION, token)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
+        self.products = Products(self.http)
 
     def attach(
         self,
@@ -43,6 +96,37 @@ class Client:
         free_trial: Optional[bool] = None,
         options: Optional[List[AttachOption]] = None,
     ) -> AttachResponse:
+        """Attach a customer to a product.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to attach.
+        product_id: Optional[str]
+            The ID of the product to attach.
+        product_ids: Optional[List[str]]
+            The IDs of the products to attach.
+        success_url: Optional[str]
+            The URL to redirect to after a successful attachment.
+        force_checkout: bool
+            Whether to force the customer to checkout.
+        features: Optional[List[Feature]]
+            The features to attach.
+        entity_id: Optional[str]
+            The ID of the entity to attach.
+        customer_data: Optional[CustomerData]
+            The customer data to attach.
+        free_trial: Optional[bool]
+            Whether to attach a free trial.
+        options: Optional[List[AttachOption]]
+            The options to attach.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.AttachResponse`
+            The response from the API.
+        """
+
         assert product_id is not None or product_ids is not None, (
             "Either product_id or product_ids must be provided"
         )
@@ -68,6 +152,35 @@ class Client:
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
     ) -> CheckResponse:
+        """Check if a customer has access to a product or feature.
+
+        You must pass either ``product_id`` or ``feature_id``. Failure to pass one and **only one** will raise an assertion error.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to check.
+        product_id: Optional[str]
+            The ID of the product to check.
+        feature_id: Optional[str]
+            The ID of the feature to check.
+        required_balance: Optional[int]
+            The required balance to check.
+        send_event: bool
+            Whether to send an event to the API.
+        with_preview: bool
+            If true, the response will include a ``preview`` object, which can be used to display information such as a paywall or upgrade confirmation.
+        entity_id: Optional[str]
+            If using entity balances (eg, seats), the entity ID to check access for.
+        customer_data: Optional[CustomerData]
+            Additional customer properties. These will be used if the customer's properties are not already set.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.CheckResponse`
+            The response from the API.
+        """
+
         assert product_id is not None or feature_id is not None, (
             "Either product_id or feature_id must be provided"
         )
@@ -87,5 +200,32 @@ class Client:
         properties: Optional[Dict[str, Any]] = None,
         customer_data: Optional[CustomerData] = None,
     ) -> TrackResponse:
+        """
+        Track a feature usage.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to track.
+        feature_id: str
+            The ID of the feature to track.
+        value: int
+            The amount of the feature to deduct.
+        entity_id: Optional[str]
+            The ID of the entity to track.
+        event_name: Optional[str]
+            The name of the event to track.
+        idempotency_key: Optional[str]
+            A unique identifier for the track event. If not provided, the SDK will not generate one - the Autumn API does not expect one.
+        properties: Optional[Dict[str, Any]]
+            Additional properties to track.
+        customer_data: Optional[CustomerData]
+            Additional customer properties. These will be used if the customer's properties are not already set.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.TrackResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
