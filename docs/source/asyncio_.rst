@@ -60,6 +60,10 @@ FastAPI is a popular web framework for Python. It's built on top of Starlette, w
 If you're looking for a similar experience to the official Next.js client-side implementation, or we recommend writing your own routes.
 This will soon be natively supported by the library (hopefully) soon.
 
+.. warning::
+    Do **not** use the synchronous :class:`autumn.Client` in your ASGI application.
+    You will not get the full benefits of an asynchronous application - the synchronous client will block the event loop.
+
 .. code-block:: python
 
     from fastapi import FastAPI
