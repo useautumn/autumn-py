@@ -58,7 +58,6 @@ class HTTPClient:
         resp = self.session.request(method, url, headers=self._headers, **kwargs)
 
         data = resp.json()
-        print(data)
 
         _check_response(resp.status_code, data)
         return _build_model(type_, data)
