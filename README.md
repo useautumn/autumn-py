@@ -67,10 +67,10 @@ if check.allowed is False:
 ### Async Usage
 
 ```python
-from autumn.aio import Client
+from autumn.aio import AsyncClient
 
 # First, initialize a client.
-client = Client(token="your_api_key")
+client = AsyncClient(token="your_api_key")
 
 # Attach a customer to a product
 await client.attach(
