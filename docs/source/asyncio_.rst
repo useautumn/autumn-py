@@ -27,15 +27,12 @@ Note that these speedups are not required for the library to work, but they may 
 Usage
 -----
 
-Autumn supports asyncio. You can use the :class:`autumn.aio.Client` class to interact with the API asynchronously.
+Autumn supports asyncio. You can use the :class:`~autumn.aio.client.AsyncClient` class to interact with the API asynchronously.
 
 Basic Usage
 ^^^^^^^^^^^
 
-.. _client_ref: :class:`autumn.Client`
-
-The basic usage of the asyncio client is the same as the sync client. You can use the :class:`autumn.aio.Client` class to interact with the API asynchronously.
-The documentation for the sync client is available :ref:`here <client_ref>`: it still applies to the async client.
+The basic usage of the asyncio client is the same as the sync client. You can use the :class:`autumn.aio.client.AsyncClient` class to interact with the API asynchronously.
 
 .. code-block:: python
 
