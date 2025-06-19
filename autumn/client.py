@@ -41,8 +41,8 @@ class Client:
         )
 
     .. note::
-        This client should not be used in async contexts. Use :class:`autumn.aio.Client` instead.
-        The :class:`~autumn.aio.Client` class is a *wrapper* around the :class:`~autumn.Client` class that provides async support.
+        This client should not be used in async contexts. Use :class:`autumn.aio.AsyncClient` instead.
+        The :class:`~autumn.aio.AsyncClient` class is a *wrapper* around the :class:`~autumn.Client` class that provides async support.
         It works the same, but you must ``await`` your method calls.
 
         .. code-block:: python
