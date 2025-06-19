@@ -67,37 +67,41 @@ if check.allowed is False:
 ### Async Usage
 
 ```python
-from autumn.aio import Client
+import asyncio
+from autumn.aio import AsyncClient
 
 # First, initialize a client.
-client = Client(token="your_api_key")
+client = AsyncClient(token="your_api_key")
 
-# Attach a customer to a product
-await client.attach(
-    customer_id="john_doe",
-    product_id="chat_messages",
-)
+async def main():
+    # Attach a customer to a product
+    await client.attach(
+        customer_id="john_doe",
+        product_id="chat_messages",
+    )
 
-# Check if the customer has access to the product
-check = await client.check(
-    customer_id="john_doe",
-    product_id="chat_messages",
-)
-if check.allowed is True:
-    print("Sending chat message...")
+    # Check if the customer has access to the product
+    check = await client.check(
+        customer_id="john_doe",
+        product_id="chat_messages",
+    )
+    if check.allowed is True:
+        print("Sending chat message...")
 
-# Once the customer uses a chat message:
-await client.track(
-    customer_id="john_doe",
-    feature_id="chat_messages",
-    value=1,
-)
+    # Once the customer uses a chat message:
+    await client.track(
+        customer_id="john_doe",
+        feature_id="chat_messages",
+        value=1,
+    )
 
-# Let's say the customer has run out of chat messages.
-check = await client.check(
-    customer_id="john_doe",
-    product_id="chat_messages",
-)
-if check.allowed is False:
-    print("Customer has run out of chat messages.")
+    # Let's say the customer has run out of chat messages.
+    check = await client.check(
+        customer_id="john_doe",
+        product_id="chat_messages",
+    )
+    if check.allowed is False:
+        print("Customer has run out of chat messages.")
+
+asyncio.run(main())
 ```
