@@ -2,8 +2,8 @@ import pytest
 
 from autumn.types.customers import CustomerFeature, ProductItemInterval
 from autumn.customers import Customers
-from autumn.error import AutumnValidationError
-from autumn.utils import _build_model, _build_payload, _decompose_value
+from autumn.error import AutumnValidationError, AutumnHTTPError
+from autumn.utils import _build_model, _build_payload, _decompose_value, _check_response
 
 
 def test_decompose_value_singular():
@@ -85,3 +85,16 @@ def test_model_build_exc():
 
     with pytest.raises(AutumnValidationError):
         _build_model(CustomerFeature, bad_data)
+
+
+def test_check_response():
+    data = {"mock": "data"}
+
+    for code in range(200, 299 + 1):
+        _check_response(code, data)
+
+    with pytest.raises(AutumnHTTPError):
+        _check_response(300, data)
+
+    with pytest.raises(AutumnHTTPError):
+        _check_response(301, data)
