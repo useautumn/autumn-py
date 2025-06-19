@@ -23,7 +23,8 @@ class AutumnError(Exception):
         return f"{self.code}: {self.message}"
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.message}, {self.code})"
+        notes = "\n".join(self.__notes__)
+        return f"{self.__class__.__name__}({self.message}, {self.code}){notes}"
 
 
 class AutumnValidationError(AutumnError):

@@ -39,10 +39,12 @@ def _build_model(model: Type[T], data: Dict[str, Any]) -> T:
         error_path = errors[0]["loc"]
         error_code = errors[0]["type"]
 
-        raise AutumnValidationError(
+        err = AutumnValidationError(
             f"{error_message} at {error_path} with code {error_code}",
             "validation_error",
         )
+        err.add_note("Received response: " + str(data))
+        raise err
 
 
 def _check_response(status_code: int, data: Dict[str, Any]) -> None:
