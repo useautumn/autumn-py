@@ -7,6 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 import sys
+import types
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -26,6 +27,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
+    "sphinx_autodoc_typehints",
 ]
 
 templates_path = ["_templates"]
@@ -60,3 +62,6 @@ resource_links = {
     "github": "https://github.com/justanotherbyte/autumn",
     "discord": "https://discord.gg/QDjfwGGWKT",
 }
+
+
+autodoc_typehints_description_target = "implementation"

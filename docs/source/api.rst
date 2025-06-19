@@ -12,6 +12,10 @@ Client
    :members:
    :undoc-members:
 
+.. autoclass:: autumn.aio.client.AsyncClient
+   :members:
+   :undoc-members:
+
 API Features
 ------------
 

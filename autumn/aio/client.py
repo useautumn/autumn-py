@@ -15,6 +15,25 @@ __all__ = ("AsyncClient",)
 
 
 class AsyncClient(Client):
+    """
+    The ``async`` client class for interacting with the Autumn API.
+
+    Parameters
+    ----------
+    token: str
+        The API key to use for authentication.
+
+    Attributes
+    ----------
+    customers: :class:`~autumn.customers.Customers`
+        An interface to Autumn's customer API.
+    features: :class:`~autumn.features.Features`
+        An interface to Autumn's feature API.
+    products: :class:`~autumn.products.Products`
+        An interface to Autumn's product API.
+
+    """
+
     attach: AttachParams  # type: ignore
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
