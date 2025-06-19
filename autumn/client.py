@@ -8,15 +8,15 @@ from .products import Products
 from .http import HTTPClient
 from .utils import _build_payload
 from .types.meta import AttachOption
+from .types.response import (
+    AttachResponse,
+    CheckResponse,
+    TrackResponse,
+)
 
 if TYPE_CHECKING:
     from .types.features import Feature
     from .types.meta import CustomerData
-    from .types.response import (
-        AttachResponse,
-        CheckResponse,
-        TrackResponse,
-    )
 
 
 __all__ = ("Client",)
