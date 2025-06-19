@@ -13,4 +13,7 @@ uv.lock
 .python-version
 .ruff_cache/
 
+# PyTest
+.pytest_cache/
+
 .DS_Store

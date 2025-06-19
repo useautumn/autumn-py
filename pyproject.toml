@@ -18,3 +18,12 @@ docs = [
     "sphinx>=8.2.3",
     "sphinx-autodoc-typehints>=3.2.0"
 ]
+tests = [
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
