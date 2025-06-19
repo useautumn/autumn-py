@@ -16,4 +16,5 @@ aio = [
 docs = [
     "furo>=2024.8.6",
     "sphinx>=8.2.3",
+    "sphinx-autodoc-typehints>=3.2.0"
 ]
