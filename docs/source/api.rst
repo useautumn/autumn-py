@@ -15,6 +15,8 @@ Client
 .. autoclass:: autumn.aio.client.AsyncClient
    :members:
    :undoc-members:
+   :inherited-members:
+   :show-inheritance:
 
 API Features
 ------------
