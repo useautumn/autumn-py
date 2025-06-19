@@ -98,6 +98,8 @@ class Client:
     ) -> AttachResponse:
         """Attach a customer to a product.
 
+        |maybecoro|
+
         Parameters
         ----------
         customer_id: str
@@ -154,6 +156,8 @@ class Client:
     ) -> CheckResponse:
         """Check if a customer has access to a product or feature.
 
+        |maybecoro|
+
         You must pass either ``product_id`` or ``feature_id``. Failure to pass one and **only one** will raise an assertion error.
 
         Parameters
@@ -202,6 +206,8 @@ class Client:
     ) -> TrackResponse:
         """
         Track a feature usage.
+
+        |maybecoro|
 
         Parameters
         ----------
