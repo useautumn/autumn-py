@@ -40,8 +40,7 @@ html_static_path = ["_static"]
 html_theme_options = {}
 
 rst_prolog: str = """
-.. |coro| replace:: This function is a |coroutine_link|_.
-.. |maybecoro| replace:: This function *could be a* |coroutine_link|_.
+.. |maybecoro| replace:: This function is a |coroutine_link|_ when using the AsyncClient.
 .. |coroutine_link| replace:: *coroutine*
 .. _coroutine_link: https://docs.python.org/3/library/asyncio-task.html#coroutine
 """
