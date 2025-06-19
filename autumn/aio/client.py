@@ -9,6 +9,7 @@ from ..customers import Customers
 from ..products import Products
 
 if TYPE_CHECKING:
+    from typing import Self
     from .shed import AttachParams, CheckParams, TrackParams
 
 __all__ = ("AsyncClient",)
@@ -45,6 +46,12 @@ class AsyncClient(Client):
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
+
+    async def __aenter__(self) -> Self:
+        return self
+
+    async def __aexit__(self, _exc_type, _exc, _tb):
+        await self.close()
 
     async def close(self):
         await self.http.close()
