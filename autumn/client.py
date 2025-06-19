@@ -136,10 +136,7 @@ class Client:
             "Only one of product_id or product_ids must be provided"
         )
 
-        if product_id is not None:
-            product_ids = [product_id]
-
-        payload = _build_payload(locals(), self.attach, ignore={"product_id"})
+        payload = _build_payload(locals(), self.attach)
         return self.http.request("POST", "/attach", AttachResponse, json=payload)
 
     def check(
