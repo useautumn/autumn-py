@@ -38,10 +38,10 @@ The basic usage of the asyncio client is the same as the sync client. You can us
 
     import asyncio
 
-    from autumn.aio import Client
+    from autumn.aio import AsyncClient
 
     async def main():
-        client = Client(token="your_api_key")
+        client = AsyncClient(token="your_api_key")
         await client.attach(
             "customer_id",
             product_id="chat_messages"
@@ -65,10 +65,10 @@ This will soon be natively supported by the library (hopefully) soon.
 
     from fastapi import FastAPI
     from pydantic import BaseModel
-    from autumn.aio import Client
+    from autumn.aio import AsyncClient
 
     app = FastAPI()
-    autumn = Client(token="your_api_key")
+    autumn = AsyncClient(token="your_api_key")
 
     # Pydantic models are used to validate the request body.
     class CreateCustomerRequest(BaseModel):
