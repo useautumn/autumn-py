@@ -20,9 +20,9 @@ class AttachResponse(BaseModel):
 class CheckResponse(BaseModel):
     allowed: bool
     customer_id: str
-    feature_id: str
     code: str
     balance: Optional[float] = None
+    feature_id: Optional[str] = None
     product_id: Optional[str] = None
     status: Optional[str] = None
     # TODO: add preview attribute
