@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import (
     List,
     Any,
+    Union,
     TypeVar,
     Generic,
     overload,
@@ -88,7 +89,7 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ):
+    ) -> Union[CreateProductResponse, Coroutine[Any, Any, CreateProductResponse]]:
         """Create a new product.
 
         |maybecoro|
@@ -130,7 +131,9 @@ class Products(Generic[T_HttpClient]):
         id: str,
     ) -> Coroutine[Any, Any, GetProductResponse]: ...
 
-    def get_product(self, id: str):
+    def get_product(
+        self, id: str
+    ) -> Union[GetProductResponse, Coroutine[Any, Any, GetProductResponse]]:
         """Get a product by its ID.
 
         |maybecoro|
@@ -165,7 +168,7 @@ class Products(Generic[T_HttpClient]):
         self,
         customer_id: str,
         program_id: str,
-    ):
+    ) -> Union[ReferralCodeResponse, Coroutine[Any, Any, ReferralCodeResponse]]:
         """Get a referral code for a customer.
 
         |maybecoro|
@@ -212,7 +215,7 @@ class Products(Generic[T_HttpClient]):
         code: str,
         customer_id: str,
         reward_id: str,
-    ):
+    ) -> Union[ReferralRedeemResponse, Coroutine[Any, Any, ReferralRedeemResponse]]:
         """Redeem a referral code for a customer.
 
         |maybecoro|
@@ -260,7 +263,7 @@ class Products(Generic[T_HttpClient]):
         customer_id: str,
         product_id: str,
         entity_id: Optional[str] = None,
-    ):
+    ) -> Union[ProductCancelResponse, Coroutine[Any, Any, ProductCancelResponse]]:
         """Cancel a product for a customer.
 
         |maybecoro|

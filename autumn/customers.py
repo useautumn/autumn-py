@@ -6,6 +6,7 @@ from typing import (
     Any,
     TypeVar,
     Generic,
+    Union,
     overload,
     Coroutine,
     TYPE_CHECKING,
@@ -43,7 +44,7 @@ class Customers(Generic[T_HttpClient]):
         self: "Customers[AsyncHTTPClient]", customer_id: str
     ) -> Coroutine[Any, Any, Customer]: ...
 
-    def get(self, customer_id):
+    def get(self, customer_id) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Get a customer by their ID.
 
         |maybecoro|
@@ -87,7 +88,7 @@ class Customers(Generic[T_HttpClient]):
         email: Optional[str] = None,
         name: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-    ):
+    ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Create a new customer.
 
         |maybecoro|
@@ -138,7 +139,7 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         email: Optional[str] = None,
         fingerprint: Optional[str] = None,
-    ):
+    ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Update a customer.
 
         |maybecoro|
@@ -185,7 +186,7 @@ class Customers(Generic[T_HttpClient]):
         customer_id: str,
         *,
         return_url: Optional[str] = None,
-    ):
+    ) -> Union[BillingPortalResponse, Coroutine[Any, Any, BillingPortalResponse]]:
         """Get a billing portal URL for a customer.
 
         |maybecoro|

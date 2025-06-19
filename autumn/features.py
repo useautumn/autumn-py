@@ -7,6 +7,7 @@ from typing import (
     Generic,
     overload,
     Coroutine,
+    Union,
     TYPE_CHECKING,
 )
 
@@ -43,7 +44,9 @@ class Features(Generic[T_HttpClient]):
         self: "Features[AsyncHTTPClient]", customer_id: str, feature_id: str, value: int
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def set_usage(self, customer_id: str, feature_id: str, value: int):
+    def set_usage(
+        self, customer_id: str, feature_id: str, value: int
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the usage of a feature for a customer.
 
         |maybecoro|
@@ -84,7 +87,9 @@ class Features(Generic[T_HttpClient]):
         balances: List[Balance],
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def set_balances(self, customer_id: str, balances: List[Balance]):
+    def set_balances(
+        self, customer_id: str, balances: List[Balance]
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the balances of a customer.
 
         |maybecoro|
@@ -125,7 +130,9 @@ class Features(Generic[T_HttpClient]):
         name: str,
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def create_entity(self, customer_id: str, id: str, feature_id: str, name: str):
+    def create_entity(
+        self, customer_id: str, id: str, feature_id: str, name: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Create an entity for a customer.
 
         |maybecoro|
@@ -166,7 +173,9 @@ class Features(Generic[T_HttpClient]):
         entity_id: str,
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete_entity(self, customer_id: str, entity_id: str):
+    def delete_entity(
+        self, customer_id: str, entity_id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete an entity for a customer.
 
         |maybecoro|
