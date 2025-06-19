@@ -24,7 +24,7 @@ def _build_payload(
     payload: Dict[str, Any] = {}
 
     for key, value in scope.items():
-        if key != "self" and key in params and key not in ignore:
+        if key != "self" and key in params and key not in ignore and value is not None:
             payload[key] = _decompose_value(value)
 
     return payload
