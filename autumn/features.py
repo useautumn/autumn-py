@@ -8,11 +8,13 @@ from typing import (
     overload,
     Coroutine,
     Union,
+    Optional,
     TYPE_CHECKING,
 )
 
 from .types.balance import Balance
 from .types.meta import Empty
+from .types.features import Entity
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -157,6 +159,33 @@ class Features(Generic[T_HttpClient]):
         payload = _build_payload(locals(), self.create_entity, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST", f"/customers/{customer_id}/entities", Empty, json=payload
+        )
+
+    @overload
+    def get_entity(
+        self: "Features[HTTPClient]",
+        customer_id: str,
+        entity_id: str,
+        expand: Optional[List[str]] = None,
+    ) -> Entity: ...
+
+    @overload
+    def get_entity(
+        self: "Features[AsyncHTTPClient]",
+        customer_id: str,
+        entity_id: str,
+        expand: Optional[List[str]] = None,
+    ) -> Coroutine[Any, Any, Entity]: ...
+
+    def get_entity(
+        self, customer_id: str, entity_id: str, expand: Optional[List[str]] = None
+    ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
+        params = {"expand": expand}
+        return self._http.request(
+            "GET",
+            f"/customers/{customer_id}/entities/{entity_id}",
+            Entity,
+            params=params,
         )
 
     @overload
