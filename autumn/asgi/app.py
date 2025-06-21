@@ -53,17 +53,17 @@ class AutumnASGI:
                     "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
                 ),
                 Route(
-                    "/customers/{customer_id}/entities",
+                    "/customers/{customer_id:str}/entities/{entity_id:str}",
                     delete_entity_route,
                     methods={"DELETE"},
                 ),
                 Route(
-                    "/customers/{customer_id}/entities/{entity_id}/",
+                    "/customers/{customer_id:str}/entities/",
                     create_entity_route,
                     methods={"POST"},
                 ),
                 Route(
-                    "/customers/{customer_id}/entities/entity_id/",
+                    "/customers/{customer_id:str}/entities/{entity_id:str}/",
                     get_entity_route,
                     methods={"GET"},
                 ),
