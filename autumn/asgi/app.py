@@ -13,6 +13,7 @@ from .routes.core import (
     billing_portal_route,
 )
 from .routes.customers import create_customer_route
+from .routes.entities import create_entity_route, delete_entity_route
 from ..aio.client import AsyncClient
 from ..error import AutumnHTTPError
 
@@ -51,6 +52,12 @@ class AutumnASGI:
                 Route(
                     "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
                 ),
+                Route(
+                    "/entities/{entity_id}/",
+                    delete_entity_route,
+                    methods={"DELETE"},
+                ),
+                Route("/entities/{entity_id}", create_entity_route, methods={"POST"}),
             ],
         )
         self._router = router
