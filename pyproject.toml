@@ -27,6 +27,7 @@ tests = [
     "pytest-cov>=6.2.1",
 ]
 dev = [
+    "litestar>=2.16.0",
     "uvicorn>=0.34.3",
 ]
 
