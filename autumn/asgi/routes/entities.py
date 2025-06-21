@@ -11,18 +11,18 @@ if TYPE_CHECKING:
 
 
 async def create_entity_route(request: Request):
-    identify, autumn, json = await _extract(request)
+    _, autumn, json = await _extract(request)
 
-    customer_id = identify["customer_id"]
+    customer_id = request.path_params["customer_id"]
     response = await autumn.features.create_entity(customer_id=customer_id, **json)
 
     return JSONResponse(response.model_dump(mode="json"))
 
 
 async def delete_entity_route(request: Request):
-    identify, autumn, _ = await _extract(request)
+    _, autumn, _ = await _extract(request)
 
-    customer_id = identify["customer_id"]
+    customer_id = request.path_params["customer_id"]
     entity_id = request.path_params["entity_id"]
     response = await autumn.features.delete_entity(customer_id, entity_id)
 

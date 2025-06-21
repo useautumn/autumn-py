@@ -53,11 +53,15 @@ class AutumnASGI:
                     "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
                 ),
                 Route(
-                    "/entities/{entity_id}/",
+                    "/customers/{customer_id}/entities",
                     delete_entity_route,
                     methods={"DELETE"},
                 ),
-                Route("/entities/{entity_id}", create_entity_route, methods={"POST"}),
+                Route(
+                    "/customers/{customer_id}/entities/{entity_id}/",
+                    create_entity_route,
+                    methods={"POST"},
+                ),
             ],
         )
         self._router = router
