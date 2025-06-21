@@ -1,6 +1,8 @@
-from typing import Literal
+from typing import Literal, List, Dict, Optional
 
 from pydantic import BaseModel
+
+from ..types.customers import CustomerProduct, CustomerFeature, CustomerInvoice
 
 
 class Feature(BaseModel):
@@ -15,6 +17,17 @@ class FeaturePreview(BaseModel):
     feature_id: str
     feature_name: str
     upgrade_product_id: str
+
+
+class Entity(BaseModel):
+    id: str
+    name: str
+    customer_id: str
+    created_at: int
+    env: str
+    products: List[CustomerProduct]
+    features: Dict[str, CustomerFeature]
+    invoices: Optional[List[CustomerInvoice]] = None
 
 
 __all__ = ("Feature", "FeaturePreview")

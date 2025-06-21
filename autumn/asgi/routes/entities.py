@@ -29,7 +29,7 @@ async def delete_entity_route(request: Request):
     return JSONResponse(response.model_dump(mode="json"))
 
 
-async def get_entity(request: Request):
+async def get_entity_route(request: Request):
     _, autumn, _ = await _extract(request)
 
     customer_id = request.path_params["customer_id"]
