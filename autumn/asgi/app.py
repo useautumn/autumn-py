@@ -1,18 +1,20 @@
 from __future__ import annotations
 
-from typing import Awaitable, Callable, TypedDict, TYPE_CHECKING
-import contextlib
+from typing import Coroutine, Callable, TypedDict, Any, TYPE_CHECKING
 
 from starlette.routing import Router, Route
+from starlette.responses import JSONResponse
 
-from .routes import (
+from .routes.core import (
     attach_route,
     check_route,
     track_route,
     cancel_route,
     billing_portal_route,
 )
+from .routes.customers import create_customer_route
 from ..aio.client import AsyncClient
+from ..error import AutumnHTTPError
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -33,24 +35,37 @@ class AutumnASGI:
         self,
         token: str,
         *,
-        identify: Callable[[Request], Awaitable[AutumnData]],
+        identify: Callable[[Request], Coroutine[Any, Any, AutumnData]],
     ):
-        @contextlib.asynccontextmanager
-        async def lifespan(_):
-            async with AsyncClient(token=token) as client:
-                yield {"autumn": client, "identify": identify}
-
         router = Router(
-            lifespan=lifespan,
             routes=[
-                Route("/attach", attach_route, methods={"POST"}),
-                Route("/check", check_route, methods={"POST"}),
-                Route("/track", track_route, methods={"POST"}),
-                Route("/cancel", cancel_route, methods={"POST"}),
-                Route("/billing_portal", billing_portal_route, methods={"POST"}),
+                Route("/attach/", attach_route, methods={"POST", "OPTIONS"}),
+                Route("/check/", check_route, methods={"POST", "OPTIONS"}),
+                Route("/track/", track_route, methods={"POST", "OPTIONS"}),
+                Route("/cancel/", cancel_route, methods={"POST", "OPTIONS"}),
+                Route(
+                    "/billing_portal/",
+                    billing_portal_route,
+                    methods={"POST", "OPTIONS"},
+                ),
+                Route(
+                    "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
+                ),
             ],
         )
         self._router = router
+        self._identify = identify
+        self._client = AsyncClient(token)
 
-    async def __call__(self, scope, receive, send):
-        await self._router(scope, receive, send)
+    def setup(self, app: Any):
+        app.state.__autumn__ = {"client": self._client, "identify": self._identify}
+
+    async def _handle_http_error(self, request: Request, exc: AutumnHTTPError):
+        return JSONResponse({"detail": f"{exc.message} ({exc.code})"})
+
+    async def __call__(self, scope: Any, receive: Any, send: Any) -> None:
+        try:
+            await self._router(scope, receive, send)
+        except AutumnHTTPError as exc:
+            response = JSONResponse({"detail": str(exc)}, status_code=400)
+            await response(scope, receive, send)
