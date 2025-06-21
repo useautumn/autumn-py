@@ -40,14 +40,14 @@ class AutumnASGI:
     ):
         router = Router(
             routes=[
-                Route("/attach/", attach_route, methods={"POST", "OPTIONS"}),
-                Route("/check/", check_route, methods={"POST", "OPTIONS"}),
-                Route("/track/", track_route, methods={"POST", "OPTIONS"}),
-                Route("/cancel/", cancel_route, methods={"POST", "OPTIONS"}),
+                Route("/attach/", attach_route, methods={"POST"}),
+                Route("/check/", check_route, methods={"POST"}),
+                Route("/track/", track_route, methods={"POST"}),
+                Route("/cancel/", cancel_route, methods={"POST"}),
                 Route(
                     "/billing_portal/",
                     billing_portal_route,
-                    methods={"POST", "OPTIONS"},
+                    methods={"POST"},
                 ),
                 Route(
                     "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
