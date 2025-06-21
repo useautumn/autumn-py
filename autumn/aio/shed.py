@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
     from ..types.meta import AttachOption
     from ..types.features import Feature
-    from ..types.customers import Customer
+    from ..types.meta import CustomerData
     from ..types.response import (
         AttachResponse,
         CheckResponse,
@@ -29,7 +29,7 @@ class AttachParams(Protocol):
         force_checkout: bool = False,
         features: Optional[List[Feature]] = None,
         entity_id: Optional[str] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
         free_trial: Optional[bool] = None,
         options: Optional[List[AttachOption]] = None,
     ) -> Awaitable[AttachResponse]: ...
@@ -46,7 +46,7 @@ class CheckParams(Protocol):
         send_event: bool = False,
         with_preview: bool = False,
         entity_id: Optional[str] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
     ) -> Awaitable[CheckResponse]: ...
 
 
@@ -61,5 +61,5 @@ class TrackParams(Protocol):
         event_name: Optional[str] = None,
         idempotency_key: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None,
-        customer_data: Optional[Customer] = None,
+        customer_data: Optional[CustomerData] = None,
     ) -> Awaitable[TrackResponse]: ...
