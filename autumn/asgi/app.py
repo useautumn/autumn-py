@@ -25,7 +25,7 @@ class _CustomerData(TypedDict):
     email: str
 
 
-class AutumnData(TypedDict):
+class AutumnIdentifyData(TypedDict):
     customer_id: str
     customer_data: _CustomerData
 
@@ -35,7 +35,7 @@ class AutumnASGI:
         self,
         token: str,
         *,
-        identify: Callable[[Request], Coroutine[Any, Any, AutumnData]],
+        identify: Callable[[Request], Coroutine[Any, Any, AutumnIdentifyData]],
     ):
         router = Router(
             routes=[

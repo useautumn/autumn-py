@@ -1,1 +1,1 @@
-from .app import AutumnASGI  # noqa: F401
+from .app import AutumnASGI, AutumnIdentifyData  # noqa: F401
