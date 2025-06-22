@@ -56,6 +56,7 @@ intersphinx_mapping: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable", None),
     "pydantic": ("https://docs.pydantic.dev/latest", None),
+    "starlette": ("https://www.starlette.io/", None),
 }
 
 resource_links = {

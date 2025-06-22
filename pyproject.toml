@@ -21,6 +21,7 @@ docs = [
     "furo>=2024.8.6",
     "sphinx>=8.2.3",
     "sphinx-autodoc-typehints>=3.2.0",
+    "sphinx-tabs>=3.4.7",
 ]
 tests = [
     "pytest>=8.4.1",

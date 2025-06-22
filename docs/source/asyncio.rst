@@ -52,6 +52,14 @@ The basic usage of the asyncio client is the same as the sync client. You can us
 ASGI compatible frameworks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+The Python SDK now supports automatic mounting of backend routes that the `autumn-js <https://github.com/useautumn/autumn-js>`_ JavaSript library uses.
+This means you can easily use a stack where you have a React frontend and a Python backend.
+
+You must provide an asynchronous ``identify`` method that takes in a Starlette ``Request`` object. You are required to return your logged in user's information, specifically their ``name``,
+their internal ``user_id`` (the User ID on **your** systems) and their ``email``.
+
+Examples have been provided below.
+
 .. tabs::
 
     .. tab:: Litestar
@@ -126,3 +134,7 @@ ASGI compatible frameworks
             app = Starlette(debug=True, middleware=middleware)
             app.mount("/api/autumn", autumn)
             autumn.setup(app)
+
+Finally, on your frontend, simply adjust the ``<AutumnHandler />`` component's ``backendUrl`` attribute to the URL of your Python API.
+
+That's it! Enjoy using Autumn!
