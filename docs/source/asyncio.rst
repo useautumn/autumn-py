@@ -60,6 +60,9 @@ their internal ``user_id`` (the User ID on **your** systems) and their ``email``
 
 Examples have been provided below.
 
+.. warning::
+    You **must** mount the ``AutumnASGI`` app at ``/api/autumn``. Any other route will cause ``autumn-js`` to break.
+
 .. tabs::
 
     .. tab:: Litestar
