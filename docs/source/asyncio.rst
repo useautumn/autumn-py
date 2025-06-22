@@ -49,36 +49,80 @@ The basic usage of the asyncio client is the same as the sync client. You can us
 
     asyncio.run(main())
 
-FastAPI (and other frameworks)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ASGI compatible frameworks
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-FastAPI is a popular web framework for Python. It's built on top of Starlette, which is a lightweight ASGI framework.
+.. tabs::
 
-If you're looking for a similar experience to the official Next.js client-side implementation, or we recommend writing your own routes.
-This will soon be natively supported by the library (hopefully) soon.
+    .. tab:: Litestar
 
-.. warning::
-    Do **not** use the synchronous :class:`autumn.Client` in your ASGI application.
-    You will not get the full benefits of an asynchronous application - the synchronous client will block the event loop.
+        .. code-block:: python
 
-.. code-block:: python
+            from starlette.requests import Request
+            from autumn.asgi import AutumnASGI, AutumnIdentifyData
+            from litestar import Litestar
+            from litestar.handlers import asgi
+            from litestar.config.cors import CORSConfig
 
-    from fastapi import FastAPI
-    from pydantic import BaseModel
-    from autumn.aio import AsyncClient
 
-    app = FastAPI()
-    autumn = AsyncClient(token="your_api_key")
+            async def identify(request: Request) -> AutumnIdentifyData:
+                return {
+                    "customer_id": "user_123",
+                    "customer_data": {"name": "John Doe", "email": "djohn@gmail.com"},
+                }
 
-    # Pydantic models are used to validate the request body.
-    class CreateCustomerRequest(BaseModel):
-        id: str
-        name: str
-        email: str
 
-    @app.post("/api/autumn/customers")
-    async def create_customer(request: CreateCustomerRequest):
-        await autumn.customers.create(
-            name=request.name,
-            email=request.email
-        )
+            autumn = AutumnASGI(
+                token="your autumn key", identify=identify
+            )
+
+
+            autumn_asgi = asgi(path="/api/autumn", is_mount=True, copy_scope=True)(autumn)
+
+            DOMAINS = ["your frontend url"]
+            app = Litestar(
+                debug=True,
+                route_handlers=[autumn_asgi],
+                cors_config=CORSConfig(
+                    allow_origins=DOMAINS,
+                    allow_credentials=True,
+                    allow_headers=["*"],
+                    allow_methods=["*"],
+                ),
+            )
+            autumn.setup(app)
+
+
+    .. tab:: Starlette/FastAPI
+
+        .. code-block:: python
+
+            from autumn.asgi import AutumnASGI, AutumnIdentifyData
+            from starlette.applications import Starlette
+            from starlette.middleware.cors import CORSMiddleware
+            from starlette.middleware import Middleware
+
+            async def identify(request: Request) -> AutumnIdentifyData:
+                return {
+                    "customer_id": "user_123",
+                    "customer_data": {"name": "John Doe", "email": "djohn@gmail.com"},
+                }
+
+
+            autumn = AutumnASGI(
+                token="your autumn key", identify=identify
+            )
+
+            middleware = [
+                Middleware(
+                    CORSMiddleware,
+                    allow_methods=["*"],
+                    allow_headers=["*"],
+                    allow_credentials=True,
+                    allow_origins=DOMAINS,
+                )
+            ]
+
+            app = Starlette(debug=True, middleware=middleware)
+            app.mount("/api/autumn", autumn)
+            autumn.setup(app)
