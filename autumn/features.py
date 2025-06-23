@@ -180,6 +180,13 @@ class Features(Generic[T_HttpClient]):
     def get_entity(
         self, customer_id: str, entity_id: str, expand: Optional[List[str]] = None
     ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
+        """Get an entity
+
+        |maybecoro|
+
+        This method is undocumented and will remain undocumented until the official Autumn docs document this route.
+
+        """
         params = {"expand": expand}
         return self._http.request(
             "GET",
