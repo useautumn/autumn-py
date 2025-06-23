@@ -2,8 +2,20 @@ from __future__ import annotations
 
 from typing import Coroutine, Callable, TypedDict, Any, TYPE_CHECKING
 
-from starlette.routing import Router, Route
-from starlette.responses import JSONResponse
+try:
+    from starlette.routing import Router, Route
+    from starlette.responses import JSONResponse
+except ImportError:
+    from ..error import AutumnError
+
+    STARLETTE_INSTALLED = False
+
+    raise AutumnError(
+        "starlette is not installed. Please install it with `pip install starlette`",
+        "missing_dependency",
+    )
+else:
+    STARLETTE_INSTALLED = True
 
 from .routes.core import (
     attach_route,
