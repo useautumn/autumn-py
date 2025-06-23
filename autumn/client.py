@@ -63,6 +63,8 @@ class Client:
     ----------
     token: str
         The API key to use for authentication.
+    base_url: Optional[str]
+        The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
 
     Attributes
     ----------
@@ -74,10 +76,13 @@ class Client:
         An interface to Autumn's product API.
     """
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, *, base_url: Optional[str] = None):
         from . import BASE_URL, VERSION
 
-        self.http = HTTPClient(BASE_URL, VERSION, token)
+        _base_url = base_url or BASE_URL
+        _base_url = _base_url.rstrip("/")
+
+        self.http = HTTPClient(_base_url, VERSION, token)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)

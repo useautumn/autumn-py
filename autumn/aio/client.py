@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from .http import AsyncHTTPClient
 from ..client import Client
@@ -23,6 +23,8 @@ class AsyncClient(Client):
     ----------
     token: str
         The API key to use for authentication.
+    base_url: Optional[str]
+        The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
 
     Attributes
     ----------
@@ -39,8 +41,11 @@ class AsyncClient(Client):
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, *, base_url: Optional[str] = None):
         from .. import BASE_URL, VERSION
+
+        _base_url = base_url or BASE_URL
+        _base_url = _base_url.rstrip("/")
 
         self.http = AsyncHTTPClient(BASE_URL, VERSION, token)
         self.customers = Customers(self.http)
