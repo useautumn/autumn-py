@@ -76,8 +76,11 @@ class AutumnASGI:
     def setup(self, app: Any):
         app.state.__autumn__ = {"client": self._client, "identify": self._identify}
 
-    async def _handle_http_error(self, request: Request, exc: AutumnHTTPError):
+    async def _handle_http_error(self, _: Request, exc: AutumnHTTPError):
         return JSONResponse({"detail": f"{exc.message} ({exc.code})"})
+
+    async def close(self):
+        await self._client.close()
 
     async def __call__(self, scope: Any, receive: Any, send: Any) -> None:
         try:
