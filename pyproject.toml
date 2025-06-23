@@ -3,7 +3,7 @@ name = "autumn"
 version = "1.2.0"
 description = "A thin wrapper around Autumn's REST API"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.8"
 dependencies = [
     "pydantic>=2.11.5",
     "requests>=2.32.3",
