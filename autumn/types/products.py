@@ -1,19 +1,19 @@
-from enum import StrEnum
+from enum import Enum
 from typing import Literal, List, Optional, Union
 
 from pydantic import BaseModel
 
 
-class FreeTrialDuration(StrEnum):
+class FreeTrialDuration(str, Enum):
     DAY = "day"
 
 
-class UsageModel(StrEnum):
+class UsageModel(str, Enum):
     PREPAID = "prepaid"
     PAY_PER_USE = "pay_per_use"
 
 
-class ProductItemInterval(StrEnum):
+class ProductItemInterval(str, Enum):
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
