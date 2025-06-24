@@ -114,6 +114,10 @@ if check.allowed is False:
     print("Customer has run out of chat messages.")
 ```
 
+## License
+
+`autumn-py` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+
 ## Authors
 
 Originally written by [@justanotherbyte](https://github.com/justanotherbyte).
