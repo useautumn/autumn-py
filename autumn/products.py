@@ -20,7 +20,7 @@ from .types.response import (
     ReferralRedeemResponse,
     ProductCancelResponse,
 )
-from .utils import _build_payload
+from .utils import build_payload
 
 if TYPE_CHECKING:
     from .http import HTTPClient
@@ -114,7 +114,7 @@ class Products(Generic[T_HttpClient]):
         :class:`~autumn.types.response.CreateProductResponse`
             The response from the API.
         """
-        payload = _build_payload(locals(), self.create_product)  # type: ignore
+        payload = build_payload(locals(), self.create_product)  # type: ignore
         return self._http.request(
             "POST", "/products", CreateProductResponse, json=payload
         )
@@ -186,7 +186,7 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
 
-        payload = _build_payload(locals(), self.get_referral_code)  # type: ignore
+        payload = build_payload(locals(), self.get_referral_code)  # type: ignore
         return self._http.request(
             "POST",
             "/referrals/code",
@@ -234,7 +234,7 @@ class Products(Generic[T_HttpClient]):
         :class:`~autumn.types.response.ReferralRedeemResponse`
             The response from the API.
         """
-        payload = _build_payload(locals(), self.redeem_referral_code)  # type: ignore
+        payload = build_payload(locals(), self.redeem_referral_code)  # type: ignore
         return self._http.request(
             "POST",
             "/referrals/redeem",
@@ -282,7 +282,7 @@ class Products(Generic[T_HttpClient]):
         :class:`~autumn.types.response.ProductCancelResponse`
             The response from the API.
         """
-        payload = _build_payload(locals(), self.cancel_product)  # type: ignore
+        payload = build_payload(locals(), self.cancel_product)  # type: ignore
         return self._http.request(
             "POST",
             "/products/cancel",

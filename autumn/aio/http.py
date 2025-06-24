@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from ..error import AutumnError
 from ..http import HTTPClient
-from ..utils import _build_model, _check_response
+from ..utils import build_model, check_response
 
 
 try:
@@ -48,8 +48,8 @@ class AsyncHTTPClient:
         ) as resp:
             data = await resp.json()
 
-        _check_response(resp.status, data)
-        return _build_model(type_, data)
+        check_response(resp.status, data)
+        return build_model(type_, data)
 
     async def close(self):
         if self.session is not None:

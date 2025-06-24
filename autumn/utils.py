@@ -17,7 +17,7 @@ def _decompose_value(value: Any) -> Any:
     return value
 
 
-def _build_payload(
+def build_payload(
     scope: Dict[str, Any], method: Callable, *, ignore: Set[str] = set()
 ) -> Dict[str, Any]:
     params = method.__code__.co_varnames
@@ -30,7 +30,7 @@ def _build_payload(
     return payload
 
 
-def _build_model(model: Type[T], data: Dict[str, Any]) -> T:
+def build_model(model: Type[T], data: Dict[str, Any]) -> T:
     try:
         return model.model_validate(data)
     except ValidationError as e:
@@ -47,7 +47,7 @@ def _build_model(model: Type[T], data: Dict[str, Any]) -> T:
         raise err
 
 
-def _check_response(status_code: int, data: Dict[str, Any]) -> None:
+def check_response(status_code: int, data: Dict[str, Any]) -> None:
     if not 200 <= status_code < 300:
         message = data.get("message", "No error message provided.")
         code = data.get("code", "unknown_error")

@@ -14,7 +14,7 @@ from typing import (
 
 from .types.customers import Customer
 from .types.response import BillingPortalResponse
-from .utils import _build_payload
+from .utils import build_payload
 
 if TYPE_CHECKING:
     from .http import HTTPClient
@@ -109,7 +109,7 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.types.customers.Customer`
             The created customer.
         """
-        payload = _build_payload(locals(), self.create)  # type: ignore
+        payload = build_payload(locals(), self.create)  # type: ignore
         return self._http.request("POST", "/customers", Customer, json=payload)
 
     @overload
@@ -160,7 +160,7 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.types.customers.Customer`
             The updated customer.
         """
-        payload = _build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
+        payload = build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST", f"/customers/{customer_id}", Customer, json=payload
         )
@@ -203,7 +203,7 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.types.response.BillingPortalResponse`
             The billing portal URL.
         """
-        payload = _build_payload(
+        payload = build_payload(
             locals(),
             self.get_billing_portal,  # type: ignore
             ignore={"customer_id"},
