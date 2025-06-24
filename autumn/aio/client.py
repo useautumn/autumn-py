@@ -19,6 +19,8 @@ class AsyncClient(Client):
     """
     The ``async`` client class for interacting with the Autumn API.
 
+    This class is also exposed as ``autumn.Autumn``.
+
     Parameters
     ----------
     token: str
