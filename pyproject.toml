@@ -5,6 +5,10 @@ description = "A Python SDK for Autumn's REST API"
 readme = "README.md"
 license = "MIT"
 keywords = ["autumn", "payments", "stripe"]
+authors = [
+  { name = "John Yeo", email = "johnyeocx@gmail.com" },
+  { name = "Viswa Marepalli", email = "reachvishm@gmail.com" }
+]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python",
@@ -21,7 +25,7 @@ dependencies = [
 ]
 
 [project.urls]
-GitHub = "https://github.com/justanotherbyte/autumn"
+Source = "https://github.com/justanotherbyte/autumn"
 Documentation = "https://autumn-sdk-unofficial.readthedocs.io"
 
 [project.optional-dependencies]
