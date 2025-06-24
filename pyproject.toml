@@ -36,3 +36,6 @@ dev = [
 pythonpath = [
   "."
 ]
+
+[tool.pyright]
+typeCheckingMode = "standard"
