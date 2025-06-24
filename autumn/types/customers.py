@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import Enum
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel
@@ -11,7 +11,7 @@ from .products import ProductItemInterval
 __all__ = ("Customer",)
 
 
-class ProductStatus(StrEnum):
+class ProductStatus(str, Enum):
     ACTIVE = "active"
     EXPIRED = "expired"
     TRIALING = "trialing"

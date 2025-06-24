@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Optional
 
 from pydantic import BaseModel
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class Empty(BaseModel): ...
 
 
-class AppEnv(StrEnum):
+class AppEnv(str, Enum):
     PRODUCTION = "production"
     SANDBOX = "sandbox"
 
