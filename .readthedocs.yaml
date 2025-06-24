@@ -1,5 +1,3 @@
-
-
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
@@ -25,5 +23,3 @@ python:
      path: .
      extra_requirements:
         - docs
-        
-
