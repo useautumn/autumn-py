@@ -47,7 +47,7 @@ class AsyncClient(Client):
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = AsyncHTTPClient(BASE_URL, VERSION, token)
+        self.http = AsyncHTTPClient(_base_url, VERSION, token)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)

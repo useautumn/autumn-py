@@ -44,7 +44,7 @@ class Products(Generic[T_HttpClient]):
 
         client = autumn.Client(token="your_api_key")
 
-        product = client.products.create_product(
+        product = client.products.create(
             id="chat_messages",
             name="Chat Messages"
         )
@@ -57,7 +57,7 @@ class Products(Generic[T_HttpClient]):
         self._http = http
 
     @overload
-    def create_product(
+    def create(
         self: "Products[HTTPClient]",
         id: str,
         *,
@@ -69,7 +69,7 @@ class Products(Generic[T_HttpClient]):
     ) -> CreateProductResponse: ...
 
     @overload
-    def create_product(
+    def create(
         self: "Products[AsyncHTTPClient]",
         id: str,
         *,
@@ -80,7 +80,7 @@ class Products(Generic[T_HttpClient]):
         free_trial: Optional[FreeTrial] = None,
     ) -> Coroutine[Any, Any, CreateProductResponse]: ...
 
-    def create_product(
+    def create(
         self,
         id: str,
         *,
@@ -114,24 +114,24 @@ class Products(Generic[T_HttpClient]):
         :class:`~autumn.types.response.CreateProductResponse`
             The response from the API.
         """
-        payload = _build_payload(locals(), self.create_product)  # type: ignore
+        payload = _build_payload(locals(), self.create)  # type: ignore
         return self._http.request(
             "POST", "/products", CreateProductResponse, json=payload
         )
 
     @overload
-    def get_product(
+    def get(
         self: "Products[HTTPClient]",
         id: str,
     ) -> GetProductResponse: ...
 
     @overload
-    def get_product(
+    def get(
         self: "Products[AsyncHTTPClient]",
         id: str,
     ) -> Coroutine[Any, Any, GetProductResponse]: ...
 
-    def get_product(
+    def get(
         self, id: str
     ) -> Union[GetProductResponse, Coroutine[Any, Any, GetProductResponse]]:
         """Get a product by its ID.
@@ -243,7 +243,7 @@ class Products(Generic[T_HttpClient]):
         )
 
     @overload
-    def cancel_product(
+    def cancel(
         self: "Products[HTTPClient]",
         customer_id: str,
         product_id: str,
@@ -251,14 +251,14 @@ class Products(Generic[T_HttpClient]):
     ) -> ProductCancelResponse: ...
 
     @overload
-    def cancel_product(
+    def cancel(
         self: "Products[AsyncHTTPClient]",
         customer_id: str,
         product_id: str,
         entity_id: Optional[str] = None,
     ) -> Coroutine[Any, Any, ProductCancelResponse]: ...
 
-    def cancel_product(
+    def cancel(
         self,
         customer_id: str,
         product_id: str,
