@@ -1,4 +1,4 @@
-from typing import Any, Self
+from typing import Any
 
 __all__ = ("AutumnError", "AutumnValidationError")
 
@@ -23,8 +23,7 @@ class AutumnError(Exception):
         return f"{self.code}: {self.message}"
 
     def __repr__(self):
-        notes = "\n".join(self.__notes__)
-        return f"{self.__class__.__name__}({self.message}, {self.code}){notes}"
+        return f"{self.__class__.__name__}({self.message}, {self.code})"
 
 
 class AutumnValidationError(AutumnError):
@@ -70,6 +69,6 @@ class AutumnHTTPError(AutumnError):
     def __repr__(self):
         return f"{self.__class__.__name__}({self.message}, {self.code}, {self.status_code})\n{self.body}"
 
-    def attach_body(self, body: Any) -> Self:
+    def attach_body(self, body: Any):
         self.body = body
         return self

@@ -4,13 +4,12 @@ from typing import TYPE_CHECKING, Tuple, Any
 
 if TYPE_CHECKING:
     from starlette.requests import Request
-    from ...aio.client import AsyncClient
+    from ..app import Autumn
     from ..app import AutumnIdentifyData
 
 
 async def _extract(
-    request: Request,
-) -> Tuple[AutumnIdentifyData, AsyncClient, Any]:
+    request: Request, ) -> Tuple[AutumnIdentifyData, Autumn, Any]:
     autumn = getattr(request.app.state, "__autumn__")
     identify_func = autumn["identify"]
     client = autumn["client"]

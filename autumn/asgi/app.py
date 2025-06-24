@@ -26,7 +26,7 @@ from .routes.core import (
 )
 from .routes.customers import create_customer_route
 from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
-from ..aio.client import AsyncClient
+from ..client import Autumn
 from ..error import AutumnHTTPError
 
 if TYPE_CHECKING:
@@ -44,49 +44,51 @@ class AutumnIdentifyData(TypedDict):
 
 
 class AutumnASGI:
+
     def __init__(
         self,
         token: str,
         *,
         identify: Callable[[Request], Coroutine[Any, Any, AutumnIdentifyData]],
     ):
-        router = Router(
-            routes=[
-                Route("/attach/", attach_route, methods={"POST"}),
-                Route("/check/", check_route, methods={"POST"}),
-                Route("/track/", track_route, methods={"POST"}),
-                Route("/cancel/", cancel_route, methods={"POST"}),
-                Route(
-                    "/billing_portal/",
-                    billing_portal_route,
-                    methods={"POST"},
-                ),
-                Route(
-                    "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
-                ),
-                Route(
-                    "/customers/{customer_id:str}/entities/{entity_id:str}",
-                    delete_entity_route,
-                    methods={"DELETE"},
-                ),
-                Route(
-                    "/customers/{customer_id:str}/entities/",
-                    create_entity_route,
-                    methods={"POST"},
-                ),
-                Route(
-                    "/customers/{customer_id:str}/entities/{entity_id:str}/",
-                    get_entity_route,
-                    methods={"GET"},
-                ),
-            ],
-        )
+        router = Router(routes=[
+            Route("/attach/", attach_route, methods=["POST"]),
+            Route("/check/", check_route, methods=["POST"]),
+            Route("/track/", track_route, methods=["POST"]),
+            Route("/cancel/", cancel_route, methods=["POST"]),
+            Route(
+                "/billing_portal/",
+                billing_portal_route,
+                methods=["POST"],
+            ),
+            Route("/customers/",
+                  create_customer_route,
+                  methods=["POST", "OPTIONS"]),
+            Route(
+                "/customers/{customer_id:str}/entities/{entity_id:str}",
+                delete_entity_route,
+                methods=["DELETE"],
+            ),
+            Route(
+                "/customers/{customer_id:str}/entities/",
+                create_entity_route,
+                methods=["POST"],
+            ),
+            Route(
+                "/customers/{customer_id:str}/entities/{entity_id:str}/",
+                get_entity_route,
+                methods=["GET"],
+            ),
+        ], )
         self._router = router
         self._identify = identify
-        self._client = AsyncClient(token)
+        self._client = Autumn(token)
 
     def setup(self, app: Any):
-        app.state.__autumn__ = {"client": self._client, "identify": self._identify}
+        app.state.__autumn__ = {
+            "client": self._client,
+            "identify": self._identify
+        }
 
     async def _handle_http_error(self, _: Request, exc: AutumnHTTPError):
         return JSONResponse({"detail": f"{exc.message} ({exc.code})"})

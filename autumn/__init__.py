@@ -6,6 +6,5 @@ __license__ = "MIT"
 __author__ = "justanotherbyte"
 __copyright__ = "Copyright 2025 justanotherbyte"
 
-
 BASE_URL = "https://api.useautumn.com"
 VERSION = "v1"
