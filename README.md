@@ -2,13 +2,9 @@
 
 The Python SDK for [Autumn](https://github.com/useautumn/autumn)'s REST API.
 
-<a href="https://pypi.org/project/autumn-py">
-<img src="https://img.shields.io/pypi/v/autumn-py" alt="pypi">
-</a>
-<img src="https://img.shields.io/pypi/pyversions/autumn-py.svg">
-<a href="https://discord.gg/53emPtY9tA" alt="https://discord.gg/53emPtY9tA">
-<img src="https://img.shields.io/badge/Join%20Community-5865F2?logo=discord&logoColor=white">
-</a>
+[![PyPI - Version](https://img.shields.io/pypi/v/autumn-py.svg)](https://pypi.org/project/autumn-py)
+[![pypi](https://img.shields.io/pypi/pyversions/autumn-py.svg)](https://pypi.org/pypi/autumn-py)
+[![Discord](https://img.shields.io/badge/Join%20Community-5865F2?logo=discord&logoColor=white)](https://discord.gg/53emPtY9tA)
 
 ## Documentation
 
