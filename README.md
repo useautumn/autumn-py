@@ -42,7 +42,7 @@ import asyncio
 from autumn import Autumn
 
 # First, initialize a client.
-autumn = Autumn(token="your_api_key")
+autumn = Autumn(token="am_sk_test_XESp2wyPE...")
 
 async def main():
     # Attach a customer to a product
@@ -83,7 +83,7 @@ asyncio.run(main())
 import autumn
 
 # First, initialize a client.
-client = autumn.Client(token="your_api_key")
+client = autumn.Client(token="am_sk_test_XESp2wyPE...")
 
 # Attach a customer to a product
 client.attach(
