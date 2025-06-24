@@ -15,7 +15,7 @@ from typing import (
 from .types.balance import Balance
 from .types.meta import Empty
 from .types.features import Entity
-from .utils import build_payload
+from .utils import _build_payload
 
 if TYPE_CHECKING:
     from .http import HTTPClient
@@ -67,7 +67,7 @@ class Features(Generic[T_HttpClient]):
         :class:`~autumn.types.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
-        payload = build_payload(locals(), self.set_usage, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(locals(), self.set_usage, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST",
             f"/customers/{customer_id}/balances",
@@ -109,7 +109,7 @@ class Features(Generic[T_HttpClient]):
             This is a placeholder type. Treat it as :class:`None`.
         """
 
-        payload = build_payload(locals(), self.set_balances, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(locals(), self.set_balances, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST", f"/customers/{customer_id}/balances", Empty, json=payload
         )
@@ -156,7 +156,7 @@ class Features(Generic[T_HttpClient]):
             This is a placeholder type. Treat it as :class:`None`.
         """
 
-        payload = build_payload(locals(), self.create_entity, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(locals(), self.create_entity, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST", f"/customers/{customer_id}/entities", Empty, json=payload
         )

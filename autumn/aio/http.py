@@ -4,19 +4,16 @@ from pydantic import BaseModel
 
 from ..error import AutumnError
 from ..http import HTTPClient
-from ..utils import build_model, check_response
+from ..utils import _build_model, _check_response
 
 
 try:
     import aiohttp
 except ImportError:
-    AIOHTTP_INSTALLED = False
     raise AutumnError(
         "aiohttp is not installed. Please install it with `pip install aiohttp`",
         "missing_dependency",
     )
-else:
-    AIOHTTP_INSTALLED = True
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -48,8 +45,8 @@ class AsyncHTTPClient:
         ) as resp:
             data = await resp.json()
 
-        check_response(resp.status, data)
-        return build_model(type_, data)
+        _check_response(resp.status, data)
+        return _build_model(type_, data)
 
     async def close(self):
         if self.session is not None:

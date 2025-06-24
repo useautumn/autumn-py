@@ -4,7 +4,7 @@ from typing import Dict, Type, TypeVar
 import requests
 from pydantic import BaseModel
 
-from .utils import build_model, check_response
+from .utils import _build_model, _check_response
 from .error import AutumnError
 
 __all__ = ("HTTPClient",)
@@ -59,8 +59,8 @@ class HTTPClient:
 
         data = resp.json()
 
-        check_response(resp.status_code, data)
-        return build_model(type_, data)
+        _check_response(resp.status_code, data)
+        return _build_model(type_, data)
 
     def close(self):
         if self.session is not None:

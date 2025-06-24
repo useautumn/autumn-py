@@ -6,7 +6,7 @@ from .customers import Customers
 from .features import Features
 from .products import Products
 from .http import HTTPClient
-from .utils import build_payload
+from .utils import _build_payload
 from .types.meta import AttachOption
 from .types.response import (
     AttachResponse,
@@ -141,7 +141,7 @@ class Client:
             "Only one of product_id or product_ids must be provided"
         )
 
-        payload = build_payload(locals(), self.attach)
+        payload = _build_payload(locals(), self.attach)
         return self.http.request("POST", "/attach", AttachResponse, json=payload)
 
     def check(
@@ -191,7 +191,7 @@ class Client:
             "Either product_id or feature_id must be provided"
         )
 
-        payload = build_payload(locals(), self.check)
+        payload = _build_payload(locals(), self.check)
         return self.http.request("POST", "/check", CheckResponse, json=payload)
 
     def track(
@@ -235,5 +235,5 @@ class Client:
         :class:`~autumn.types.response.TrackResponse`
             The response from the API.
         """
-        payload = build_payload(locals(), self.track)
+        payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)

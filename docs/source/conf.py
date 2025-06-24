@@ -52,7 +52,7 @@ napoleon_numpy_docstring = True
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = False
 
-intersphinx_mapping: dict[str, tuple[str, None]] = {
+intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable", None),
     "pydantic": ("https://docs.pydantic.dev/latest", None),
