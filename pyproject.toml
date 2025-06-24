@@ -1,7 +1,7 @@
 [project]
 name = "autumn"
 version = "1.2.1"
-description = "A thin wrapper around Autumn's REST API"
+description = "A Python SDK for Autumn's REST API"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
