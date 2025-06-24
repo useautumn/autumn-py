@@ -19,6 +19,7 @@ pip install git+https://github.com/justanotherbyte/autumn
 ```
 
 If you want `async` support, you need to install `aiohttp`. Yes, this doesn't just run `requests` in an executor.
+
 ```bash
 pip install aiohttp
 
