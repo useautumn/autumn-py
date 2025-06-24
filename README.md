@@ -2,8 +2,11 @@
 
 The Python SDK for [Autumn](https://github.com/useautumn/autumn)'s REST API.
 
-![pypi](https://img.shields.io/pypi/v/autumn-py)
-<a href="https://discord.gg/53emPtY9tA">
+<a href="https://pypi.org/project/autumn-py">
+<img src="https://img.shields.io/pypi/v/autumn-py" alt="pypi">
+</a>
+<img src="https://img.shields.io/pypi/pyversions/autumn-py.svg">
+<a href="https://discord.gg/53emPtY9tA" alt="https://discord.gg/53emPtY9tA">
 <img src="https://img.shields.io/badge/Join%20Community-5865F2?logo=discord&logoColor=white">
 </a>
 
