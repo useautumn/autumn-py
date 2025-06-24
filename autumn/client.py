@@ -40,13 +40,13 @@ class Autumn(Client):
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(self, secret_key: str, *, base_url: Optional[str] = None):
         from . import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = AsyncHTTPClient(BASE_URL, VERSION, token)
+        self.http = AsyncHTTPClient(BASE_URL, VERSION, secret_key)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)

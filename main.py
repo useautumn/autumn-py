@@ -1,7 +1,8 @@
 import asyncio
 from autumn import Autumn
 
-autumn = Autumn(token="am_sk_test_cRzmvdOAIbGmS2BFdU1CsfXdkJMMHceiLaQtrttwkL")
+autumn = Autumn(
+    secret_key="am_sk_test_cRzmvdOAIbGmS2BFdU1CsfXdkJMMHceiLaQtrttwkL")
 
 
 async def main():
