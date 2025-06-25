@@ -32,7 +32,7 @@ Autumn supports asyncio. You can use the :class:`~autumn.aio.client.AsyncClient`
 Basic Usage
 ^^^^^^^^^^^
 
-The basic usage of the asyncio client is the same as the sync client. You can use the :class:`autumn.aio.client.AsyncClient` class to interact with the API asynchronously.
+The basic usage of the asyncio client is the same as the sync client. You can use the :class:`~autumn.aio.client.AsyncClient` class to interact with the API asynchronously.
 
 .. code-block:: python
 

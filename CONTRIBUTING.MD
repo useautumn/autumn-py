@@ -4,7 +4,9 @@ We appreciate any contributions to the Python SDK - documentation or code change
 
 ## Type-checking
 
-To keep DX standards high, we ask you use the `Pylance/Pyright` type-checker set to `standard` mode.
+To keep DX standards high, we ask you use the `Pylance/Pyright` type-checker set to `standard` mode. If you use your own type-checker such as `Ruff` or others, this should suffice.
+
+Don't worry about this too much, we'll fix any type errors in PRs: the crux of the PR is the most important to us.
 
 ## Documenting code changes
 
