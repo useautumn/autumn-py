@@ -8,7 +8,7 @@ The Python SDK for [Autumn](https://github.com/useautumn/autumn)'s REST API.
 
 ## Documentation
 
-The Python SDK's documentation can be found on [ReadTheDocs](https://autumn-sdk-unofficial.readthedocs.io).
+The Python SDK's documentation can be found on [ReadTheDocs](https://autumn-py.readthedocs.io).
 
 ## Features
 

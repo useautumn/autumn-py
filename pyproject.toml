@@ -26,7 +26,7 @@ dependencies = [
 
 [project.urls]
 Source = "https://github.com/justanotherbyte/autumn"
-Documentation = "https://autumn-sdk-unofficial.readthedocs.io"
+Documentation = "https://autumn-py.readthedocs.io"
 
 [project.optional-dependencies]
 aio = [
