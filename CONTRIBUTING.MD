@@ -12,6 +12,8 @@ Don't worry about this too much, we'll fix any type errors in PRs: the crux of t
 
 If you make a breaking change (or any change that requires documentation to be updated), please include the documentation changes in the same pull-request.
 
+We use NumPy style docstrings.
+
 ## Pull-requests
 
 - Ensure your pull-requests are strict in their scope. Please don't open pull-requests that make seemingly unrelated changes to many parts of the SDK.
