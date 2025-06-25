@@ -62,3 +62,6 @@ typeCheckingMode = "standard"
 [build-system]
 requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["autumn/"]

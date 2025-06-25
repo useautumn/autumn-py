@@ -3,18 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Autumn.py!
+Welcome to Autumn-py!
 =======================
 
-Autumn.py is an *unofficial* SDK for interacting with the `Autumn API <https://useautumn.com/>`_, supporting both synchronous and asynchronous usage.
+Autumn-py is the Python SDK for interacting with the `Autumn API <https://useautumn.com/>`_, supporting both synchronous and asynchronous usage.
 
-.. note::
+Features
+--------
 
-    This SDK is not affiliated with Autumn. It is a solo-project currently in development.
-
-This SDK currently supports Autumn's public REST API. While integrations with libraries such as `FastAPI <https://fastapi.tiangolo.com/>`_ are planned, they are not currently supported.
-If you are looking for JavaScript support, this is not the SDK for you. This SDK, written in Python, is designed to be used on the server, with you responsible for handling communication of data to and from the client.
-This SDK is designed to assist you with this, but knowledge of the Autumn flow is still required.
+- Easily mount Autumn's routes onto your Python backend.
+- Support for synchronous and asynchronous contexts.
+- Fully typed.
 
 Quickstart
 ----------

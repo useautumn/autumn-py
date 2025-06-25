@@ -9,7 +9,7 @@ from ..customers import Customers
 from ..products import Products
 
 if TYPE_CHECKING:
-    from typing import Self
+    from typing_extensions import Self
     from .shed import AttachParams, CheckParams, TrackParams
 
 __all__ = ("AsyncClient",)

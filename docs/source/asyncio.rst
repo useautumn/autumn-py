@@ -11,7 +11,7 @@ Async support is not included in the default installation. You can install it vi
 
 .. code-block:: bash
 
-    pip install git+https://github.com/justanotherbyte/autumn.git@main#egg=autumn[aio]
+    pip install autumn-py[aio]
 
 This will install the :mod:`aiohttp` library, which is required for async support. You may optionally choose to install some speedups provided by the :mod:`aiohttp` library.
 Note that these speedups are not required for the library to work, but they may improve performance, but may not be available on all platforms.

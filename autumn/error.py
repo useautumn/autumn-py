@@ -1,4 +1,6 @@
-from typing import Any, Self
+from typing import Any
+from typing_extensions import Self
+
 
 __all__ = ("AutumnError", "AutumnValidationError")
 
@@ -19,12 +21,18 @@ class AutumnError(Exception):
         self.message = message
         self.code = code
 
+        if not hasattr(self, "__notes__"):
+            self.__notes__: list[str] = []
+
     def __str__(self):
         return f"{self.code}: {self.message}"
 
     def __repr__(self):
         notes = "\n".join(self.__notes__)
         return f"{self.__class__.__name__}({self.message}, {self.code}){notes}"
+
+    def add_note(self, note: str):
+        self.__notes__.append(note)
 
 
 class AutumnValidationError(AutumnError):
