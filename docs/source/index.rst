@@ -66,7 +66,7 @@ Getting Help
 ------------
 
 - Report bugs and request features on the `GitHub repository <https://github.com/justanotherbyte/autumn/issues>`_.
-- Join the `Autumn Discord <https://discord.gg/QDjfwGGWKT>`_ for general API support. We do not have an official support Discord, but we're happy to help you out on GitHub.
+- Join the `Autumn Discord <https://discord.gg/QDjfwGGWKT>`_ for help or open an issue on GitHub.
 
 
 .. toctree::
