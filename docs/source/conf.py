@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-project = "autumn.py"
+project = "autumn-py"
 copyright = "2025, Vish M"
 author = "Vish M"
 release = "1.2.1"
