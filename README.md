@@ -18,6 +18,9 @@ The Python SDK's documentation can be found on [ReadTheDocs](https://autumn-py.r
 
 ## Installation
 
+> [!NOTE]
+> Python 3.9+ is required.
+
 ```bash
 pip install autumn-py
 ```

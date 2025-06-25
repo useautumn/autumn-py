@@ -59,6 +59,9 @@ pythonpath = [
 [tool.pyright]
 typeCheckingMode = "standard"
 
+[tool.isort]
+profile = "black"
+
 [build-system]
 requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
