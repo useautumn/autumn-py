@@ -72,28 +72,45 @@ Examples have been provided below.
 
         .. code-block:: python
 
-            from starlette.requests import Request
-            from autumn.asgi import AutumnASGI, AutumnIdentifyData
+            from __future__ import annotations
+
+            import os
+            from typing import TYPE_CHECKING
+
             from litestar import Litestar
             from litestar.handlers import asgi
             from litestar.config.cors import CORSConfig
 
+            from autumn.asgi import AutumnASGI
+
+            if TYPE_CHECKING:
+                from starlette.requests import Request
+                from autumn.asgi import AutumnIdentifyData
+
 
             async def identify(request: Request) -> AutumnIdentifyData:
+                # db = request.state.postgres
+                # session = request.session
+
                 return {
                     "customer_id": "user_123",
                     "customer_data": {"name": "John Doe", "email": "djohn@gmail.com"},
                 }
 
 
-            autumn = AutumnASGI(
-                token="your autumn key", identify=identify
-            )
+            autumn = AutumnASGI(token=os.environ["AUTUMN_KEY"], identify=identify)
+
+
+            async def close_autumn(_):
+                await autumn.close()
 
 
             autumn_asgi = asgi(path="/api/autumn", is_mount=True, copy_scope=True)(autumn)
 
-            DOMAINS = ["your frontend url"]
+            # CORS must be configured correctly.
+            # You must allow the GET, POST and OPTIONS methods at a minimum.
+            # Pass your frontend url here.
+            DOMAINS = ["<Your Frontend URL>"]
             app = Litestar(
                 debug=True,
                 route_handlers=[autumn_asgi],
@@ -103,30 +120,54 @@ Examples have been provided below.
                     allow_headers=["*"],
                     allow_methods=["*"],
                 ),
+                on_shutdown=[close_autumn],
             )
-            autumn.setup(app)
 
 
     .. tab:: Starlette/FastAPI
 
         .. code-block:: python
 
-            from autumn.asgi import AutumnASGI, AutumnIdentifyData
+            from __future__ import annotations
+
+            import os
+            import contextlib
+            from typing import TYPE_CHECKING
+
             from starlette.applications import Starlette
             from starlette.middleware.cors import CORSMiddleware
             from starlette.middleware import Middleware
+            from autumn.asgi import AutumnASGI
+
+            if TYPE_CHECKING:
+                from starlette.requests import Request
+                from autumn.asgi import AutumnIdentifyData
+
 
             async def identify(request: Request) -> AutumnIdentifyData:
+                # db = request.state.postgres
+                # session = request.session
+
+                # This is where you are responsible for identifying the logged-in user.
+                # You must return a dictionary in the format shown below.
+
                 return {
                     "customer_id": "user_123",
                     "customer_data": {"name": "John Doe", "email": "djohn@gmail.com"},
                 }
 
 
-            autumn = AutumnASGI(
-                token="your autumn key", identify=identify
-            )
+            autumn = AutumnASGI(token=os.environ["AUTUMN_KEY"], identify=identify)
 
+            @contextlib.asynccontextmanager
+            async def lifespan(_):
+                yield
+                await autumn.close()
+
+            # CORS must be configured correctly.
+            # You must allow the GET, POST and OPTIONS methods at a minimum.
+            # Pass your frontend url here.
+            DOMAINS = ["<Your Frontend URL>"]
             middleware = [
                 Middleware(
                     CORSMiddleware,
@@ -137,9 +178,8 @@ Examples have been provided below.
                 )
             ]
 
-            app = Starlette(debug=True, middleware=middleware)
+            app = Starlette(debug=True, middleware=middleware, lifespan=lifespan)
             app.mount("/api/autumn", autumn)
-            autumn.setup(app)
 
 Finally, on your frontend, simply adjust the ``<AutumnHandler />`` component's ``backendUrl`` attribute to the URL of your Python API.
 

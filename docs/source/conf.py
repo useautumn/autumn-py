@@ -66,3 +66,5 @@ resource_links = {
 
 
 autodoc_typehints_description_target = "implementation"
+
+pygments_style = "friendly"
