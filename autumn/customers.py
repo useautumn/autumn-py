@@ -13,7 +13,7 @@ from typing import (
 )
 
 from .types.customers import Customer
-from .types.response import BillingPortalResponse
+from .types.response import BillingPortalResponse, PricingTableResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -213,4 +213,39 @@ class Customers(Generic[T_HttpClient]):
             f"/customers/{customer_id}/billing_portal",
             BillingPortalResponse,
             json=payload,
+        )
+
+    @overload
+    def pricing_table(
+        self: "Customers[HTTPClient]", customer_id: str
+    ) -> PricingTableResponse: ...
+
+    @overload
+    def pricing_table(
+        self: "Customers[AsyncHTTPClient]", customer_id: str
+    ) -> Coroutine[Any, Any, PricingTableResponse]: ...
+
+    def pricing_table(
+        self, customer_id: str
+    ) -> Union[PricingTableResponse, Coroutine[Any, Any, PricingTableResponse]]:
+        """Get a pricing table for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to get a pricing table for.
+
+        Returns
+        -------
+        :class:`~autumn.types.response.PricingTableResponse`
+            The pricing table.
+        """
+        params = {"customer_id": customer_id}
+        return self._http.request(
+            "GET",
+            "/components/pricing_table",
+            PricingTableResponse,
+            params=params,
         )

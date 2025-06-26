@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from .meta import AppEnv
 from .products import ProductItem, FreeTrial
+from .customers import PricingTableProduct
 
 __all__ = ("AttachResponse", "CheckResponse")
 
@@ -79,3 +80,7 @@ class ProductCancelResponse(BaseModel):
     message: str
     customer_id: str
     product_id: str
+
+
+class PricingTableResponse(BaseModel):
+    list: List[PricingTableProduct]

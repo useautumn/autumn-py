@@ -63,3 +63,25 @@ class Customer(BaseModel):
     products: List[CustomerProduct]
     features: Dict[str, CustomerFeature]
     invoices: Optional[List[CustomerInvoice]] = None
+
+
+class PriceInfo(BaseModel):
+    primaryText: str
+    secondaryText: Optional[str] = None
+
+
+class ItemInfo(BaseModel):
+    primaryText: str
+    secondaryText: Optional[str] = None
+
+
+class GetPricingTableParams(BaseModel):
+    customer_id: Optional[str] = None
+
+
+class PricingTableProduct(BaseModel):
+    id: str
+    name: str
+    buttonText: str
+    price: PriceInfo
+    items: List[ItemInfo]
