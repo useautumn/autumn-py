@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 async def _extract(
     request: Request,
 ) -> Tuple[AutumnIdentifyData, AsyncClient, Any]:
-    autumn = getattr(request.app.state, "__autumn__")
+    autumn = getattr(request.state, "__autumn__")
     identify_func = autumn["identify"]
     client = autumn["client"]
 

@@ -5,6 +5,8 @@ from typing import Coroutine, Callable, TypedDict, Any, TYPE_CHECKING
 try:
     from starlette.routing import Router, Route
     from starlette.responses import JSONResponse
+    from starlette.middleware import Middleware
+    from starlette.middleware.base import BaseHTTPMiddleware
 except ImportError:
     from ..error import AutumnError
 
@@ -43,6 +45,20 @@ class AutumnIdentifyData(TypedDict):
     customer_data: _CustomerData
 
 
+class _StateMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app, *, client, identify):
+        super().__init__(app)
+        self._client = client
+        self._identify = identify
+
+    async def dispatch(self, request: Request, call_next):
+        request.state.__autumn__ = {
+            "client": self._client,
+            "identify": self._identify,
+        }
+        return await call_next(request)
+
+
 class AutumnASGI:
     def __init__(
         self,
@@ -50,6 +66,16 @@ class AutumnASGI:
         *,
         identify: Callable[[Request], Coroutine[Any, Any, AutumnIdentifyData]],
     ):
+        self._client = AsyncClient(token)
+        self._identify = identify
+
+        async def _attach_state(request: Request, call_next):
+            request.state.__autumn__ = {
+                "client": self._client,
+                "identify": self._identify,
+            }
+            return await call_next(request)
+
         router = Router(
             routes=[
                 Route("/attach/", attach_route, methods={"POST"}),
@@ -80,13 +106,13 @@ class AutumnASGI:
                     methods={"GET"},
                 ),
             ],
+            middleware=[
+                Middleware(
+                    _StateMiddleware, client=self._client, identify=self._identify
+                )
+            ],
         )
         self._router = router
-        self._identify = identify
-        self._client = AsyncClient(token)
-
-    def setup(self, app: Any):
-        app.state.__autumn__ = {"client": self._client, "identify": self._identify}
 
     async def _handle_http_error(self, _: Request, exc: AutumnHTTPError):
         return JSONResponse({"detail": f"{exc.message} ({exc.code})"})
