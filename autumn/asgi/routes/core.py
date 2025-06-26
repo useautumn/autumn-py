@@ -43,7 +43,7 @@ async def cancel_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    response = await autumn.products.cancel_product(customer_id, **json)
+    response = await autumn.products.cancel(customer_id, **json)
     return JSONResponse(response.model_dump(mode="json"))
 
 
