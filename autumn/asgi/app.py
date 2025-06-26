@@ -26,7 +26,7 @@ from .routes.core import (
     cancel_route,
     billing_portal_route,
 )
-from .routes.customers import create_customer_route
+from .routes.customers import create_customer_route, pricing_table_route
 from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
 from ..aio.client import AsyncClient
 from ..error import AutumnHTTPError
@@ -71,7 +71,7 @@ class AutumnASGI:
 
         router = Router(
             routes=[
-                Route("/attach/", attach_route, methods={"POST"}),
+                Route("/attach", attach_route, methods={"POST"}),
                 Route("/check/", check_route, methods={"POST"}),
                 Route("/track/", track_route, methods={"POST"}),
                 Route("/cancel/", cancel_route, methods={"POST"}),
@@ -96,6 +96,11 @@ class AutumnASGI:
                 Route(
                     "/customers/{customer_id:str}/entities/{entity_id:str}/",
                     get_entity_route,
+                    methods={"GET"},
+                ),
+                Route(
+                    "/components/pricing_table/",
+                    pricing_table_route,
                     methods={"GET"},
                 ),
             ],

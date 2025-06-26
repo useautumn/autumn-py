@@ -10,11 +10,13 @@ if TYPE_CHECKING:
 
 async def _extract(
     request: Request,
+    *,
+    get_json: bool = True,
 ) -> Tuple[AutumnIdentifyData, AsyncClient, Any]:
     autumn = getattr(request.state, "__autumn__")
     identify_func = autumn["identify"]
     client = autumn["client"]
 
     identify = await identify_func(request)
-    json = await request.json()
+    json = await request.json() if get_json else None
     return (identify, client, json)
