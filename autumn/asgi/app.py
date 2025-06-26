@@ -69,13 +69,6 @@ class AutumnASGI:
         self._client = AsyncClient(token)
         self._identify = identify
 
-        async def _attach_state(request: Request, call_next):
-            request.state.__autumn__ = {
-                "client": self._client,
-                "identify": self._identify,
-            }
-            return await call_next(request)
-
         router = Router(
             routes=[
                 Route("/attach/", attach_route, methods={"POST"}),
