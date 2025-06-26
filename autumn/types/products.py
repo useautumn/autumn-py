@@ -23,6 +23,7 @@ class ProductItemInterval(str, Enum):
     SEMI_ANNUAL = "semi_annual"
     YEAR = "year"
     MULTIPLE = "multiple"
+    LIFETIME = "lifetime"
 
 
 class PriceCurrencyPair(BaseModel):
