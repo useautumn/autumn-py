@@ -21,3 +21,4 @@ uv.lock
 
 # Testing
 tests.py
+.env
