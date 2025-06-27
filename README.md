@@ -37,6 +37,10 @@ pip install aiohttp[speedups]
 pip install autumn-py[aio]
 ```
 
+> [!WARNING]
+> This version of the SDK is not available on PyPi yet.
+> Please install it directly from this repo.
+
 ## Quickstart
 
 ```python
