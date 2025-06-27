@@ -183,6 +183,6 @@ Examples have been provided below.
 
 Finally, on your frontend, simply adjust the ``<AutumnHandler />`` component's ``backendUrl`` attribute to the URL of your Python API.
 
-For a complete example, check out the `python-ssr-autumn-template <https://github.com/justanotherbyte/python-ssr-autumn-template>_`.
+For a complete example, check out the `python-ssr-autumn-template <https://github.com/justanotherbyte/python-ssr-autumn-template>`_.
 
 That's it! Enjoy using Autumn!
