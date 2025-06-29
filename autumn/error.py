@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 from typing_extensions import Self
 
 
@@ -22,7 +22,7 @@ class AutumnError(Exception):
         self.code = code
 
         if not hasattr(self, "__notes__"):
-            self.__notes__: list[str] = []
+            self.__notes__: List[str] = []
 
     def __str__(self):
         return f"{self.code}: {self.message}"
