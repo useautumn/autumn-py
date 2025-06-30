@@ -7,7 +7,7 @@ license = "MIT"
 keywords = ["autumn", "payments", "stripe"]
 authors = [
   { name = "John Yeo", email = "johnyeocx@gmail.com" },
-  { name = "Viswa Marepalli", email = "reachvishm@gmail.com" }
+  { name = "Viswa Marepalli", email = "reachvishm@gmail.com" },
 ]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -19,42 +19,26 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 requires-python = ">=3.9"
-dependencies = [
-    "pydantic>=2.11.7",
-    "requests>=2.32.4",
-]
+dependencies = ["pydantic>=2.11.7", "requests>=2.32.4"]
 
 [project.urls]
 Source = "https://github.com/justanotherbyte/autumn"
 Documentation = "https://autumn-py.readthedocs.io"
 
 [project.optional-dependencies]
-aio = [
-    "aiohttp>=3.12.13",
-]
-asgi = [
-    "aiohttp>=3.12.13",
-    "starlette>=0.47.1",
-]
+aio = ["aiohttp>=3.12.13"]
+asgi = ["aiohttp>=3.12.13", "starlette>=0.47.1"]
 docs = [
-    "furo>=2024.8.6",
-    "sphinx>=7.4.7",
-    "sphinx-autodoc-typehints>=2.3.0",
-    "sphinx-tabs>=3.4.7",
+  "furo>=2024.8.6",
+  "sphinx>=7.4.7",
+  "sphinx-autodoc-typehints>=2.3.0",
+  "sphinx-tabs>=3.4.7",
 ]
-tests = [
-    "pytest>=8.4.1",
-    "pytest-cov>=6.2.1",
-]
-dev = [
-    "litestar>=2.16.0",
-    "uvicorn>=0.34.3",
-]
+tests = ["pytest>=8.4.1", "pytest-cov>=6.2.1"]
+dev = ["litestar>=2.16.0", "uvicorn>=0.34.3"]
 
 [tool.pytest.ini_options]
-pythonpath = [
-  "."
-]
+pythonpath = ["."]
 
 [tool.pyright]
 typeCheckingMode = "standard"
