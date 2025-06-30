@@ -247,7 +247,9 @@ class Products(Generic[T_HttpClient]):
         self: "Products[HTTPClient]",
         customer_id: str,
         product_id: str,
+        *,
         entity_id: Optional[str] = None,
+        cancel_immediately: bool = False
     ) -> ProductCancelResponse: ...
 
     @overload
@@ -255,14 +257,18 @@ class Products(Generic[T_HttpClient]):
         self: "Products[AsyncHTTPClient]",
         customer_id: str,
         product_id: str,
+        *,
         entity_id: Optional[str] = None,
+        cancel_immediately: bool = False
     ) -> Coroutine[Any, Any, ProductCancelResponse]: ...
 
     def cancel(
         self,
         customer_id: str,
         product_id: str,
+        *,
         entity_id: Optional[str] = None,
+        cancel_immediately: bool = False
     ) -> Union[ProductCancelResponse, Coroutine[Any, Any, ProductCancelResponse]]:
         """Cancel a product for a customer.
 
@@ -276,6 +282,8 @@ class Products(Generic[T_HttpClient]):
             The ID of the product to cancel.
         entity_id: Optional[str]
             The ID of the entity to cancel the product for.
+        cancel_immediately: bool
+            Whether to cancel the product immediately. If false, the product will be cancelled at the end of the billing cycle.
 
         Returns
         -------
@@ -285,7 +293,7 @@ class Products(Generic[T_HttpClient]):
         payload = _build_payload(locals(), self.cancel_product)  # type: ignore
         return self._http.request(
             "POST",
-            "/products/cancel",
+            "/cancel",
             ProductCancelResponse,
             json=payload,
         )
