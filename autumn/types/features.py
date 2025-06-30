@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 from ..types.customers import CustomerProduct, CustomerFeature, CustomerInvoice
 
+__all__ = ("Feature", "FeaturePreview", "Entity")
+
 
 class Feature(BaseModel):
     feature_id: str
