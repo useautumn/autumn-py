@@ -21,8 +21,8 @@ Installation
 Currently, the latest Python SDK is not available on PyPi. It must be installed from our GitHub repository:
 
 .. code-block:: shell
-   
-   python3 -m pip install -U git+https://github.com/useautumn/autumn-py
+
+   python3 -m pip install -U autumn-py
 
 
 If you would like support for our ``AsyncClient``, install ``aiohttp``:
@@ -38,7 +38,7 @@ If you would like to mount our ASGI handler, install both ``aiohttp`` and ``star
    python3 -m pip install -U aiohttp starlette
 
 .. note::
-   
+
    The Python SDK officially supports Python 3.9 and above.
 
 Quickstart
@@ -50,7 +50,7 @@ The order of steps is the same as listed on the `Autumn docs <https://docs.useau
 .. note::
    It is recommended to use a sandbox environment for testing. This can be controlled via the token you choose to give to the client.
    To securely store your API key, you can use environment variables.
-      
+
 This example shows an example flow using the Python SDK.
 Of course, a real application would likely look vastly different.
 
@@ -118,4 +118,3 @@ Getting Help
 
    asyncio
    api
-
