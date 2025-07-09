@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 project = "autumn-py"
 copyright = "2025, Vish M"
 author = "Vish M"
-release = "1.3.1"
+release = "1.3.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
