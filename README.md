@@ -71,7 +71,7 @@ async def main():
     # Let's say the customer has run out of chat messages.
     check = await autumn.check(
         customer_id="john_doe",
-        product_id="chat_messages",
+        feature_id="chat_messages",
     )
     if check.allowed is False:
         print("Customer has run out of chat messages.")
@@ -111,7 +111,7 @@ client.track(
 # Let's say the customer has run out of chat messages.
 check = client.check(
     customer_id="john_doe",
-    product_id="chat_messages",
+    feature_id="chat_messages",
 )
 if check.allowed is False:
     print("Customer has run out of chat messages.")
