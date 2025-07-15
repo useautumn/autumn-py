@@ -113,7 +113,7 @@ class AutumnASGI:
         self._router = router
 
     async def _handle_http_error(self, _: Request, exc: AutumnHTTPError):
-        return JSONResponse({"detail": f"{exc.message} ({exc.code})"})
+        return JSONResponse({"message": f"{exc.message} ({exc.code})"})
 
     async def close(self):
         await self._client.close()
