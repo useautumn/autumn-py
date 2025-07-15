@@ -30,7 +30,7 @@ class HTTPClient:
 
         v_info = sys.version_info
         user_agent = (
-            f"autumn.py/{__version__} (https://github.com/justanotherbyte/autumn)"
+            f"autumn-py/{__version__}"
             f" (Python {v_info.major}.{v_info.minor}.{v_info.micro})"
         )
         headers = {
