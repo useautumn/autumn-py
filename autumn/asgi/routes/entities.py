@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from starlette.responses import JSONResponse
-
-from . import _extract
+from . import _extract, _build_response
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -16,7 +14,7 @@ async def create_entity_route(request: Request):
     customer_id = request.path_params["customer_id"]
     response = await autumn.features.create_entity(customer_id=customer_id, **json)
 
-    return JSONResponse(response.model_dump(mode="json"))
+    return _build_response(response)
 
 
 async def delete_entity_route(request: Request):
@@ -26,7 +24,7 @@ async def delete_entity_route(request: Request):
     entity_id = request.path_params["entity_id"]
     response = await autumn.features.delete_entity(customer_id, entity_id)
 
-    return JSONResponse(response.model_dump(mode="json"))
+    return _build_response(response)
 
 
 async def get_entity_route(request: Request):
@@ -40,4 +38,4 @@ async def get_entity_route(request: Request):
         expand = expand.split(",")
 
     response = await autumn.features.get_entity(customer_id, entity_id, expand)
-    return JSONResponse(response.model_dump(mode="json"))
+    return _build_response(response)

@@ -2,8 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Tuple, Any
 
+from starlette.responses import JSONResponse
+
 if TYPE_CHECKING:
     from starlette.requests import Request
+
+    from pydantic import BaseModel
+
     from ...aio.client import AsyncClient
     from ..app import AutumnIdentifyData
 
@@ -20,3 +25,7 @@ async def _extract(
     identify = await identify_func(request)
     json = await request.json() if get_json else None
     return (identify, client, json)
+
+
+def _build_response(response: BaseModel) -> JSONResponse:
+    return JSONResponse(response.model_dump(mode="json"))
