@@ -1,7 +1,8 @@
 name: Run Tests
 
 on:
-    pull_request
+    pull_request:
+        types: [ opened, reopened, synchronize ]
 
 jobs:
     test:
@@ -13,8 +14,19 @@ jobs:
             - name: Install uv
               uses: astral-sh/setup-uv@v6
 
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: 3.9
+
             - name: Install dependencies
               run: uv pip install -r pyproject.toml --extra tests
 
-            - name: Run Tests
+            - name: Run Library Tests
               run: uv run pytest
+
+            - name: Can Docs Build
+              run: |
+                uv pip install -r pyproject.toml --extra docs
+                cd docs/
+                uv run make html
