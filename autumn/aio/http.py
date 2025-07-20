@@ -41,13 +41,9 @@ class AsyncHTTPClient:
         rand.seed()
         self._rand = rand
 
-    def _ensure_session(self):
+    async def request(self, method: str, path: str, type_: Type[T], **kwargs) -> T:
         if self.session is None:
             self.session = aiohttp.ClientSession()
-
-    async def request(self, method: str, path: str, type_: Type[T], **kwargs) -> T:
-        self._ensure_session()
-        assert self.session is not None  # appease type checker
 
         url = self._build_url(self.base_url, self.version, path)
 
