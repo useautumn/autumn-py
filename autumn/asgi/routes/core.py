@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import _extract, _build_response
-from ...types.meta import CustomerData
+from ...models.meta import CustomerData
 
 if TYPE_CHECKING:
     from starlette.requests import Request

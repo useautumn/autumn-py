@@ -7,16 +7,16 @@ from .features import Features
 from .products import Products
 from .http import HTTPClient
 from .utils import _build_payload
-from .types.meta import AttachOption
-from .types.response import (
+from .models.meta import AttachOption
+from .models.response import (
     AttachResponse,
     CheckResponse,
     TrackResponse,
 )
 
 if TYPE_CHECKING:
-    from .types.features import Feature
-    from .types.meta import CustomerData
+    from .models.features import Feature
+    from .models.meta import CustomerData
 
 
 __all__ = ("Client",)

@@ -1,10 +1,10 @@
 from .client import *
 from .error import *
-from .types.meta import *
-from .types.balance import *
-from .types.customers import *
-from .types.features import *
-from .types.products import *
+from .models.meta import *
+from .models.balance import *
+from .models.customers import *
+from .models.features import *
+from .models.products import *
 from .aio.client import AsyncClient as Autumn
 
 
