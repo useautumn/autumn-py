@@ -1,6 +1,6 @@
 import pytest
 
-from autumn.types.customers import CustomerFeature, ProductItemInterval
+from autumn.models.customers import CustomerFeature, ProductItemInterval
 from autumn.customers import Customers
 from autumn.error import AutumnValidationError, AutumnHTTPError
 from autumn.utils import _build_model, _build_payload, _decompose_value, _check_response

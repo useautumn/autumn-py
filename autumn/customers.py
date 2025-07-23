@@ -12,8 +12,8 @@ from typing import (
     TYPE_CHECKING,
 )
 
-from .types.customers import Customer
-from .types.response import BillingPortalResponse, PricingTableResponse
+from .models.customers import Customer
+from .models.response import BillingPortalResponse, PricingTableResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:

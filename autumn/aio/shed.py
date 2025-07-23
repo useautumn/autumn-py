@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING, Protocol
 if TYPE_CHECKING:
     from typing import Optional, List, Awaitable, Dict, Any
 
-    from ..types.meta import AttachOption
-    from ..types.features import Feature
-    from ..types.meta import CustomerData
-    from ..types.response import (
+    from ..models.meta import AttachOption
+    from ..models.features import Feature
+    from ..models.meta import CustomerData
+    from ..models.response import (
         AttachResponse,
         CheckResponse,
         TrackResponse,

@@ -2,7 +2,7 @@ from typing import Literal, List, Dict, Optional
 
 from pydantic import BaseModel
 
-from ..types.customers import CustomerProduct, CustomerFeature, CustomerInvoice
+from ..models.customers import CustomerProduct, CustomerFeature, CustomerInvoice
 
 __all__ = ("Feature", "FeaturePreview", "Entity")
 
