@@ -11,7 +11,7 @@ T = TypeVar("T", bound=BaseModel)
 def _decompose_value(value: Any) -> Any:
     if isinstance(value, BaseModel):
         return value.model_dump()
-    elif isinstance(value, list):
+    elif isinstance(value, (list, tuple, set)):
         return [_decompose_value(item) for item in value]
 
     return value
