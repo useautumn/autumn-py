@@ -77,3 +77,18 @@ class Product(BaseModel):
     version: float
     items: List[ProductItem]
     free_trial: Optional[FreeTrial] = None
+
+
+class ProductPreview(BaseModel):
+    title: str
+    message: str
+    scenario: Literal["upgrade", "downgrade", "cancel", "renew"]
+    product_id: str
+    product_name: str
+    recurring: bool
+    next_cycle_at: int
+    current_product_name: str
+    items: List[ProductItem]
+    options: List[str]
+    due_today: PriceCurrencyPair
+    due_next_cycle: PriceCurrencyPair

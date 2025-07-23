@@ -2,7 +2,8 @@ from typing import Literal, List, Dict, Optional
 
 from pydantic import BaseModel
 
-from ..models.customers import CustomerProduct, CustomerFeature, CustomerInvoice
+from .customers import CustomerProduct, CustomerFeature, CustomerInvoice
+from .products import Product
 
 __all__ = ("Feature", "FeaturePreview", "Entity")
 
@@ -19,6 +20,7 @@ class FeaturePreview(BaseModel):
     feature_id: str
     feature_name: str
     upgrade_product_id: str
+    products: List[Product]
 
 
 class Entity(BaseModel):

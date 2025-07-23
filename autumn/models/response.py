@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from .meta import AppEnv
 from .products import ProductItem, FreeTrial
 from .customers import PricingTableProduct
+from .features import FeaturePreview
+from .products import ProductPreview
 
 __all__ = ("AttachResponse", "CheckResponse")
 
@@ -26,7 +28,8 @@ class CheckResponse(BaseModel):
     feature_id: Optional[str] = None
     product_id: Optional[str] = None
     status: Optional[str] = None
-    # TODO: add preview attribute
+    feature_preview: FeaturePreview
+    product_preview: ProductPreview
 
 
 class TrackResponse(BaseModel):
