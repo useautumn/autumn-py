@@ -8,7 +8,7 @@ from .models.products import *
 from .aio.client import AsyncClient as Autumn
 
 
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 __license__ = "MIT"
 __author__ = "justanotherbyte"
 __copyright__ = "Copyright 2025 justanotherbyte"
