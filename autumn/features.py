@@ -12,9 +12,9 @@ from typing import (
     TYPE_CHECKING,
 )
 
-from .types.balance import Balance
-from .types.meta import Empty
-from .types.features import Entity
+from .models.balance import Balance
+from .models.meta import Empty
+from .models.features import Entity
 from .utils import _build_payload
 
 if TYPE_CHECKING:
