@@ -12,8 +12,8 @@ from typing import (
     TYPE_CHECKING,
 )
 
-from .types.products import ProductItem, FreeTrial
-from .types.response import (
+from .models.products import ProductItem, FreeTrial
+from .models.response import (
     CreateProductResponse,
     GetProductResponse,
     ReferralCodeResponse,
@@ -111,7 +111,7 @@ class Products(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.CreateProductResponse`
+        :class:`~autumn.models.response.CreateProductResponse`
             The response from the API.
         """
         payload = _build_payload(locals(), self.create)  # type: ignore
@@ -145,7 +145,7 @@ class Products(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.GetProductResponse`
+        :class:`~autumn.models.response.GetProductResponse`
             The response from the API.
         """
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
@@ -182,7 +182,7 @@ class Products(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.ReferralCodeResponse`
+        :class:`~autumn.models.response.ReferralCodeResponse`
             The response from the API.
         """
 
@@ -231,7 +231,7 @@ class Products(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.ReferralRedeemResponse`
+        :class:`~autumn.models.response.ReferralRedeemResponse`
             The response from the API.
         """
         payload = _build_payload(locals(), self.redeem_referral_code)  # type: ignore
@@ -249,7 +249,7 @@ class Products(Generic[T_HttpClient]):
         product_id: str,
         *,
         entity_id: Optional[str] = None,
-        cancel_immediately: bool = False
+        cancel_immediately: bool = False,
     ) -> ProductCancelResponse: ...
 
     @overload
@@ -259,7 +259,7 @@ class Products(Generic[T_HttpClient]):
         product_id: str,
         *,
         entity_id: Optional[str] = None,
-        cancel_immediately: bool = False
+        cancel_immediately: bool = False,
     ) -> Coroutine[Any, Any, ProductCancelResponse]: ...
 
     def cancel(
@@ -268,7 +268,7 @@ class Products(Generic[T_HttpClient]):
         product_id: str,
         *,
         entity_id: Optional[str] = None,
-        cancel_immediately: bool = False
+        cancel_immediately: bool = False,
     ) -> Union[ProductCancelResponse, Coroutine[Any, Any, ProductCancelResponse]]:
         """Cancel a product for a customer.
 
@@ -287,7 +287,7 @@ class Products(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.ProductCancelResponse`
+        :class:`~autumn.models.response.ProductCancelResponse`
             The response from the API.
         """
         payload = _build_payload(locals(), self.cancel_product)  # type: ignore

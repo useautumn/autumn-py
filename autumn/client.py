@@ -130,7 +130,7 @@ class Client:
 
         Returns
         -------
-        :class:`~autumn.types.response.AttachResponse`
+        :class:`~autumn.models.response.AttachResponse`
             The response from the API.
         """
 
@@ -183,7 +183,7 @@ class Client:
 
         Returns
         -------
-        :class:`~autumn.types.response.CheckResponse`
+        :class:`~autumn.models.response.CheckResponse`
             The response from the API.
         """
 
@@ -232,7 +232,7 @@ class Client:
 
         Returns
         -------
-        :class:`~autumn.types.response.TrackResponse`
+        :class:`~autumn.models.response.TrackResponse`
             The response from the API.
         """
         payload = _build_payload(locals(), self.track)

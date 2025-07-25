@@ -64,7 +64,7 @@ class Features(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.Empty`
+        :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
         payload = _build_payload(locals(), self.set_usage, ignore={"customer_id"})  # type: ignore
@@ -100,12 +100,12 @@ class Features(Generic[T_HttpClient]):
         ----------
         customer_id: str
             The ID of the customer to set the balances for.
-        balances: List[:class:`~autumn.types.balance.Balance`]
+        balances: List[:class:`~autumn.models.balance.Balance`]
             The balances to set for the customer.
 
         Returns
         -------
-        :class:`~autumn.types.response.Empty`
+        :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
 
@@ -152,7 +152,7 @@ class Features(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.Empty`
+        :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
 
@@ -225,7 +225,7 @@ class Features(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.Empty`
+        :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
 
