@@ -56,7 +56,7 @@ class Customers(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.customers.Customer`
+        :class:`~autumn.models.customers.Customer`
             The customer.
         """
         return self._http.request("GET", f"/customers/{customer_id}", Customer)
@@ -106,7 +106,7 @@ class Customers(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.customers.Customer`
+        :class:`~autumn.models.customers.Customer`
             The created customer.
         """
         payload = _build_payload(locals(), self.create)  # type: ignore
@@ -157,7 +157,7 @@ class Customers(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.customers.Customer`
+        :class:`~autumn.models.customers.Customer`
             The updated customer.
         """
         payload = _build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
@@ -200,7 +200,7 @@ class Customers(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.BillingPortalResponse`
+        :class:`~autumn.models.response.BillingPortalResponse`
             The billing portal URL.
         """
         payload = _build_payload(
@@ -239,7 +239,7 @@ class Customers(Generic[T_HttpClient]):
 
         Returns
         -------
-        :class:`~autumn.types.response.PricingTableResponse`
+        :class:`~autumn.models.response.PricingTableResponse`
             The pricing table.
         """
         params = {"customer_id": customer_id}
