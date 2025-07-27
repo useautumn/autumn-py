@@ -28,8 +28,8 @@ class CheckResponse(BaseModel):
     feature_id: Optional[str] = None
     product_id: Optional[str] = None
     status: Optional[str] = None
-    feature_preview: FeaturePreview
-    product_preview: ProductPreview
+    feature_preview: Optional[FeaturePreview] = None
+    product_preview: Optional[ProductPreview] = None
 
 
 class TrackResponse(BaseModel):
