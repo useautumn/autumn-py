@@ -12,6 +12,7 @@ from typing import (
     TYPE_CHECKING,
 )
 
+from .models.meta import Empty
 from .models.products import ProductItem, FreeTrial
 from .models.response import (
     CreateProductResponse,
@@ -149,6 +150,61 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
+
+    @overload
+    def update(
+        self: "Products[HTTPClient]",
+        id: str,
+        *,
+        name: str,
+        is_add_on: bool = False,
+        is_default: bool = False,
+        items: Optional[List[ProductItem]] = None,
+        free_trial: Optional[FreeTrial] = None,
+    ) -> Empty: ...
+
+    @overload
+    def update(
+        self: "Products[AsyncHTTPClient]",
+        id: str,
+        *,
+        name: str,
+        is_add_on: bool = False,
+        is_default: bool = False,
+        items: Optional[List[ProductItem]] = None,
+        free_trial: Optional[FreeTrial] = None,
+    ) -> Coroutine[Any, Any, Empty]: ...
+
+    def update(
+        self,
+        id: str,
+        *,
+        name: str,
+        is_add_on: bool = False,
+        is_default: bool = False,
+        items: Optional[List[ProductItem]] = None,
+        free_trial: Optional[FreeTrial] = None,
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        payload = _build_payload(locals(), self.update) # type: ignore
+        return self._http.request("POST", f"/products/{id}", Empty, json=payload)
+
+    @overload
+    def delete(
+        self: "Products[HTTPClient]",
+        id: str
+    ) -> Empty: ...
+
+    @overload
+    def delete(
+        self: "Products[AsyncHTTPClient]",
+        id: str
+    ) -> Empty: ...
+
+    def delete(
+        self,
+        id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        return self._http.request("DELETE", f"/products/{id}", Empty)
 
     @overload
     def get_referral_code(
