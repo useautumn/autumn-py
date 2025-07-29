@@ -43,7 +43,6 @@ dev = ["litestar>=2.16.0", "uvicorn>=0.34.3"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
-asyncio_mode = "auto"
 
 [tool.pyright]
 typeCheckingMode = "standard"
