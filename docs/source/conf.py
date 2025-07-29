@@ -16,7 +16,7 @@ project = "autumn-py"
 copyright = "2025, Vish M"
 author = "Vish M"
 
-with open("../autumn/__init__.py", "r") as f:
+with open("../../autumn/__init__.py", "r") as f:
     version = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1) # type: ignore
 
 release = version
