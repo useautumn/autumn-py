@@ -26,7 +26,7 @@ class HTTPClient:
 
     @staticmethod
     def _build_headers(token: str) -> Dict[str, str]:
-        from . import __version__
+        from . import __version__, LATEST_API_VERSION
 
         v_info = sys.version_info
         user_agent = (
@@ -38,6 +38,7 @@ class HTTPClient:
             "Accept": "application/json",
             "User-Agent": user_agent,
             "Authorization": f"Bearer {token}",
+            "X-Api-Version": LATEST_API_VERSION,
         }
         return headers
 
