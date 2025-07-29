@@ -73,7 +73,7 @@ class AutumnHTTPError(AutumnError):
         self.body = ""
 
     def __str__(self):
-        return f"{self.code}: {self.message} (HTTP {self.status_code})"
+        return f"{self.code!r}: {self.message!r} (HTTP {self.status_code})"
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.message}, {self.code}, {self.status_code})\n{self.body}"
