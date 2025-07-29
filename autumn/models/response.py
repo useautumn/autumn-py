@@ -52,11 +52,11 @@ class BillingPortalResponse(BaseModel):
 
 
 class CreateProductResponse(BaseModel):
-    autumn_id: str
     created_at: int
     id: str
     name: str
     env: AppEnv
+    version: int
     is_add_on: bool
     is_default: bool
     items: List[ProductItem]
