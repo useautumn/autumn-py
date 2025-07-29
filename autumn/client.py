@@ -7,7 +7,6 @@ from .features import Features
 from .products import Products
 from .http import HTTPClient
 from .utils import _build_payload
-from .models.meta import AttachOption
 from .models.response import (
     AttachResponse,
     CheckResponse,
@@ -16,6 +15,7 @@ from .models.response import (
 
 if TYPE_CHECKING:
     from .models.features import Feature
+    from .models.meta import AttachOption
     from .models.meta import CustomerData
 
 
