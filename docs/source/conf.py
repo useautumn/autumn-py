@@ -6,6 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import re
 import sys
 from pathlib import Path
 
@@ -14,7 +15,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 project = "autumn-py"
 copyright = "2025, Vish M"
 author = "Vish M"
-release = "1.5.2"
+
+with open("../autumn/__init__.py", "r") as f:
+    version = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1) # type: ignore
+
+release = version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
