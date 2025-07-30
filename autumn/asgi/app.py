@@ -72,7 +72,7 @@ class AutumnASGI:
 
         router = Router(
             routes=[
-                Route("/attach", attach_route, methods={"POST"}),
+                Route("/attach/", attach_route, methods={"POST"}),
                 Route("/check/", check_route, methods={"POST"}),
                 Route("/track/", track_route, methods={"POST"}),
                 Route("/cancel/", cancel_route, methods={"POST"}),
@@ -83,7 +83,7 @@ class AutumnASGI:
                 ),
                 Route("/checkout/", checkout_route, methods={"POST"}),
                 Route(
-                    "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
+                    "/customers/", create_customer_route, methods={"POST"}
                 ),
                 Route(
                     "/customers/{customer_id:str}/entities/{entity_id:str}",
