@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+env:
+  AUTUMN_TEST_KEY: ${{ secrets.AUTUMN_TEST_KEY }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
