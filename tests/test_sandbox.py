@@ -25,7 +25,6 @@ async def test_customers(autumn: Autumn):
 
     updated_customer = await autumn.customers.get(customer.id) # type: ignore
     assert updated_customer.name == "ay-rod"
-
     await autumn.customers.get_billing_portal(customer.id) # type: ignore
 
     await autumn.customers.delete(customer.id) # type: ignore
@@ -53,3 +52,22 @@ async def test_products(autumn: Autumn):
 
     await autumn.products.delete(default.id) # type: ignore
     await autumn.products.delete(add_on.id) # type: ignore
+
+@pytest.mark.asyncio
+async def test_checkout(autumn: Autumn):
+    customer = await autumn.customers.create(
+        "test_customer_id",
+        name="John Yeo",
+        email="johnyeo@gmail.com"
+    )
+    product = await autumn.products.create(
+        "test_product_id",
+        name="Test Product",
+        is_add_on=False,
+        is_default=False,
+    )
+
+    await autumn.checkout(customer.id, product.id) # type: ignore
+
+    await autumn.customers.delete(customer.id) # type: ignore
+    await autumn.products.delete(product.id) # type: ignore

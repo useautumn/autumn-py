@@ -10,6 +10,7 @@ from .utils import _build_payload
 from .models.response import (
     AttachResponse,
     CheckResponse,
+    CheckoutResponse,
     TrackResponse,
 )
 
@@ -237,3 +238,13 @@ class Client:
         """
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
+
+    def checkout(
+        self,
+        customer_id: str,
+        product_id: str,
+        *,
+        success_url: Optional[str] = None,
+    ) -> CheckoutResponse:
+        payload = _build_payload(locals(), self.checkout)
+        return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)

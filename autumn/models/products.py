@@ -66,14 +66,14 @@ class FreeTrial(BaseModel):
 
 
 class Product(BaseModel):
-    autumn_id: str
+    autumn_id: Optional[str] = None
     created_at: float
     id: str
     name: str
     env: Literal["sandbox", "live"]
     is_add_on: bool
     is_default: bool
-    group: str
+    group: Optional[str] = None
     version: float
     items: List[ProductItem]
     free_trial: Optional[FreeTrial] = None

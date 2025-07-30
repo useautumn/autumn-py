@@ -24,6 +24,7 @@ from .routes.core import (
     check_route,
     track_route,
     cancel_route,
+    checkout_route,
     billing_portal_route,
 )
 from .routes.customers import create_customer_route, pricing_table_route
@@ -80,6 +81,7 @@ class AutumnASGI:
                     billing_portal_route,
                     methods={"POST"},
                 ),
+                Route("/checkout/", checkout_route, methods={"POST"}),
                 Route(
                     "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
                 ),

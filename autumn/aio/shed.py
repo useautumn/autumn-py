@@ -12,6 +12,7 @@ if TYPE_CHECKING:
         AttachResponse,
         CheckResponse,
         TrackResponse,
+        CheckoutResponse,
     )
 
 
@@ -63,3 +64,13 @@ class TrackParams(Protocol):
         properties: Optional[Dict[str, Any]] = None,
         customer_data: Optional[CustomerData] = None,
     ) -> Awaitable[TrackResponse]: ...
+
+
+class CheckoutParams(Protocol):
+    def __call__(
+        self,
+        customer_id: str,
+        product_id: str,
+        *,
+        success_url: Optional[str] = None,
+    ) -> Awaitable[CheckoutResponse]: ...

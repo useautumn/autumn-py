@@ -51,3 +51,11 @@ async def billing_portal_route(request: Request):
     customer_id = identify["customer_id"]
     response = await autumn.customers.get_billing_portal(customer_id, **json)
     return _build_response(response)
+
+
+async def checkout_route(request: Request):
+    identify, autumn, json = await _extract(request)
+
+    customer_id = identify["customer_id"]
+    response = await autumn.checkout(customer_id, **json)
+    return _build_response(response)
