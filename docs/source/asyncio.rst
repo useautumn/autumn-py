@@ -38,10 +38,11 @@ The basic usage of the asyncio client is the same as the sync client. You can us
 
     import asyncio
 
-    from autumn.aio import AsyncClient
+    from autumn import Autumn
+    # from autumn.aio import AsyncClient
 
     async def main():
-        client = AsyncClient(token="your_api_key")
+        client = Autumn(token="your_api_key")
         await client.attach(
             "customer_id",
             product_id="chat_messages"
