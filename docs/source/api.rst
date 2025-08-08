@@ -8,7 +8,7 @@ This page gives an overview of all the public autumn classes, functions and meth
 Client
 ------
 
-.. autoclass:: autumn.Client
+.. autoclass:: autumn.client.Client
    :members:
    :undoc-members:
 
