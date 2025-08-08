@@ -1,6 +1,6 @@
 [project]
 name = "autumn-py"
-version = "1.5.2"
+version = "1.5.6"
 description = "A Python SDK for Autumn's REST API"
 readme = "README.md"
 license = "MIT"
@@ -19,7 +19,11 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 requires-python = ">=3.9"
-dependencies = ["pydantic>=2.11.7", "requests>=2.32.4"]
+dependencies = [
+    "aiohttp>=3.12.15",
+    "pydantic>=2.11.7",
+ "requests>=2.32.4",
+]
 
 [project.urls]
 Source = "https://github.com/useautumn/autumn-py"

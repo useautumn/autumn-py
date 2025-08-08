@@ -10,9 +10,9 @@ from ..products import Products
 
 if TYPE_CHECKING:
     from typing_extensions import Self
-    from .shed import AttachParams, CheckParams, TrackParams
+    from .shed import AttachParams, CheckParams, TrackParams, CheckoutParams
 
-__all__ = ("AsyncClient",)
+__all__ = ("AsyncClient", )
 
 
 class AsyncClient(Client):
@@ -42,6 +42,7 @@ class AsyncClient(Client):
     attach: AttachParams  # type: ignore
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
+    checkout: CheckoutParams  # type: ignore
 
     def __init__(self, token: str, *, base_url: Optional[str] = None):
         from .. import BASE_URL, VERSION

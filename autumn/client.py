@@ -11,6 +11,7 @@ from .models.meta import AttachOption
 from .models.response import (
     AttachResponse,
     CheckResponse,
+    CheckoutResponse,
     TrackResponse,
 )
 
@@ -18,8 +19,7 @@ if TYPE_CHECKING:
     from .models.features import Feature
     from .models.meta import CustomerData
 
-
-__all__ = ("Client",)
+__all__ = ("Client", )
 
 
 class Client:
@@ -87,6 +87,42 @@ class Client:
         self.features = Features(self.http)
         self.products = Products(self.http)
 
+    def checkout(
+        self,
+        customer_id: str,
+        *,
+        product_id: Optional[str] = None,
+        success_url: Optional[str] = None,
+        options: Optional[List[AttachOption]] = None,
+        entity_id: Optional[str] = None,
+        customer_data: Optional[CustomerData] = None,
+        checkout_session_params: Optional[Dict[str, Any]] = None,
+        reward: Optional[str] = None,
+    ) -> CheckoutResponse:
+        """Checkout a customer for a product.
+        
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to checkout.
+        product_id: Optional[str]
+            The ID of the product to checkout.
+        success_url: Optional[str]
+            The URL to redirect to after a successful checkout.
+        force_checkout: bool
+            Whether to force the customer to checkout.
+        entity_id: Optional[str]
+            The ID of the entity to checkout.
+        customer_data: Optional[CustomerData] 
+            The customer data to checkout.
+        """
+
+        payload = _build_payload(locals(), self.checkout)
+        return self.http.request("POST",
+                                 "/checkout",
+                                 CheckoutResponse,
+                                 json=payload)
+
     def attach(
         self,
         customer_id: str,
@@ -135,14 +171,15 @@ class Client:
         """
 
         assert product_id is not None or product_ids is not None, (
-            "Either product_id or product_ids must be provided"
-        )
+            "Either product_id or product_ids must be provided")
         assert not (product_id is not None and product_ids is not None), (
-            "Only one of product_id or product_ids must be provided"
-        )
+            "Only one of product_id or product_ids must be provided")
 
         payload = _build_payload(locals(), self.attach)
-        return self.http.request("POST", "/attach", AttachResponse, json=payload)
+        return self.http.request("POST",
+                                 "/attach",
+                                 AttachResponse,
+                                 json=payload)
 
     def check(
         self,
@@ -188,8 +225,7 @@ class Client:
         """
 
         assert product_id is not None or feature_id is not None, (
-            "Either product_id or feature_id must be provided"
-        )
+            "Either product_id or feature_id must be provided")
 
         payload = _build_payload(locals(), self.check)
         return self.http.request("POST", "/check", CheckResponse, json=payload)
@@ -197,7 +233,7 @@ class Client:
     def track(
         self,
         customer_id: str,
-        feature_id: str,
+        feature_id: Optional[str] = None,
         *,
         value: int = 1,
         entity_id: Optional[str] = None,
