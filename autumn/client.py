@@ -198,7 +198,7 @@ class Client:
     def track(
         self,
         customer_id: str,
-        feature_id: str,
+        feature_id: Optional[str] = None,
         *,
         value: int = 1,
         entity_id: Optional[str] = None,
@@ -216,8 +216,8 @@ class Client:
         ----------
         customer_id: str
             The ID of the customer to track.
-        feature_id: str
-            The ID of the feature to track.
+        feature_id: Optional[str]
+            The ID of the feature to track. This or the ``event_name`` must be provided.
         value: int
             The amount of the feature to deduct.
         entity_id: Optional[str]
@@ -236,6 +236,7 @@ class Client:
         :class:`~autumn.models.response.TrackResponse`
             The response from the API.
         """
+        assert feature_id or event_name, "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
 

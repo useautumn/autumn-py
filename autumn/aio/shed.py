@@ -55,7 +55,7 @@ class TrackParams(Protocol):
     def __call__(
         self,
         customer_id: str,
-        feature_id: str,
+        feature_id: Optional[str] = None,
         *,
         value: int = 1,
         entity_id: Optional[str] = None,
