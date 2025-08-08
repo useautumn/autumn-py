@@ -247,5 +247,22 @@ class Client:
         *,
         success_url: Optional[str] = None,
     ) -> CheckoutResponse:
+        """
+        Checkout a product for a customer.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to checkout.
+        product_id: str
+            The ID of the product to checkout.
+        success_url: Optional[str]
+            The URL to redirect to after a successful checkout.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.CheckoutResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.checkout)
         return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
