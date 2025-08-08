@@ -24,6 +24,7 @@ from .routes.core import (
     check_route,
     track_route,
     cancel_route,
+    checkout_route,
     billing_portal_route,
 )
 from .routes.customers import create_customer_route, pricing_table_route
@@ -71,7 +72,7 @@ class AutumnASGI:
 
         router = Router(
             routes=[
-                Route("/attach", attach_route, methods={"POST"}),
+                Route("/attach/", attach_route, methods={"POST"}),
                 Route("/check/", check_route, methods={"POST"}),
                 Route("/track/", track_route, methods={"POST"}),
                 Route("/cancel/", cancel_route, methods={"POST"}),
@@ -80,8 +81,9 @@ class AutumnASGI:
                     billing_portal_route,
                     methods={"POST"},
                 ),
+                Route("/checkout/", checkout_route, methods={"POST"}),
                 Route(
-                    "/customers/", create_customer_route, methods={"POST", "OPTIONS"}
+                    "/customers/", create_customer_route, methods={"POST"}
                 ),
                 Route(
                     "/customers/{customer_id:str}/entities/{entity_id:str}",

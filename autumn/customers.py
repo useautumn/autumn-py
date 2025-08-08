@@ -12,6 +12,7 @@ from typing import (
     TYPE_CHECKING,
 )
 
+from .models.meta import Empty
 from .models.customers import Customer
 from .models.response import BillingPortalResponse, PricingTableResponse
 from .utils import _build_payload
@@ -164,6 +165,24 @@ class Customers(Generic[T_HttpClient]):
         return self._http.request(
             "POST", f"/customers/{customer_id}", Customer, json=payload
         )
+
+    @overload
+    def delete(
+        self: "Customers[HTTPClient]",
+        customer_id: str
+    ) -> Empty: ...
+
+    @overload
+    def delete(
+        self: "Customers[AsyncHTTPClient]",
+        customer_id: str
+    ) -> Coroutine[Any, Any, Empty]: ...
+
+    def delete(
+        self,
+        customer_id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        return self._http.request("DELETE", f"/customers/{customer_id}", Empty)
 
     @overload
     def get_billing_portal(

@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING, Optional
 
 from pydantic import BaseModel
 
+from .products import ProductItem
+
 if TYPE_CHECKING:
     from typing import Dict, Any
 
@@ -31,3 +33,14 @@ class CustomerData(BaseModel):
     name: Optional[str] = None
     email: Optional[str] = None
     fingerprint: Optional[str] = None
+
+
+class CheckoutLine(BaseModel):
+    description: str
+    amount: int
+    item: ProductItem
+
+
+class Cycle(BaseModel):
+    starts_at: int
+    total: int

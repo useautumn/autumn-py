@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 requires-python = ">=3.9"
@@ -24,6 +25,7 @@ dependencies = [
     "pydantic>=2.11.7",
  "requests>=2.32.4",
 ]
+dynamic = ["version"]
 
 [project.urls]
 Source = "https://github.com/useautumn/autumn-py"
@@ -38,11 +40,12 @@ docs = [
     "sphinx-autodoc-typehints>=2.3.0",
     "sphinx-tabs>=3.4.7",
 ]
-tests = ["pytest>=8.4.1", "pytest-cov>=6.2.1"]
+tests = ["pytest>=8.4.1", "pytest-asyncio>=1.1.0", "pytest-cov>=6.2.1"]
 dev = ["litestar>=2.16.0", "uvicorn>=0.34.3"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+asyncio_mode = "auto"
 
 [tool.pyright]
 typeCheckingMode = "standard"
@@ -56,3 +59,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["autumn/"]
+
+[tool.hatch.version]
+path = "autumn/__init__.py"

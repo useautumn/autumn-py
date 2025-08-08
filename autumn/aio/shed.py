@@ -14,6 +14,7 @@ if TYPE_CHECKING:
         AttachResponse,
         CheckResponse,
         TrackResponse,
+        CheckoutResponse,
     )
 
 __all__ = ("AttachParams", "CheckParams", "TrackParams")

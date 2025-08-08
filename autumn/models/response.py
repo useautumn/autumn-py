@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 from .meta import AppEnv, AttachOption
 from .products import Product, ProductItem, FreeTrial
+from .meta import AppEnv, AttachOption
+from .products import ProductItem, FreeTrial, Product
 from .customers import PricingTableProduct
 from .features import FeaturePreview
 from .products import ProductPreview
@@ -52,11 +54,11 @@ class BillingPortalResponse(BaseModel):
 
 
 class CreateProductResponse(BaseModel):
-    autumn_id: str
     created_at: int
     id: str
     name: str
     env: AppEnv
+    version: int
     is_add_on: bool
     is_default: bool
     items: List[ProductItem]

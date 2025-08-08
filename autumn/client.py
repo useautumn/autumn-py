@@ -7,7 +7,6 @@ from .features import Features
 from .products import Products
 from .http import HTTPClient
 from .utils import _build_payload
-from .models.meta import AttachOption
 from .models.response import (
     AttachResponse,
     CheckResponse,
@@ -17,6 +16,7 @@ from .models.response import (
 
 if TYPE_CHECKING:
     from .models.features import Feature
+    from .models.meta import AttachOption
     from .models.meta import CustomerData
 
 __all__ = ("Client", )
@@ -251,8 +251,8 @@ class Client:
         ----------
         customer_id: str
             The ID of the customer to track.
-        feature_id: str
-            The ID of the feature to track.
+        feature_id: Optional[str]
+            The ID of the feature to track. This or the ``event_name`` must be provided.
         value: int
             The amount of the feature to deduct.
         entity_id: Optional[str]
@@ -271,5 +271,33 @@ class Client:
         :class:`~autumn.models.response.TrackResponse`
             The response from the API.
         """
+        assert feature_id or event_name, "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
+
+    def checkout(
+        self,
+        customer_id: str,
+        product_id: str,
+        *,
+        success_url: Optional[str] = None,
+    ) -> CheckoutResponse:
+        """
+        Checkout a product for a customer.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to checkout.
+        product_id: str
+            The ID of the product to checkout.
+        success_url: Optional[str]
+            The URL to redirect to after a successful checkout.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.CheckoutResponse`
+            The response from the API.
+        """
+        payload = _build_payload(locals(), self.checkout)
+        return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
