@@ -65,7 +65,7 @@ intersphinx_mapping = {
 }
 
 resource_links = {
-    "github": "https://github.com/justanotherbyte/autumn",
+    "github": "https://github.com/useautumn/autumn-py",
     "discord": "https://discord.gg/QDjfwGGWKT",
 }
 
