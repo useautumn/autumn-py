@@ -43,7 +43,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "furo"
-html_static_path = ["_static"]
+html_static_path = []
 html_theme_options = {}
 
 rst_prolog: str = """
@@ -72,4 +72,4 @@ resource_links = {
 
 autodoc_typehints_description_target = "implementation"
 
-pygments_style = "friendly"
+pygments_style = "autumn"
