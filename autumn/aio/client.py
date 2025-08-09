@@ -21,6 +21,8 @@ class AsyncClient(Client):
 
     This class is also exposed as ``autumn.Autumn``.
 
+    The ``AsyncClient`` automatically retries requests up to 5 times, exponentially backing off between attempts.
+
     Parameters
     ----------
     token: str
