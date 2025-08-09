@@ -161,7 +161,8 @@ class Products(Generic[T_HttpClient]):
         ...
 
     def list(self, customer_id: str) -> Union[ListProductResponse, Coroutine[Any, Any, ListProductResponse]]:
-        return self._http.request("GET", f"/products?customer_id={customer_id}", ListProductResponse)
+        params = {"customer_id": customer_id}
+        return self._http.request("GET", f"/products", ListProductResponse, params=params)
 
     @overload
     def update(

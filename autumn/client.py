@@ -88,6 +88,8 @@ class Client:
         self.features = Features(self.http)
         self.products = Products(self.http)
 
+        self.cancel = self.products.cancel
+
     def attach(
         self,
         customer_id: str,
