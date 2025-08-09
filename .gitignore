@@ -22,3 +22,6 @@ uv.lock
 # Testing
 tests.py
 .env
+
+autumn-env
+publish.sh

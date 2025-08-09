@@ -2,7 +2,9 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from .meta import AppEnv, CheckoutLine, AttachOption, Cycle
+from .meta import AppEnv, AttachOption
+from .products import Product, ProductItem, FreeTrial
+from .meta import AppEnv, AttachOption
 from .products import ProductItem, FreeTrial, Product
 from .customers import PricingTableProduct
 from .features import FeaturePreview
@@ -46,19 +48,6 @@ class UsageResponse(BaseModel):
     feature_id: str
 
 
-class CheckoutResponse(BaseModel):
-    url: Optional[str] = None
-    customer_id: str
-    has_prorations: bool
-    total: float
-    currency: str
-    lines: List[CheckoutLine]
-    options: List[AttachOption]
-    product: Product
-    current_product: Optional[Product] = None
-    next_cycle: Optional[Cycle] = None
-
-
 class BillingPortalResponse(BaseModel):
     url: str
     customer_id: str
@@ -100,3 +89,27 @@ class ProductCancelResponse(BaseModel):
 
 class PricingTableResponse(BaseModel):
     list: List[PricingTableProduct]
+
+
+class CheckoutLine(BaseModel):
+    description: str
+    amount: float
+    item: ProductItem
+
+
+class CheckoutNextCycle(BaseModel):
+    starts_at: int
+    total: float
+
+
+class CheckoutResponse(BaseModel):
+    url: Optional[str] = None
+    customer_id: str
+    has_prorations: bool
+    lines: List[CheckoutLine]
+    total: float
+    currency: str
+    options: List[AttachOption]
+    product: Product
+    current_product: Product
+    next_cycle: Optional[CheckoutNextCycle] = None
