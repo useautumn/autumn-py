@@ -55,6 +55,8 @@ class AsyncClient(Client):
         self.features = Features(self.http)
         self.products = Products(self.http)
 
+        self.cancel = self.products.cancel
+
     async def __aenter__(self) -> Self:
         return self
 
