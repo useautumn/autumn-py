@@ -64,12 +64,12 @@ class FreeTrial(BaseModel):
     length: float
     unique_fingerprint: bool
 
+ProductScenario = Literal["scheduled", "active", "new", "renew", "upgrade", "downgrade", "cancel"]
 
 class Product(BaseModel):
-    autumn_id: Optional[str] = None
     created_at: float
     id: str
-    name: str
+    name: Optional[str] = None
     env: Literal["sandbox", "live"]
     is_add_on: bool
     is_default: bool
@@ -77,6 +77,8 @@ class Product(BaseModel):
     version: float
     items: List[ProductItem]
     free_trial: Optional[FreeTrial] = None
+    scenario: Optional[ProductScenario] = None
+    base_variant_id: Optional[str] = None
 
 
 class ProductPreview(BaseModel):
