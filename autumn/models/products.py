@@ -3,6 +3,8 @@ from typing import Literal, List, Optional, Union
 
 from pydantic import BaseModel
 
+from .meta import AppEnv
+
 __all__ = (
     "FreeTrialDuration",
     "UsageModel",
@@ -70,7 +72,7 @@ class Product(BaseModel):
     created_at: float
     id: str
     name: Optional[str] = None
-    env: Literal["sandbox", "live"]
+    env: AppEnv
     is_add_on: bool
     is_default: bool
     group: Optional[str] = None

@@ -100,3 +100,7 @@ class ProductCancelResponse(BaseModel):
 
 class PricingTableResponse(BaseModel):
     list: List[PricingTableProduct]
+
+
+class ListProductResponse(BaseModel):
+    list: List[Product]
