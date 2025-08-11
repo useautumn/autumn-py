@@ -37,7 +37,6 @@ docs = [
 ]
 tests = ["pytest>=8.4.1", "pytest-asyncio>=1.1.0", "pytest-cov>=6.2.1"]
 dev = ["litestar>=2.16.0", "uvicorn>=0.34.3"]
-orjson = ["orjson>=3.11.1"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
