@@ -45,8 +45,14 @@ asyncio_mode = "auto"
 [tool.pyright]
 typeCheckingMode = "standard"
 
+[tool.black]
+line-length = 125
+
 [tool.isort]
 profile = "black"
+combine_as_imports = true
+combine_star = true
+line_length = 125
 
 [build-system]
 requires = ["hatchling >= 1.26"]
