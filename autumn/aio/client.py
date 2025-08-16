@@ -23,6 +23,8 @@ class AsyncClient(Client):
 
     The ``AsyncClient`` automatically retries requests up to 5 times, exponentially backing off between attempts.
 
+    Note that session creation is lazy. This means that the ``AsyncClient`` will not attempt to create a session until the first request is made.
+
     Parameters
     ----------
     token: str
