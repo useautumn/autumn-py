@@ -7,6 +7,15 @@ from ..client import Client
 from ..features import Features
 from ..customers import Customers
 from ..products import Products
+from ..error import AutumnError
+
+try:
+    import aiohttp
+except ImportError:
+    raise AutumnError(
+        "aiohttp is not installed. Please install it with `pip install aiohttp`",
+        "missing_dependency",
+    )
 
 if TYPE_CHECKING:
     from typing_extensions import Self
@@ -31,6 +40,10 @@ class AsyncClient(Client):
         The API key to use for authentication.
     base_url: Optional[str]
         The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
+    max_retries: int
+        The maximum number of retries to attempt for failed requests.
+    session: Optional[:class:`~aiohttp.ClientSession`]
+        The session to use for requests. If not provided, a new session will be created **lazily**.
 
     Attributes
     ----------
@@ -48,13 +61,21 @@ class AsyncClient(Client):
     track: TrackParams  # type: ignore
     checkout: CheckoutParams # type: ignore
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        *,
+        base_url: Optional[str] = None,
+        max_retries: int = 5,
+        session: Optional[aiohttp.ClientSession] = None,
+    ) -> None:
         from .. import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = AsyncHTTPClient(_base_url, VERSION, token)
+        self.http = AsyncHTTPClient(
+            _base_url, VERSION, token, max_retries=max_retries, session=session)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)

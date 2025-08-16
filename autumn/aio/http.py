@@ -1,6 +1,6 @@
 import random
 import asyncio
-from typing import Type, TypeVar
+from typing import Type, TypeVar, Optional
 
 from pydantic import BaseModel
 
@@ -28,10 +28,18 @@ class _RetryRequestError(Exception):
 
 
 class AsyncHTTPClient:
-    def __init__(self, base_url: str, version: str, token: str, max_retries: int = 3):
+    def __init__(
+        self,
+        base_url: str,
+        version: str,
+        token: str,
+        max_retries: int = 3,
+        *,
+        session: Optional[aiohttp.ClientSession] = None
+    ):
         self.base_url = base_url
         self.version = version
-        self.session = None  # type: ignore
+        self.session = session  # type: ignore
         self._headers = HTTPClient._build_headers(token)
         self.max_retries = max_retries
 
