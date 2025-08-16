@@ -81,7 +81,7 @@ asyncio.run(main())
 
 # ASGI framework usage
 
-*Usage with a FastAPI application*
+*Usage with a FastAPI/Starlette application*
 
 ```python
 from __future__ import annotations
