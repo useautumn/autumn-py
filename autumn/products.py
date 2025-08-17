@@ -20,6 +20,7 @@ from .models.response import (
     ReferralCodeResponse,
     ReferralRedeemResponse,
     ProductCancelResponse,
+    ListProductResponse
 )
 from .utils import _build_payload
 
@@ -150,6 +151,18 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
+
+    @overload
+    def list(self: "Products[HTTPClient]", customer_id: str) -> ListProductResponse:
+        ...
+
+    @overload
+    def list(self: "Products[AsyncHTTPClient]", customer_id: str) -> Coroutine[Any, Any, ListProductResponse]:
+        ...
+
+    def list(self, customer_id: str) -> Union[ListProductResponse, Coroutine[Any, Any, ListProductResponse]]:
+        params = {"customer_id": customer_id}
+        return self._http.request("GET", f"/products", ListProductResponse, params=params)
 
     @overload
     def update(

@@ -110,6 +110,10 @@ class CheckoutResponse(BaseModel):
     total: float
     currency: str
     options: List[AttachOption]
-    product: Product
-    current_product: Product
+    product: Optional[Product] = None
+    current_product: Optional[Product] = None
     next_cycle: Optional[CheckoutNextCycle] = None
+
+
+class ListProductResponse(BaseModel):
+    list: List[Product]

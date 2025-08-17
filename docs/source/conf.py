@@ -43,7 +43,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "furo"
-html_static_path = ["_static"]
+html_static_path = []
 html_theme_options = {}
 
 rst_prolog: str = """
@@ -65,11 +65,11 @@ intersphinx_mapping = {
 }
 
 resource_links = {
-    "github": "https://github.com/justanotherbyte/autumn",
+    "github": "https://github.com/useautumn/autumn-py",
     "discord": "https://discord.gg/QDjfwGGWKT",
 }
 
 
 autodoc_typehints_description_target = "implementation"
 
-pygments_style = "friendly"
+pygments_style = "autumn"
