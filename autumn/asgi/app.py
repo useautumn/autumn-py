@@ -124,5 +124,5 @@ class AutumnASGI:
         try:
             await self._router(scope, receive, send)
         except AutumnHTTPError as exc:
-            response = JSONResponse({"detail": str(exc)}, status_code=400)
+            response = JSONResponse({"detail": str(exc)}, status_code=exc.status_code or 400)
             await response(scope, receive, send)
