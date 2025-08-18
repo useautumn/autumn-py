@@ -22,6 +22,7 @@ class Empty(BaseModel): ...
 class AppEnv(str, Enum):
     PRODUCTION = "production"
     SANDBOX = "sandbox"
+    LIVE = "live"
 
 
 class AttachOption(BaseModel):
