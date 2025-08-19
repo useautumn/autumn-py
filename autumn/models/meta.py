@@ -44,4 +44,4 @@ class CheckoutLine(BaseModel):
 
 class Cycle(BaseModel):
     starts_at: int
-    total: int
+    total: float
