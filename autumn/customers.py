@@ -105,6 +105,8 @@ class Customers(Generic[T_HttpClient]):
             The customer's email address.
         name: Optional[str]
             The customer's name.
+        stripe_id: Optional[str]
+            The customer's Stripe ID. This can be a new or existing ID.
         metadata: Optional[Dict[str, Any]]
             Additional metadata to attach to the customer.
 
