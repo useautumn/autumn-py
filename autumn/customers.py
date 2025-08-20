@@ -187,6 +187,20 @@ class Customers(Generic[T_HttpClient]):
         self,
         customer_id: str
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        """Delete a customer.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to delete.
+
+        Returns
+        -------
+        :class:`~autumn.models.customers.Empty`
+            An empty response.
+
+        |maybecoro|
+        """
         return self._http.request("DELETE", f"/customers/{customer_id}", Empty)
 
     @overload
