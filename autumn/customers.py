@@ -69,6 +69,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Customer: ...
 
@@ -79,6 +80,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Coroutine[Any, Any, Customer]: ...
 
@@ -88,6 +90,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Create a new customer.
