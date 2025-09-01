@@ -14,7 +14,7 @@ from typing import (
 
 from .models.meta import Empty
 from .models.customers import Customer
-from .models.response import BillingPortalResponse, PricingTableResponse
+from .models.response import BillingPortalResponse, PricingTableResponse, ListCustomerResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -61,6 +61,36 @@ class Customers(Generic[T_HttpClient]):
             The customer.
         """
         return self._http.request("GET", f"/customers/{customer_id}", Customer)
+    
+    @overload
+    def list(
+        self: "Customers[HTTPClient]",
+        *,
+        limit: int = 10,
+        offset: int = 0
+    ) -> ListCustomerResponse:
+        ...
+
+    @overload
+    def list(
+        self: "Customers[AsyncHTTPClient]",
+        *,
+        limit: int = 10,
+        offset: int = 0
+    )-> Coroutine[Any, Any, ListCustomerResponse]:
+        ...
+
+    def list(
+        self,
+        *,
+        limit: int = 10,
+        offset: int = 0
+    ) -> Union[ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]]:
+        params = {
+            "limit": limit,
+            "offset": offset
+        }
+        return self._http.request("GET", "/customers", ListCustomerResponse, params=params)
 
     @overload
     def create(

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from .meta import AppEnv, CheckoutLine, AttachOption, Cycle
 from .products import ProductItem, FreeTrial, Product
-from .customers import PricingTableProduct
+from .customers import PricingTableProduct, Customer
 from .features import FeaturePreview
 from .products import ProductPreview
 
@@ -104,3 +104,6 @@ class PricingTableResponse(BaseModel):
 
 class ListProductResponse(BaseModel):
     list: List[Product]
+
+class ListCustomerResponse(BaseModel):
+    list: List[Customer]
