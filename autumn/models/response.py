@@ -107,3 +107,6 @@ class ListProductResponse(BaseModel):
 
 class ListCustomerResponse(BaseModel):
     list: List[Customer]
+    total: int
+    limit: int
+    offset: int
