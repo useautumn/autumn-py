@@ -105,6 +105,7 @@ class PricingTableResponse(BaseModel):
 class ListProductResponse(BaseModel):
     list: List[Product]
 
+
 class ListCustomerResponse(BaseModel):
     list: List[Customer]
     total: int

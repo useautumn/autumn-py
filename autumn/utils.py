@@ -1,4 +1,4 @@
-from typing import Dict, Any, Callable, Type, TypeVar, Set
+from typing import Dict, Any, Callable, Type, TypeVar, Set, Coroutine
 
 from pydantic import BaseModel, ValidationError
 
@@ -6,6 +6,7 @@ from .error import AutumnValidationError, AutumnHTTPError
 
 
 T = TypeVar("T", bound=BaseModel)
+T_Page = TypeVar("T_Page")
 
 
 def _decompose_value(value: Any) -> Any:
@@ -61,3 +62,26 @@ def _check_response(status_code: int, data: Dict[str, Any]) -> None:
             code,
             status_code,
         )
+
+class AsyncPaginator:
+    def __init__(
+        self,
+        get_next_page: Callable[..., Coroutine[Any, Any, T_Page]],
+        resolve: Callable[..., Coroutine[Any, Any, T_Page]]
+    ):
+        self.next_page = get_next_page
+        self.resolve = resolve
+
+    async def __aiter__(self):
+        exhausted = False
+        while not exhausted:
+            page = await self.next_page()
+            if page is not None:
+                yield page
+            else:
+                exhausted = True
+
+    async def __await__(self):
+        page = await self.resolve()
+        yield page
+
