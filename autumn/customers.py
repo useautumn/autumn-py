@@ -1,29 +1,29 @@
 from __future__ import annotations
 
 from typing import (
-    Optional,
-    Dict,
+    TYPE_CHECKING,
     Any,
-    TypeVar,
+    Coroutine,
+    Dict,
     Generic,
+    Optional,
+    TypeVar,
     Union,
     overload,
-    Coroutine,
-    TYPE_CHECKING,
 )
 
-from .models.meta import Empty
 from .models.customers import Customer
+from .models.meta import Empty
 from .models.response import (
     BillingPortalResponse,
-    PricingTableResponse,
     ListCustomerResponse,
+    PricingTableResponse,
 )
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 T_HttpClient = TypeVar(
     "T_HttpClient",

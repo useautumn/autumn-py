@@ -4,24 +4,23 @@ from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from typing import (
-        Optional,
-        List,
+        Any,
         Awaitable,
         Dict,
-        Any,
-        Union,
+        List,
         Literal,
+        Optional,
+        Union,
     )
 
-    from ..models.meta import AttachOption
     from ..models.features import Feature
-    from ..models.meta import CustomerData
+    from ..models.meta import AttachOption, CustomerData
     from ..models.response import (
         AttachResponse,
-        CheckResponse,
-        TrackResponse,
         CheckoutResponse,
+        CheckResponse,
         QueryResponse,
+        TrackResponse,
     )
 
 

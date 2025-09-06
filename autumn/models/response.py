@@ -1,25 +1,25 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
+from .customers import (
+    Customer,
+    PricingTableProduct,
+)
+from .features import FeaturePreview
 from .meta import (
     AppEnv,
-    CheckoutLine,
     AttachOption,
+    CheckoutLine,
     Cycle,
     QueryDP,
 )
 from .products import (
-    ProductItem,
     FreeTrial,
     Product,
+    ProductItem,
+    ProductPreview,
 )
-from .customers import (
-    PricingTableProduct,
-    Customer,
-)
-from .features import FeaturePreview
-from .products import ProductPreview
 
 __all__ = ("AttachResponse", "CheckResponse")
 

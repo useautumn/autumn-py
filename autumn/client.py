@@ -1,32 +1,31 @@
 from __future__ import annotations
 
 from typing import (
-    Optional,
-    List,
+    TYPE_CHECKING,
     Any,
     Dict,
+    List,
     Literal,
+    Optional,
     Union,
-    TYPE_CHECKING,
 )
 
 from .customers import Customers
 from .features import Features
-from .products import Products
 from .http import HTTPClient
-from .utils import _build_payload
 from .models.response import (
     AttachResponse,
-    CheckResponse,
     CheckoutResponse,
-    TrackResponse,
+    CheckResponse,
     QueryResponse,
+    TrackResponse,
 )
+from .products import Products
+from .utils import _build_payload
 
 if TYPE_CHECKING:
     from .models.features import Feature
-    from .models.meta import AttachOption
-    from .models.meta import CustomerData
+    from .models.meta import AttachOption, CustomerData
 
 
 __all__ = ("Client",)

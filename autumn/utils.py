@@ -1,19 +1,18 @@
 from typing import (
-    Dict,
     Any,
     Callable,
+    Dict,
+    Set,
     Type,
     TypeVar,
-    Set,
 )
 
 from pydantic import BaseModel, ValidationError
 
 from .error import (
-    AutumnValidationError,
     AutumnHTTPError,
+    AutumnValidationError,
 )
-
 
 T = TypeVar("T", bound=BaseModel)
 

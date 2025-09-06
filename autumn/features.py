@@ -1,25 +1,25 @@
 from __future__ import annotations
 
 from typing import (
-    List,
-    Any,
-    TypeVar,
-    Generic,
-    overload,
-    Coroutine,
-    Union,
-    Optional,
     TYPE_CHECKING,
+    Any,
+    Coroutine,
+    Generic,
+    List,
+    Optional,
+    TypeVar,
+    Union,
+    overload,
 )
 
 from .models.balance import Balance
-from .models.meta import Empty
 from .models.features import Entity
+from .models.meta import Empty
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 
 T_HttpClient = TypeVar(

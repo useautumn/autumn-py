@@ -1,11 +1,11 @@
-from typing import Literal, List, Dict, Optional
+from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel
 
 from .customers import (
-    CustomerProduct,
     CustomerFeature,
     CustomerInvoice,
+    CustomerProduct,
 )
 from .products import Product
 

@@ -4,8 +4,8 @@ from typing import Dict, Type, TypeVar
 import requests
 from pydantic import BaseModel
 
-from .utils import _build_model, _check_response
 from .error import AutumnError
+from .utils import _build_model, _check_response
 
 __all__ = ("HTTPClient",)
 
@@ -34,8 +34,8 @@ class HTTPClient:
         token: str,
     ) -> Dict[str, str]:
         from . import (
-            __version__,
             LATEST_API_VERSION,
+            __version__,
         )
 
         v_info = sys.version_info

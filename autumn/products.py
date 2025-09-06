@@ -1,35 +1,35 @@
 from __future__ import annotations
 
 from typing import (
-    List,
-    Any,
-    Union,
-    TypeVar,
-    Generic,
-    overload,
-    Coroutine,
-    Optional,
     TYPE_CHECKING,
+    Any,
+    Coroutine,
+    Generic,
+    List,
+    Optional,
+    TypeVar,
+    Union,
+    overload,
 )
 
 from .models.meta import Empty
 from .models.products import (
-    ProductItem,
     FreeTrial,
+    ProductItem,
 )
 from .models.response import (
     CreateProductResponse,
     GetProductResponse,
+    ListProductResponse,
+    ProductCancelResponse,
     ReferralCodeResponse,
     ReferralRedeemResponse,
-    ProductCancelResponse,
-    ListProductResponse,
 )
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 T_HttpClient = TypeVar(
     "T_HttpClient",

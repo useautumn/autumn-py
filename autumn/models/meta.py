@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict
 from .products import ProductItem
 
 if TYPE_CHECKING:
-    from typing import Dict, Any
+    from typing import Any, Dict
 
     Metadata = Dict[str, Any]
 

@@ -1,13 +1,12 @@
-import random
 import asyncio
-from typing import Type, TypeVar, Optional
+import random
+from typing import Optional, Type, TypeVar
 
 from pydantic import BaseModel
 
 from ..error import AutumnError, AutumnHTTPError
 from ..http import HTTPClient
 from ..utils import _build_model, _check_response
-
 
 try:
     import aiohttp
@@ -73,7 +72,6 @@ class AsyncHTTPClient:
                         raise _RetryRequestError()
 
                     data = await resp.json()
-
             except (
                 _RetryRequestError,
                 OSError,

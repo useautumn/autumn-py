@@ -1,20 +1,20 @@
 from __future__ import annotations
 
 from typing import (
-    Coroutine,
-    Callable,
-    TypedDict,
-    Any,
     TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    TypedDict,
 )
 
 try:
-    from starlette.routing import Router, Route
-    from starlette.responses import JSONResponse
     from starlette.middleware import Middleware
     from starlette.middleware.base import (
         BaseHTTPMiddleware,
     )
+    from starlette.responses import JSONResponse
+    from starlette.routing import Route, Router
 except ImportError:
     from ..error import AutumnError
 
@@ -27,13 +27,15 @@ except ImportError:
 else:
     STARLETTE_INSTALLED = True
 
+from ..aio.client import AsyncClient
+from ..error import AutumnHTTPError
 from .routes.core import (
     attach_route,
-    check_route,
-    track_route,
-    cancel_route,
-    checkout_route,
     billing_portal_route,
+    cancel_route,
+    check_route,
+    checkout_route,
+    track_route,
 )
 from .routes.customers import (
     create_customer_route,
@@ -44,8 +46,6 @@ from .routes.entities import (
     delete_entity_route,
     get_entity_route,
 )
-from ..aio.client import AsyncClient
-from ..error import AutumnHTTPError
 
 if TYPE_CHECKING:
     from starlette.requests import Request
