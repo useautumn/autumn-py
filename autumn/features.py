@@ -1,28 +1,32 @@
 from __future__ import annotations
 
 from typing import (
-    List,
-    Any,
-    TypeVar,
-    Generic,
-    overload,
-    Coroutine,
-    Union,
-    Optional,
     TYPE_CHECKING,
+    Any,
+    Coroutine,
+    Generic,
+    List,
+    Optional,
+    TypeVar,
+    Union,
+    overload,
 )
 
 from .models.balance import Balance
-from .models.meta import Empty
 from .models.features import Entity
+from .models.meta import Empty
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 
-T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
+T_HttpClient = TypeVar(
+    "T_HttpClient",
+    "AsyncHTTPClient",
+    "HTTPClient",
+)
 
 
 class Features(Generic[T_HttpClient]):
@@ -38,16 +42,25 @@ class Features(Generic[T_HttpClient]):
 
     @overload
     def set_usage(
-        self: "Features[HTTPClient]", customer_id: str, feature_id: str, value: int
+        self: "Features[HTTPClient]",
+        customer_id: str,
+        feature_id: str,
+        value: int,
     ) -> Empty: ...
 
     @overload
     def set_usage(
-        self: "Features[AsyncHTTPClient]", customer_id: str, feature_id: str, value: int
+        self: "Features[AsyncHTTPClient]",
+        customer_id: str,
+        feature_id: str,
+        value: int,
     ) -> Coroutine[Any, Any, Empty]: ...
 
     def set_usage(
-        self, customer_id: str, feature_id: str, value: int
+        self,
+        customer_id: str,
+        feature_id: str,
+        value: int,
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the usage of a feature for a customer.
 
@@ -90,7 +103,9 @@ class Features(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, Empty]: ...
 
     def set_balances(
-        self, customer_id: str, balances: List[Balance]
+        self,
+        customer_id: str,
+        balances: List[Balance],
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the balances of a customer.
 
@@ -111,7 +126,10 @@ class Features(Generic[T_HttpClient]):
 
         payload = _build_payload(locals(), self.set_balances, ignore={"customer_id"})  # type: ignore
         return self._http.request(
-            "POST", f"/customers/{customer_id}/balances", Empty, json=payload
+            "POST",
+            f"/customers/{customer_id}/balances",
+            Empty,
+            json=payload,
         )
 
     @overload
@@ -133,7 +151,11 @@ class Features(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, Empty]: ...
 
     def create_entity(
-        self, customer_id: str, id: str, feature_id: str, name: str
+        self,
+        customer_id: str,
+        id: str,
+        feature_id: str,
+        name: str,
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Create an entity for a customer.
 
@@ -158,7 +180,10 @@ class Features(Generic[T_HttpClient]):
 
         payload = _build_payload(locals(), self.create_entity, ignore={"customer_id"})  # type: ignore
         return self._http.request(
-            "POST", f"/customers/{customer_id}/entities", Empty, json=payload
+            "POST",
+            f"/customers/{customer_id}/entities",
+            Empty,
+            json=payload,
         )
 
     @overload
@@ -178,7 +203,10 @@ class Features(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, Entity]: ...
 
     def get_entity(
-        self, customer_id: str, entity_id: str, expand: Optional[List[str]] = None
+        self,
+        customer_id: str,
+        entity_id: str,
+        expand: Optional[List[str]] = None,
     ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
         """Get an entity
 
@@ -209,9 +237,7 @@ class Features(Generic[T_HttpClient]):
         entity_id: str,
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete_entity(
-        self, customer_id: str, entity_id: str
-    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete_entity(self, customer_id: str, entity_id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete an entity for a customer.
 
         |maybecoro|
@@ -230,5 +256,7 @@ class Features(Generic[T_HttpClient]):
         """
 
         return self._http.request(
-            "DELETE", f"/customers/{customer_id}/entities/{entity_id}", Empty
+            "DELETE",
+            f"/customers/{customer_id}/entities/{entity_id}",
+            Empty,
         )

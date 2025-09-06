@@ -1,6 +1,6 @@
 from typing import Any, List
-from typing_extensions import Self
 
+from typing_extensions import Self
 
 __all__ = ("AutumnError", "AutumnValidationError")
 
@@ -66,7 +66,12 @@ class AutumnHTTPError(AutumnError):
         The HTTP status code.
     """
 
-    def __init__(self, message: str, code: str, status_code: int):
+    def __init__(
+        self,
+        message: str,
+        code: str,
+        status_code: int,
+    ):
         super().__init__(message, code)
         self.status_code = status_code
 

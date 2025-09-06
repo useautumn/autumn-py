@@ -8,12 +8,17 @@ from pydantic import BaseModel, ConfigDict
 from .products import ProductItem
 
 if TYPE_CHECKING:
-    from typing import Dict, Any
+    from typing import Any, Dict
 
     Metadata = Dict[str, Any]
 
 
-__all__ = ("Empty", "AppEnv", "AttachOption", "CustomerData")
+__all__ = (
+    "Empty",
+    "AppEnv",
+    "AttachOption",
+    "CustomerData",
+)
 
 
 class Empty(BaseModel): ...
