@@ -1,12 +1,20 @@
 from __future__ import annotations
 
-from typing import Coroutine, Callable, TypedDict, Any, TYPE_CHECKING
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    TypedDict,
+)
 
 try:
-    from starlette.routing import Router, Route
-    from starlette.responses import JSONResponse
     from starlette.middleware import Middleware
-    from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.middleware.base import (
+        BaseHTTPMiddleware,
+    )
+    from starlette.responses import JSONResponse
+    from starlette.routing import Route, Router
 except ImportError:
     from ..error import AutumnError
 
@@ -19,18 +27,25 @@ except ImportError:
 else:
     STARLETTE_INSTALLED = True
 
-from .routes.core import (
-    attach_route,
-    check_route,
-    track_route,
-    cancel_route,
-    checkout_route,
-    billing_portal_route,
-)
-from .routes.customers import create_customer_route, pricing_table_route
-from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
 from ..aio.client import AsyncClient
 from ..error import AutumnHTTPError
+from .routes.core import (
+    attach_route,
+    billing_portal_route,
+    cancel_route,
+    check_route,
+    checkout_route,
+    track_route,
+)
+from .routes.customers import (
+    create_customer_route,
+    pricing_table_route,
+)
+from .routes.entities import (
+    create_entity_route,
+    delete_entity_route,
+    get_entity_route,
+)
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -65,25 +80,50 @@ class AutumnASGI:
         self,
         token: str,
         *,
-        identify: Callable[[Request], Coroutine[Any, Any, AutumnIdentifyData]],
+        identify: Callable[
+            [Request],
+            Coroutine[Any, Any, AutumnIdentifyData],
+        ],
     ):
         self._client = AsyncClient(token)
         self._identify = identify
 
         router = Router(
             routes=[
-                Route("/attach/", attach_route, methods={"POST"}),
-                Route("/check/", check_route, methods={"POST"}),
-                Route("/track/", track_route, methods={"POST"}),
-                Route("/cancel/", cancel_route, methods={"POST"}),
+                Route(
+                    "/attach/",
+                    attach_route,
+                    methods={"POST"},
+                ),
+                Route(
+                    "/check/",
+                    check_route,
+                    methods={"POST"},
+                ),
+                Route(
+                    "/track/",
+                    track_route,
+                    methods={"POST"},
+                ),
+                Route(
+                    "/cancel/",
+                    cancel_route,
+                    methods={"POST"},
+                ),
                 Route(
                     "/billing_portal/",
                     billing_portal_route,
                     methods={"POST"},
                 ),
-                Route("/checkout/", checkout_route, methods={"POST"}),
                 Route(
-                    "/customers/", create_customer_route, methods={"POST"}
+                    "/checkout/",
+                    checkout_route,
+                    methods={"POST"},
+                ),
+                Route(
+                    "/customers/",
+                    create_customer_route,
+                    methods={"POST"},
                 ),
                 Route(
                     "/customers/{customer_id:str}/entities/{entity_id:str}",
@@ -108,7 +148,9 @@ class AutumnASGI:
             ],
             middleware=[
                 Middleware(
-                    _StateMiddleware, client=self._client, identify=self._identify
+                    _StateMiddleware,
+                    client=self._client,
+                    identify=self._identify,
                 )
             ],
         )
@@ -124,5 +166,8 @@ class AutumnASGI:
         try:
             await self._router(scope, receive, send)
         except AutumnHTTPError as exc:
-            response = JSONResponse({"detail": str(exc)}, status_code=exc.status_code or 400)
+            response = JSONResponse(
+                {"detail": str(exc)},
+                status_code=exc.status_code or 400,
+            )
             await response(scope, receive, send)

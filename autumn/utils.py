@@ -1,9 +1,18 @@
-from typing import Dict, Any, Callable, Type, TypeVar, Set, Coroutine
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Set,
+    Type,
+    TypeVar,
+)
 
 from pydantic import BaseModel, ValidationError
 
-from .error import AutumnValidationError, AutumnHTTPError
-
+from .error import (
+    AutumnHTTPError,
+    AutumnValidationError,
+)
 
 T = TypeVar("T", bound=BaseModel)
 T_Page = TypeVar("T_Page")
@@ -19,18 +28,16 @@ def _decompose_value(value: Any) -> Any:
 
 
 def _build_payload(
-    scope: Dict[str, Any], method: Callable, *, ignore: Set[str] = set()
+    scope: Dict[str, Any],
+    method: Callable,
+    *,
+    ignore: Set[str] = set(),
 ) -> Dict[str, Any]:
     params = method.__code__.co_varnames
     payload: Dict[str, Any] = {}
 
     for key, value in scope.items():
-        if (
-            key != "self"
-            and (key in params)
-            and (key not in ignore)
-            and (value is not None)
-        ):
+        if key != "self" and (key in params) and (key not in ignore) and (value is not None):
             payload[key] = _decompose_value(value)
 
     return payload
@@ -55,7 +62,10 @@ def _build_model(model: Type[T], data: Dict[str, Any]) -> T:
 
 def _check_response(status_code: int, data: Dict[str, Any]) -> None:
     if not 200 <= status_code < 300:
-        message = data.get("message", "No error message provided.")
+        message = data.get(
+            "message",
+            "No error message provided.",
+        )
         code = data.get("code", "unknown_error")
         raise AutumnHTTPError(
             message,

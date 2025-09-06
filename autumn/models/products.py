@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Literal, List, Optional, Union
+from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel
 
@@ -64,7 +64,17 @@ class FreeTrial(BaseModel):
     length: float
     unique_fingerprint: bool
 
-ProductScenario = Literal["scheduled", "active", "new", "renew", "upgrade", "downgrade", "cancel"]
+
+ProductScenario = Literal[
+    "scheduled",
+    "active",
+    "new",
+    "renew",
+    "upgrade",
+    "downgrade",
+    "cancel",
+]
+
 
 class Product(BaseModel):
     created_at: float

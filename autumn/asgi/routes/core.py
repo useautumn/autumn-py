@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import _extract, _build_response
 from ...models.meta import CustomerData
+from . import _build_response, _extract
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -16,7 +16,9 @@ async def attach_route(request: Request):
     customer_data = identify["customer_data"]
 
     response = await autumn.attach(
-        customer_id, customer_data=CustomerData(**customer_data), **json
+        customer_id,
+        customer_data=CustomerData(**customer_data),
+        **json,
     )
     return _build_response(response)
 

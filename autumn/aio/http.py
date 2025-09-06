@@ -1,13 +1,12 @@
-import random
 import asyncio
-from typing import Type, TypeVar, Optional
+import random
+from typing import Optional, Type, TypeVar
 
 from pydantic import BaseModel
 
 from ..error import AutumnError, AutumnHTTPError
 from ..http import HTTPClient
 from ..utils import _build_model, _check_response
-
 
 try:
     import aiohttp
@@ -35,7 +34,7 @@ class AsyncHTTPClient:
         token: str,
         max_retries: int = 3,
         *,
-        session: Optional[aiohttp.ClientSession] = None
+        session: Optional[aiohttp.ClientSession] = None,
     ):
         self.base_url = base_url
         self.version = version
@@ -49,7 +48,13 @@ class AsyncHTTPClient:
         rand.seed()
         self._rand = rand
 
-    async def request(self, method: str, path: str, type_: Type[T], **kwargs) -> T:
+    async def request(
+        self,
+        method: str,
+        path: str,
+        type_: Type[T],
+        **kwargs,
+    ) -> T:
         if self.session is None:
             self.session = aiohttp.ClientSession()
 
@@ -58,15 +63,21 @@ class AsyncHTTPClient:
         for attempt in range(self.max_retries):
             try:
                 async with self.session.request(
-                    method, url, headers=self._headers, **kwargs
+                    method,
+                    url,
+                    headers=self._headers,
+                    **kwargs,
                 ) as resp:
                     if 500 <= resp.status <= 504:
                         raise _RetryRequestError()
 
                     data = await resp.json()
-
-            except (_RetryRequestError, OSError, asyncio.TimeoutError):
-                sleep_time = (2 ** attempt) + self._rand.uniform(0, 1)
+            except (
+                _RetryRequestError,
+                OSError,
+                asyncio.TimeoutError,
+            ):
+                sleep_time = (2**attempt) + self._rand.uniform(0, 1)
                 await asyncio.sleep(sleep_time)
             else:
                 _check_response(resp.status, data)
@@ -76,5 +87,5 @@ class AsyncHTTPClient:
         raise AutumnHTTPError(msg, "max_retries_reached", 500)
 
     async def close(self):
-        if self.session is not None:
+        if self.session is not None and not self.session.closed:
             await self.session.close()

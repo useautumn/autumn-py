@@ -1,12 +1,25 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
-from .meta import AppEnv, CheckoutLine, AttachOption, Cycle
-from .products import ProductItem, FreeTrial, Product
-from .customers import PricingTableProduct, Customer
+from .customers import (
+    Customer,
+    PricingTableProduct,
+)
 from .features import FeaturePreview
-from .products import ProductPreview
+from .meta import (
+    AppEnv,
+    AttachOption,
+    CheckoutLine,
+    Cycle,
+    QueryDP,
+)
+from .products import (
+    FreeTrial,
+    Product,
+    ProductItem,
+    ProductPreview,
+)
 
 __all__ = ("AttachResponse", "CheckResponse")
 
@@ -111,3 +124,7 @@ class ListCustomerResponse(BaseModel):
     total: int
     limit: int
     offset: int
+
+
+class QueryResponse(BaseModel):
+    list: List[QueryDP]

@@ -140,6 +140,9 @@ app.mount("/api/autumn", autumn)
 
 ## Synchronous Usage
 
+> [!WARNING]  
+> The synchronous client exists only for convenience. It does not have automatic request retries. It will likely be deprecated in the future. Use the `async` client please.
+
 ```python
 import autumn
 
