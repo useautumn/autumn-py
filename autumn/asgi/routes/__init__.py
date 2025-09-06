@@ -27,5 +27,7 @@ async def _extract(
     return (identify, client, json)
 
 
-def _build_response(response: BaseModel) -> JSONResponse:
+def _build_response(
+    response: BaseModel,
+) -> JSONResponse:
     return JSONResponse(response.model_dump(mode="json"))

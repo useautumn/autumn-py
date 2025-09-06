@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from typing import Optional, List, Any, Dict, Literal, Union, TYPE_CHECKING
+from typing import (
+    Optional,
+    List,
+    Any,
+    Dict,
+    Literal,
+    Union,
+    TYPE_CHECKING,
+)
 
 from .customers import Customers
 from .features import Features
@@ -78,7 +86,12 @@ class Client:
         An interface to Autumn's product API.
     """
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        *,
+        base_url: Optional[str] = None,
+    ):
         from . import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
@@ -138,15 +151,18 @@ class Client:
             The response from the API.
         """
 
-        assert product_id is not None or product_ids is not None, (
-            "Either product_id or product_ids must be provided"
-        )
-        assert not (product_id is not None and product_ids is not None), (
-            "Only one of product_id or product_ids must be provided"
-        )
+        assert product_id is not None or product_ids is not None, "Either product_id or product_ids must be provided"
+        assert not (
+            product_id is not None and product_ids is not None
+        ), "Only one of product_id or product_ids must be provided"
 
         payload = _build_payload(locals(), self.attach)
-        return self.http.request("POST", "/attach", AttachResponse, json=payload)
+        return self.http.request(
+            "POST",
+            "/attach",
+            AttachResponse,
+            json=payload,
+        )
 
     def check(
         self,
@@ -191,12 +207,15 @@ class Client:
             The response from the API.
         """
 
-        assert product_id is not None or feature_id is not None, (
-            "Either product_id or feature_id must be provided"
-        )
+        assert product_id is not None or feature_id is not None, "Either product_id or feature_id must be provided"
 
         payload = _build_payload(locals(), self.check)
-        return self.http.request("POST", "/check", CheckResponse, json=payload)
+        return self.http.request(
+            "POST",
+            "/check",
+            CheckResponse,
+            json=payload,
+        )
 
     def track(
         self,
@@ -241,7 +260,12 @@ class Client:
         """
         assert feature_id or event_name, "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
-        return self.http.request("POST", "/track", TrackResponse, json=payload)
+        return self.http.request(
+            "POST",
+            "/track",
+            TrackResponse,
+            json=payload,
+        )
 
     def checkout(
         self,
@@ -268,14 +292,30 @@ class Client:
             The response from the API.
         """
         payload = _build_payload(locals(), self.checkout)
-        return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
+        return self.http.request(
+            "POST",
+            "/checkout",
+            CheckoutResponse,
+            json=payload,
+        )
 
     def query(
         self,
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
-        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
+        range: Literal[
+            "24h",
+            "7d",
+            "30d",
+            "90d",
+            "last_cycle",
+        ] = "30d",
     ) -> QueryResponse:
         payload = _build_payload(locals(), self.query)
-        return self.http.request("POST", "/query", QueryResponse, json=payload)
+        return self.http.request(
+            "POST",
+            "/query",
+            QueryResponse,
+            json=payload,
+        )

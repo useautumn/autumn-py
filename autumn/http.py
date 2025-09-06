@@ -13,7 +13,12 @@ T = TypeVar("T", bound=BaseModel)
 
 
 class HTTPClient:
-    def __init__(self, base_url: str, version: str, token: str):
+    def __init__(
+        self,
+        base_url: str,
+        version: str,
+        token: str,
+    ):
         self.base_url = base_url
         self.version = version
         self.session = requests.Session()
@@ -25,14 +30,16 @@ class HTTPClient:
         return f"{base_url}/{version}{path}"
 
     @staticmethod
-    def _build_headers(token: str) -> Dict[str, str]:
-        from . import __version__, LATEST_API_VERSION
+    def _build_headers(
+        token: str,
+    ) -> Dict[str, str]:
+        from . import (
+            __version__,
+            LATEST_API_VERSION,
+        )
 
         v_info = sys.version_info
-        user_agent = (
-            f"autumn-py/{__version__}"
-            f" (Python {v_info.major}.{v_info.minor}.{v_info.micro})"
-        )
+        user_agent = f"autumn-py/{__version__}" f" (Python {v_info.major}.{v_info.minor}.{v_info.micro})"
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -56,7 +63,12 @@ class HTTPClient:
             )
 
         url = self._build_url(self.base_url, self.version, path)
-        resp = self.session.request(method, url, headers=self._headers, **kwargs)
+        resp = self.session.request(
+            method,
+            url,
+            headers=self._headers,
+            **kwargs,
+        )
 
         data = resp.json()
 

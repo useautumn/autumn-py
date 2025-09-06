@@ -13,7 +13,12 @@ if TYPE_CHECKING:
     Metadata = Dict[str, Any]
 
 
-__all__ = ("Empty", "AppEnv", "AttachOption", "CustomerData")
+__all__ = (
+    "Empty",
+    "AppEnv",
+    "AttachOption",
+    "CustomerData",
+)
 
 
 class Empty(BaseModel): ...

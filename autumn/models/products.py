@@ -64,7 +64,17 @@ class FreeTrial(BaseModel):
     length: float
     unique_fingerprint: bool
 
-ProductScenario = Literal["scheduled", "active", "new", "renew", "upgrade", "downgrade", "cancel"]
+
+ProductScenario = Literal[
+    "scheduled",
+    "active",
+    "new",
+    "renew",
+    "upgrade",
+    "downgrade",
+    "cancel",
+]
+
 
 class Product(BaseModel):
     created_at: float

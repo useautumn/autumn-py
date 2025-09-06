@@ -2,7 +2,11 @@ from typing import Literal, List, Dict, Optional
 
 from pydantic import BaseModel
 
-from .customers import CustomerProduct, CustomerFeature, CustomerInvoice
+from .customers import (
+    CustomerProduct,
+    CustomerFeature,
+    CustomerInvoice,
+)
 from .products import Product
 
 __all__ = ("Feature", "FeaturePreview", "Entity")

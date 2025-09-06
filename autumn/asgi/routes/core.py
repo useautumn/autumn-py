@@ -16,7 +16,9 @@ async def attach_route(request: Request):
     customer_data = identify["customer_data"]
 
     response = await autumn.attach(
-        customer_id, customer_data=CustomerData(**customer_data), **json
+        customer_id,
+        customer_data=CustomerData(**customer_data),
+        **json,
     )
     return _build_response(response)
 

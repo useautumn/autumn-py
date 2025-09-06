@@ -3,7 +3,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
-    from typing import Optional, List, Awaitable, Dict, Any, Union, Literal
+    from typing import (
+        Optional,
+        List,
+        Awaitable,
+        Dict,
+        Any,
+        Union,
+        Literal,
+    )
 
     from ..models.meta import AttachOption
     from ..models.features import Feature
@@ -17,7 +25,11 @@ if TYPE_CHECKING:
     )
 
 
-__all__ = ("AttachParams", "CheckParams", "TrackParams")
+__all__ = (
+    "AttachParams",
+    "CheckParams",
+    "TrackParams",
+)
 
 
 class AttachParams(Protocol):
@@ -76,11 +88,18 @@ class CheckoutParams(Protocol):
         success_url: Optional[str] = None,
     ) -> Awaitable[CheckoutResponse]: ...
 
+
 class QueryParams(Protocol):
     def __call__(
         self,
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
-        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
+        range: Literal[
+            "24h",
+            "7d",
+            "30d",
+            "90d",
+            "last_cycle",
+        ] = "30d",
     ) -> Awaitable[QueryResponse]: ...
