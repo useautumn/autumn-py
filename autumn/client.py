@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, List, Any, Dict, TYPE_CHECKING
+from typing import Optional, List, Any, Dict, Literal, Union, TYPE_CHECKING
 
 from .customers import Customers
 from .features import Features
@@ -12,6 +12,7 @@ from .models.response import (
     CheckResponse,
     CheckoutResponse,
     TrackResponse,
+    QueryResponse,
 )
 
 if TYPE_CHECKING:
@@ -268,3 +269,13 @@ class Client:
         """
         payload = _build_payload(locals(), self.checkout)
         return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
+
+    def query(
+        self,
+        customer_id: str,
+        feature_id: Union[str, List[str]],
+        *,
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"]
+    ) -> QueryResponse:
+        payload = _build_payload(locals(), self.query)
+        return self.http.request("POST", "/query", QueryResponse, json=payload)

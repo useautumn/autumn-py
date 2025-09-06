@@ -19,7 +19,7 @@ except ImportError:
 
 if TYPE_CHECKING:
     from typing_extensions import Self
-    from .shed import AttachParams, CheckParams, TrackParams, CheckoutParams
+    from .shed import AttachParams, CheckParams, TrackParams, CheckoutParams, QueryParams
 
 __all__ = ("AsyncClient",)
 
@@ -60,6 +60,7 @@ class AsyncClient(Client):
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
     checkout: CheckoutParams # type: ignore
+    query: QueryParams # type: ignore
 
     def __init__(
         self,

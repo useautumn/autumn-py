@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from .meta import AppEnv, CheckoutLine, AttachOption, Cycle
+from .meta import AppEnv, CheckoutLine, AttachOption, Cycle, QueryDP
 from .products import ProductItem, FreeTrial, Product
 from .customers import PricingTableProduct, Customer
 from .features import FeaturePreview
@@ -110,3 +110,6 @@ class ListCustomerResponse(BaseModel):
     total: int
     limit: int
     offset: int
+
+class QueryResponse(BaseModel):
+    list: List[QueryDP]
