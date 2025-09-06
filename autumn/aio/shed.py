@@ -82,5 +82,5 @@ class QueryParams(Protocol):
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
-        range: Literal["24h", "7d", "30d", "90d", "last_cycle"]
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
     ) -> Awaitable[QueryResponse]: ...
