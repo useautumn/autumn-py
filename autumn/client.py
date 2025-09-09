@@ -65,6 +65,8 @@ class Client:
     ----------
     token: str
         The API key to use for authentication.
+    max_retries: int
+        The maximum number of retries to attempt for failed requests.
     base_url: Optional[str]
         The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
 
