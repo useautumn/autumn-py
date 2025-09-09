@@ -32,10 +32,6 @@ class HTTPClient:
         self._headers = self._build_headers(token)
         self.attempts = attempts
 
-        rand = random.Random()
-        rand.seed()
-        self._rand = rand
-
     @staticmethod
     def _build_url(base_url: str, version: str, path: str) -> str:
         return f"{base_url}/{version}{path}"
