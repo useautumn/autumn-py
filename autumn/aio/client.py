@@ -19,7 +19,13 @@ except ImportError:
 
 if TYPE_CHECKING:
     from typing_extensions import Self
-    from .shed import AttachParams, CheckParams, TrackParams, CheckoutParams, QueryParams
+    from .shed import (
+        AttachParams,
+        CheckParams,
+        TrackParams,
+        CheckoutParams,
+        QueryParams,
+    )
 
 __all__ = ("AsyncClient",)
 
@@ -59,8 +65,8 @@ class AsyncClient(Client):
     attach: AttachParams  # type: ignore
     check: CheckParams  # type: ignore
     track: TrackParams  # type: ignore
-    checkout: CheckoutParams # type: ignore
-    query: QueryParams # type: ignore
+    checkout: CheckoutParams  # type: ignore
+    query: QueryParams  # type: ignore
 
     def __init__(
         self,
@@ -75,8 +81,14 @@ class AsyncClient(Client):
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
+        attempts = max_retries + 1
         self.http = AsyncHTTPClient(
-            _base_url, VERSION, token, max_retries=max_retries, session=session)
+            _base_url,
+            VERSION,
+            token,
+            attempts=attempts,
+            session=session,
+        )
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)

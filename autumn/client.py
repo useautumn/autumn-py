@@ -65,6 +65,8 @@ class Client:
     ----------
     token: str
         The API key to use for authentication.
+    max_retries: int
+        The maximum number of retries to attempt for failed requests.
     base_url: Optional[str]
         The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
 
@@ -78,13 +80,20 @@ class Client:
         An interface to Autumn's product API.
     """
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        *,
+        base_url: Optional[str] = None,
+        max_retries: int = 5,
+    ):
         from . import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = HTTPClient(_base_url, VERSION, token)
+        attempts = max_retries + 1 # account for the original request
+        self.http = HTTPClient(_base_url, VERSION, token, attempts=attempts)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
