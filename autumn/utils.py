@@ -74,7 +74,6 @@ class ExponentialBackoff:
         self._state = 0
 
     def tick(self):
-        print("ticked")
         self._state += 1
 
     @property
