@@ -29,7 +29,7 @@ class AsyncHTTPClient:
         base_url: str,
         version: str,
         token: str,
-        max_retries: int,
+        attempts: int,
         *,
         session: Optional[aiohttp.ClientSession] = None
     ):
@@ -37,7 +37,7 @@ class AsyncHTTPClient:
         self.version = version
         self.session = session  # type: ignore
         self._headers = HTTPClient._build_headers(token)
-        self.max_retries = max_retries
+        self.attempts = attempts
 
         self._build_url = HTTPClient._build_url
 
@@ -47,9 +47,9 @@ class AsyncHTTPClient:
 
         url = self._build_url(self.base_url, self.version, path)
 
-        max_retries = self.max_retries
+        max_attempts = self.attempts
         backoff = ExponentialBackoff()
-        for attempt in range(self.max_retries):
+        for attempt in range(max_attempts):
             try:
                 async with self.session.request(
                     method, url, headers=self._headers, **kwargs
@@ -60,7 +60,7 @@ class AsyncHTTPClient:
                     data = await resp.json()
 
             except (_RetryRequestError, OSError, asyncio.TimeoutError):
-                if attempt == max_retries - 1:
+                if attempt == max_attempts - 1:
                     raise
 
                 await asyncio.sleep(backoff.bedtime)

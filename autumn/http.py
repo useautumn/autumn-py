@@ -23,14 +23,14 @@ class HTTPClient:
         base_url: str,
         version: str,
         token: str,
-        max_retries: int
+        attempts: int
     ):
         self.base_url = base_url
         self.version = version
         self.session = requests.Session()
 
         self._headers = self._build_headers(token)
-        self.max_retries = max_retries
+        self.attempts = attempts
 
         rand = random.Random()
         rand.seed()
@@ -73,9 +73,9 @@ class HTTPClient:
 
         url = self._build_url(self.base_url, self.version, path)
 
-        max_retries = self.max_retries
+        max_attempts = self.attempts
         backoff = ExponentialBackoff()
-        for attempt in range(self.max_retries):
+        for attempt in range(max_attempts):
             try:
                 resp = self.session.request(
                     method,
@@ -93,7 +93,7 @@ class HTTPClient:
                 requests.ConnectionError,
                 requests.ConnectTimeout
             ):
-                if attempt == max_retries - 1:
+                if attempt == max_attempts - 1:
                     raise
 
                 time.sleep(backoff.bedtime)

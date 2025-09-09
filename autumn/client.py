@@ -90,7 +90,8 @@ class Client:
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = HTTPClient(_base_url, VERSION, token, max_retries=max_retries)
+        attempts = max_retries + 1 # account for the original request
+        self.http = HTTPClient(_base_url, VERSION, token, attempts=attempts)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
