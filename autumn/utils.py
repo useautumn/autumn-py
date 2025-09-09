@@ -1,3 +1,4 @@
+import random
 from typing import Dict, Any, Callable, Type, TypeVar, Set
 
 from pydantic import BaseModel, ValidationError
@@ -61,3 +62,23 @@ def _check_response(status_code: int, data: Dict[str, Any]) -> None:
             code,
             status_code,
         )
+
+
+class ExponentialBackoff:
+    def __init__(self):
+        rand = random.Random()
+        rand.seed()
+
+        self._rand = rand
+        self._base = 2
+        self._state = 0
+
+    def tick(self):
+        print("ticked")
+        self._state += 1
+
+    @property
+    def bedtime(self):
+        raw_time = self._base ** self._state
+        jitter = self._rand.uniform(0, 1)
+        return raw_time + jitter

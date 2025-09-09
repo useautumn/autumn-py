@@ -78,13 +78,19 @@ class Client:
         An interface to Autumn's product API.
     """
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        *,
+        base_url: Optional[str] = None,
+        max_retries: int = 5,
+    ):
         from . import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = HTTPClient(_base_url, VERSION, token)
+        self.http = HTTPClient(_base_url, VERSION, token, max_retries=max_retries)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
