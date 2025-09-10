@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 async def list_products_route(request: Request):
-    identify, autumn, _ = await _extract(request)
+    identify, autumn, _ = await _extract(request, get_json=False)
 
     customer_id = identify["customer_id"]
 
