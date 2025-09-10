@@ -59,3 +59,11 @@ async def checkout_route(request: Request):
     customer_id = identify["customer_id"]
     response = await autumn.checkout(customer_id, **json)
     return _build_response(response)
+
+
+async def query_route(request: Request):
+    identify, autumn, json = await _extract(request)
+
+    customer_id = identify["customer_id"]
+    response = await autumn.query(customer_id=customer_id, **json)
+    return _build_response(response)
