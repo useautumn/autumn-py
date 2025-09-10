@@ -7,8 +7,7 @@ from autumn.models.response import CheckoutResponse
 if TYPE_CHECKING:
     from typing import Optional, List, Awaitable, Dict, Any, Union, Literal
 
-    from ..models.meta import AttachOption
-    from ..models.features import Feature
+    from ..models.meta import AttachOption, AttachProductOption
     from ..models.meta import CustomerData
     from ..models.response import (
         AttachResponse,
@@ -29,6 +28,7 @@ class AttachParams(Protocol):
         *,
         product_id: Optional[str] = None,
         product_ids: Optional[List[str]] = None,
+        products: Optional[List[AttachProductOption]] = None,
         success_url: Optional[str] = None,
         force_checkout: bool = False,
         entity_id: Optional[str] = None,
@@ -80,6 +80,7 @@ class CheckoutParams(Protocol):
         customer_id: str,
         *,
         product_id: Optional[str] = None,
+        products: Optional[List[AttachProductOption]] = None,
         entity_id: Optional[str] = None,
         options: Optional[List[AttachOption]] = None,
         customer_data: Optional[CustomerData] = None,
@@ -87,13 +88,16 @@ class CheckoutParams(Protocol):
         checkout_session_params: Optional[Dict[str, Any]] = None,
         reward: Optional[str] = None,
     ) -> Awaitable[CheckoutResponse]:
+        ...
 
 
 class QueryParams(Protocol):
+
     def __call__(
         self,
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
         range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
-    ) -> Awaitable[QueryResponse]: ...
+    ) -> Awaitable[QueryResponse]:
+        ...

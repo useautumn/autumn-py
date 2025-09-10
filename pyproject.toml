@@ -1,6 +1,5 @@
 [project]
 name = "autumn-py"
-version = "1.5.6"
 description = "A Python SDK for Autumn's REST API"
 readme = "README.md"
 license = "MIT"

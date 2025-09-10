@@ -25,3 +25,5 @@ tests.py
 
 autumn-env
 publish.sh
+
+tests/test.py

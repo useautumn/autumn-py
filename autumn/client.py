@@ -5,6 +5,7 @@ from typing import Optional, List, Any, Dict, Literal, Union, TYPE_CHECKING
 from .customers import Customers
 from .features import Features
 from .products import Products
+from .entities import Entities
 from .http import HTTPClient
 from .utils import _build_payload
 from .models.response import (
@@ -17,7 +18,7 @@ from .models.response import (
 
 if TYPE_CHECKING:
     from .models.features import Feature
-    from .models.meta import AttachOption
+    from .models.meta import AttachOption, ProductOption
     from .models.meta import CustomerData
 
 __all__ = ("Client", )
@@ -77,6 +78,8 @@ class Client:
         An interface to Autumn's feature API.
     products: :class:`~autumn.products.Products`
         An interface to Autumn's product API.
+    entities: :class:`~autumn.entities.Entities`
+        An interface to Autumn's entities API.
     """
 
     def __init__(
@@ -96,12 +99,14 @@ class Client:
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
+        self.entities = Entities(self.http)
 
     def checkout(
         self,
         customer_id: str,
         *,
         product_id: Optional[str] = None,
+        products: Optional[List[ProductOption]] = None,
         success_url: Optional[str] = None,
         options: Optional[List[AttachOption]] = None,
         entity_id: Optional[str] = None,
@@ -117,6 +122,8 @@ class Client:
             The ID of the customer to checkout.
         product_id: Optional[str]
             The ID of the product to checkout.
+        products: Optional[List[ProductOption]]
+            The products to checkout.
         success_url: Optional[str]
             The URL to redirect to after a successful checkout.
         force_checkout: bool
@@ -139,6 +146,7 @@ class Client:
         *,
         product_id: Optional[str] = None,
         product_ids: Optional[List[str]] = None,
+        products: Optional[List[ProductOption]] = None,
         success_url: Optional[str] = None,
         force_checkout: bool = False,
         features: Optional[List[Feature]] = None,
@@ -159,6 +167,8 @@ class Client:
             The ID of the product to attach.
         product_ids: Optional[List[str]]
             The IDs of the products to attach.
+        products: Optional[List[AttachProductOptions]]
+            The products to attach.
         success_url: Optional[str]
             The URL to redirect to after a successful attachment.
         force_checkout: bool

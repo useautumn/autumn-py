@@ -7,6 +7,7 @@ from ..client import Client
 from ..features import Features
 from ..customers import Customers
 from ..products import Products
+from ..entities import Entities
 from ..error import AutumnError
 
 try:
@@ -59,6 +60,8 @@ class AsyncClient(Client):
         An interface to Autumn's feature API.
     products: :class:`~autumn.products.Products`
         An interface to Autumn's product API.
+    entities: :class:`~autumn.entities.Entities`
+        An interface to Autumn's entities API.
 
     """
 
@@ -92,6 +95,7 @@ class AsyncClient(Client):
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
+        self.entities = Entities(self.http)
 
         self.cancel = self.products.cancel
 

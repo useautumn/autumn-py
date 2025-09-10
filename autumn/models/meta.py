@@ -12,11 +12,11 @@ if TYPE_CHECKING:
 
     Metadata = Dict[str, Any]
 
+__all__ = ("Empty", "AppEnv", "AttachOption", "ProductOption", "CustomerData")
 
-__all__ = ("Empty", "AppEnv", "AttachOption", "CustomerData")
 
-
-class Empty(BaseModel): ...
+class Empty(BaseModel):
+    ...
 
 
 class AppEnv(str, Enum):
@@ -30,10 +30,20 @@ class AttachOption(BaseModel):
     quantity: int
 
 
+class ProductOption(BaseModel):
+    product_id: str
+    quantity: Optional[int] = None
+
+
 class CustomerData(BaseModel):
     name: Optional[str] = None
     email: Optional[str] = None
     fingerprint: Optional[str] = None
+
+
+class AttachProductOptions(BaseModel):
+    product_id: str
+    quantity: Optional[int] = None
 
 
 class CheckoutLine(BaseModel):

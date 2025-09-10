@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from .meta import AppEnv, CheckoutLine, AttachOption, Cycle, QueryDP
+from .meta import AppEnv, AttachOption, Cycle, QueryDP
 from .products import ProductItem, FreeTrial, Product
 from .customers import PricingTableProduct, Customer
 from .features import FeaturePreview
