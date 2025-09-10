@@ -33,6 +33,7 @@ class FeatureType(str, Enum):
     STATIC = "static"
     CONTINUOUS_USE = "continuous_use"
     SINGLE_USE = "single_use"
+    BOOLEAN = "boolean"
 
 
 class CustomerInvoice(BaseModel):
