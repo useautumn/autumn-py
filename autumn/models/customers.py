@@ -10,6 +10,7 @@ from .products import ProductItemInterval
 
 __all__ = (
     "ProductStatus",
+    "FeatureType",
     "CustomerInvoice",
     "CustomerFeature",
     "CustomerProduct",
@@ -28,6 +29,13 @@ class ProductStatus(str, Enum):
     SCHEDULED = "scheduled"
 
 
+class FeatureType(str, Enum):
+    STATIC = "static"
+    CONTINUOUS_USE = "continuous_use"
+    SINGLE_USE = "single_use"
+    BOOLEAN = "boolean"
+
+
 class CustomerInvoice(BaseModel):
     product_ids: List[str]
     stripe_id: str
@@ -41,6 +49,7 @@ class CustomerFeature(BaseModel):
     id: str
     name: str
     unlimited: Optional[bool] = None
+    type: Optional[FeatureType] = None
     interval: Optional[ProductItemInterval] = None
     balance: Optional[float] = None
     usage: Optional[float] = None
