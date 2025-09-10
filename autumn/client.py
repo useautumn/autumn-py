@@ -286,5 +286,22 @@ class Client:
         *,
         range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
     ) -> QueryResponse:
+        """
+        Query usage analytics for a customer on a specific feature.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to query for.
+        feature_id:
+            The ID of the feature you want to query analytics for.
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"]
+            Analytics time period.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.QueryResponse`
+            The response from the API.
+        """
         payload = _build_payload(locals(), self.query)
         return self.http.request("POST", "/query", QueryResponse, json=payload)
