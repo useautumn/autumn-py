@@ -74,7 +74,7 @@ class Product(BaseModel):
     created_at: float
     id: str
     name: Optional[str] = None
-    env: Literal["sandbox", "live"]
+    env: Literal["sandbox", "live", "production"]
     is_add_on: bool
     is_default: bool
     group: Optional[str] = None

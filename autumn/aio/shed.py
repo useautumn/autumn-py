@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Protocol
 from autumn.models.response import CheckoutResponse
 
 if TYPE_CHECKING:
-    from typing import Optional, List, Awaitable, Dict, Any
+    from typing import Optional, List, Awaitable, Dict, Any, Union, Literal
 
     from ..models.meta import AttachOption
     from ..models.features import Feature
@@ -15,6 +15,7 @@ if TYPE_CHECKING:
         CheckResponse,
         TrackResponse,
         CheckoutResponse,
+        QueryResponse,
     )
 
 __all__ = ("AttachParams", "CheckParams", "TrackParams")
@@ -86,4 +87,13 @@ class CheckoutParams(Protocol):
         checkout_session_params: Optional[Dict[str, Any]] = None,
         reward: Optional[str] = None,
     ) -> Awaitable[CheckoutResponse]:
-        ...
+
+
+class QueryParams(Protocol):
+    def __call__(
+        self,
+        customer_id: str,
+        feature_id: Union[str, List[str]],
+        *,
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
+    ) -> Awaitable[QueryResponse]: ...

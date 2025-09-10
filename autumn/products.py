@@ -161,6 +161,20 @@ class Products(Generic[T_HttpClient]):
         ...
 
     def list(self, customer_id: str) -> Union[ListProductResponse, Coroutine[Any, Any, ListProductResponse]]:
+        """List products for a customer.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to list products for.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.ListProductResponse`
+            The response from the API.
+        """
         params = {"customer_id": customer_id}
         return self._http.request("GET", f"/products", ListProductResponse, params=params)
 
@@ -198,6 +212,31 @@ class Products(Generic[T_HttpClient]):
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        """Update a product.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        id: str
+            The ID of the product to update.
+        name: str
+            The new name of the product.
+        is_add_on: bool
+            Whether the product is an add-on.
+        is_default: bool
+            Whether the product is the default product.
+        items: Optional[List[ProductItem]]
+            The new items of the product.
+        free_trial: Optional[FreeTrial]
+            The new free trial of the product.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.Empty`
+            This is a placeholder type. Treat it as :class:`None`.
+        """
+
         payload = _build_payload(locals(), self.update) # type: ignore
         return self._http.request("POST", f"/products/{id}", Empty, json=payload)
 
@@ -217,6 +256,20 @@ class Products(Generic[T_HttpClient]):
         self,
         id: str
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        """Delete a product.
+
+        |maybecoro|
+
+        Parameters
+        ----------
+        id: str
+            The ID of the product to delete.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.Empty`
+            This is a placeholder type. Treat it as :class:`None`.
+        """
         return self._http.request("DELETE", f"/products/{id}", Empty)
 
     @overload

@@ -14,7 +14,7 @@ from typing import (
 
 from .models.meta import Empty
 from .models.customers import Customer
-from .models.response import BillingPortalResponse, PricingTableResponse
+from .models.response import BillingPortalResponse, PricingTableResponse, ListCustomerResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -61,6 +61,36 @@ class Customers(Generic[T_HttpClient]):
             The customer.
         """
         return self._http.request("GET", f"/customers/{customer_id}", Customer)
+    
+    @overload
+    def list(
+        self: "Customers[HTTPClient]",
+        *,
+        limit: int = 10,
+        offset: int = 0
+    ) -> ListCustomerResponse:
+        ...
+
+    @overload
+    def list(
+        self: "Customers[AsyncHTTPClient]",
+        *,
+        limit: int = 10,
+        offset: int = 0
+    )-> Coroutine[Any, Any, ListCustomerResponse]:
+        ...
+
+    def list(
+        self,
+        *,
+        limit: int = 10,
+        offset: int = 0
+    ) -> Union[ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]]:
+        params = {
+            "limit": limit,
+            "offset": offset
+        }
+        return self._http.request("GET", "/customers", ListCustomerResponse, params=params)
 
     @overload
     def create(
@@ -69,6 +99,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Customer: ...
 
@@ -79,6 +110,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Coroutine[Any, Any, Customer]: ...
 
@@ -88,6 +120,7 @@ class Customers(Generic[T_HttpClient]):
         *,
         email: Optional[str] = None,
         name: Optional[str] = None,
+        stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Create a new customer.
@@ -102,6 +135,8 @@ class Customers(Generic[T_HttpClient]):
             The customer's email address.
         name: Optional[str]
             The customer's name.
+        stripe_id: Optional[str]
+            The customer's Stripe ID. This can be a new or existing ID.
         metadata: Optional[Dict[str, Any]]
             Additional metadata to attach to the customer.
 
@@ -182,6 +217,20 @@ class Customers(Generic[T_HttpClient]):
         self,
         customer_id: str
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+        """Delete a customer.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to delete.
+
+        Returns
+        -------
+        :class:`~autumn.models.customers.Empty`
+            An empty response.
+
+        |maybecoro|
+        """
         return self._http.request("DELETE", f"/customers/{customer_id}", Empty)
 
     @overload

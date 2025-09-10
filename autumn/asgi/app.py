@@ -25,10 +25,12 @@ from .routes.core import (
     track_route,
     cancel_route,
     checkout_route,
+    query_route,
     billing_portal_route,
 )
 from .routes.customers import create_customer_route, pricing_table_route
 from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
+from .routes.products import list_products_route
 from ..aio.client import AsyncClient
 from ..error import AutumnHTTPError
 
@@ -76,6 +78,12 @@ class AutumnASGI:
                 Route("/check/", check_route, methods={"POST"}),
                 Route("/track/", track_route, methods={"POST"}),
                 Route("/cancel/", cancel_route, methods={"POST"}),
+                Route("/query/", query_route, methods={"POST"}),
+                Route(
+                    "/products/",
+                    list_products_route,
+                    methods={"GET"},
+                ),
                 Route(
                     "/billing_portal/",
                     billing_portal_route,
@@ -124,5 +132,5 @@ class AutumnASGI:
         try:
             await self._router(scope, receive, send)
         except AutumnHTTPError as exc:
-            response = JSONResponse({"detail": str(exc)}, status_code=400)
+            response = JSONResponse({"detail": str(exc)}, status_code=exc.status_code or 400)
             await response(scope, receive, send)

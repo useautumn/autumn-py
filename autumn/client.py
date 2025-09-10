@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, List, Any, Dict, TYPE_CHECKING
+from typing import Optional, List, Any, Dict, Literal, Union, TYPE_CHECKING
 
 from .customers import Customers
 from .features import Features
@@ -12,6 +12,7 @@ from .models.response import (
     CheckResponse,
     CheckoutResponse,
     TrackResponse,
+    QueryResponse,
 )
 
 if TYPE_CHECKING:
@@ -63,6 +64,8 @@ class Client:
     ----------
     token: str
         The API key to use for authentication.
+    max_retries: int
+        The maximum number of retries to attempt for failed requests.
     base_url: Optional[str]
         The base URL of the Autumn API. This is useful when you are self-hosting Autumn and need to point to your own instance.
 
@@ -76,13 +79,20 @@ class Client:
         An interface to Autumn's product API.
     """
 
-    def __init__(self, token: str, *, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        *,
+        base_url: Optional[str] = None,
+        max_retries: int = 5,
+    ):
         from . import BASE_URL, VERSION
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
-        self.http = HTTPClient(_base_url, VERSION, token)
+        attempts = max_retries + 1  # account for the original request
+        self.http = HTTPClient(_base_url, VERSION, token, attempts=attempts)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
@@ -301,3 +311,30 @@ class Client:
     #     """
     #     payload = _build_payload(locals(), self.checkout)
     #     return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
+
+    def query(
+        self,
+        customer_id: str,
+        feature_id: Union[str, List[str]],
+        *,
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
+    ) -> QueryResponse:
+        """
+        Query usage analytics for a customer on a specific feature.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to query for.
+        feature_id:
+            The ID of the feature you want to query analytics for.
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"]
+            Analytics time period.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.QueryResponse`
+            The response from the API.
+        """
+        payload = _build_payload(locals(), self.query)
+        return self.http.request("POST", "/query", QueryResponse, json=payload)
