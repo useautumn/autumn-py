@@ -23,6 +23,7 @@ def test_decompose_value_singular():
         "included_usage": None,
         "next_reset_at": None,
         "breakdown": None,
+        "type": None,
     }
 
     assert _decompose_value(feature) == decomposed_feature
@@ -45,6 +46,7 @@ def test_decompose_value_recursive():
         "included_usage": None,
         "next_reset_at": None,
         "breakdown": None,
+        "type": None,
     }
 
     features = [feature] * 50
