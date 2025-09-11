@@ -230,6 +230,7 @@ class Customers(Generic[T_HttpClient]):
     def get_billing_portal(
         self: "Customers[HTTPClient]",
         customer_id: str,
+        open_in_new_tab: Optional[bool] = False,
         *,
         return_url: Optional[str] = None,
     ) -> BillingPortalResponse: ...
@@ -238,6 +239,7 @@ class Customers(Generic[T_HttpClient]):
     def get_billing_portal(
         self: "Customers[AsyncHTTPClient]",
         customer_id: str,
+        open_in_new_tab: Optional[bool] = False,
         *,
         return_url: Optional[str] = None,
     ) -> Coroutine[Any, Any, BillingPortalResponse]: ...
@@ -245,6 +247,7 @@ class Customers(Generic[T_HttpClient]):
     def get_billing_portal(
         self,
         customer_id: str,
+        open_in_new_tab: Optional[bool] = False,
         *,
         return_url: Optional[str] = None,
     ) -> Union[
