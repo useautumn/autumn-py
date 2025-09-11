@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from . import _extract, _build_response
 from ...models.meta import CustomerData
-from . import _build_response, _extract
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -41,7 +41,7 @@ async def cancel_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    response = await autumn.products.cancel(customer_id, **json)
+    response = await autumn.cancel(customer_id, **json)
     return _build_response(response)
 
 
@@ -65,5 +65,6 @@ async def query_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
+    json.pop("open_in_new_tab", None) # temp: fix
     response = await autumn.query(customer_id=customer_id, **json)
     return _build_response(response)
