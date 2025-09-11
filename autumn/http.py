@@ -1,13 +1,12 @@
 import sys
 import time
-import random
 from typing import Dict, Type, TypeVar
 
 import requests
 from pydantic import BaseModel
 
-from .utils import _build_model, _check_response, ExponentialBackoff
 from .error import AutumnError, AutumnHTTPError
+from .utils import ExponentialBackoff, _build_model, _check_response
 
 __all__ = ("HTTPClient",)
 
@@ -17,14 +16,9 @@ T = TypeVar("T", bound=BaseModel)
 class _RetryRequestError(Exception):
     pass
 
+
 class HTTPClient:
-    def __init__(
-        self,
-        base_url: str,
-        version: str,
-        token: str,
-        attempts: int
-    ):
+    def __init__(self, base_url: str, version: str, token: str, attempts: int):
         self.base_url = base_url
         self.version = version
         self.session = requests.Session()
@@ -38,7 +32,7 @@ class HTTPClient:
 
     @staticmethod
     def _build_headers(token: str) -> Dict[str, str]:
-        from . import __version__, LATEST_API_VERSION
+        from . import LATEST_API_VERSION, __version__
 
         v_info = sys.version_info
         user_agent = (
@@ -74,10 +68,7 @@ class HTTPClient:
         for attempt in range(max_attempts):
             try:
                 resp = self.session.request(
-                    method,
-                    url,
-                    headers=self._headers,
-                    **kwargs
+                    method, url, headers=self._headers, **kwargs
                 )
                 if 500 <= resp.status_code <= 504:
                     raise _RetryRequestError()
@@ -87,7 +78,7 @@ class HTTPClient:
                 _RetryRequestError,
                 OSError,
                 requests.ConnectionError,
-                requests.ConnectTimeout
+                requests.ConnectTimeout,
             ):
                 if attempt == max_attempts - 1:
                     raise

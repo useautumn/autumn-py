@@ -1,7 +1,9 @@
 from enum import Enum
-from typing import Literal, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
+
+from .env import AppEnv
 
 __all__ = (
     "FreeTrialDuration",
@@ -65,15 +67,21 @@ class FreeTrial(BaseModel):
     unique_fingerprint: bool
 
 
-ProductScenario = Literal["scheduled", "active", "new", "renew", "upgrade",
-                          "downgrade", "cancel"]
+class ProductScenario(str, Enum):
+    SCHEDULED = "scheduled"
+    ACTIVE = "active"
+    NEW = "new"
+    RENEW = "renew"
+    UPGRADE = "upgrade"
+    DOWNGRADE = "downgrade"
+    CANCEL = "cancel"
 
 
 class Product(BaseModel):
     created_at: float
     id: str
     name: Optional[str] = None
-    env: Literal["sandbox", "live", "production"]
+    env: AppEnv
     is_add_on: bool
     is_default: bool
     group: Optional[str] = None
@@ -87,7 +95,7 @@ class Product(BaseModel):
 class ProductPreview(BaseModel):
     title: str
     message: str
-    scenario: Literal["upgrade", "downgrade", "cancel", "renew"]
+    scenario: ProductScenario
     product_id: str
     product_name: str
     recurring: bool

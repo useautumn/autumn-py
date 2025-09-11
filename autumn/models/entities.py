@@ -1,9 +1,9 @@
-from typing import Literal, List, Dict, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
-from .customers import CustomerProduct, CustomerFeature, CustomerInvoice
-from .products import Product
+from .customers import CustomerFeature, CustomerInvoice, CustomerProduct
+from .env import AppEnv
 
 
 class Entity(BaseModel):
@@ -11,11 +11,7 @@ class Entity(BaseModel):
     name: str
     customer_id: str
     created_at: int
-    env: str
+    env: AppEnv
     products: List[CustomerProduct]
     features: Dict[str, CustomerFeature]
     invoices: Optional[List[CustomerInvoice]] = None
-
-
-class TransferProductResult(BaseModel):
-    success: bool

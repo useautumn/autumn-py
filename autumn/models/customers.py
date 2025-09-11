@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel
 
-from .meta import AppEnv
+from .env import AppEnv
 from .products import ProductItemInterval
 
 __all__ = (

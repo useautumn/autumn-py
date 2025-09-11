@@ -1,28 +1,27 @@
 from __future__ import annotations
 
-from typing import Optional, List, Any, Dict, Literal, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Literal, Optional, Union
 
 from .customers import Customers
-from .features import Features
-from .products import Products
 from .entities import Entities
+from .features import Features
 from .http import HTTPClient
-from .utils import _build_payload
 from .models.response import (
     AttachResponse,
-    CheckResponse,
-    CheckoutResponse,
-    TrackResponse,
-    QueryResponse,
     CancelResponse,
+    CheckoutResponse,
+    CheckResponse,
+    QueryResponse,
+    TrackResponse,
 )
+from .products import Products
+from .utils import _build_payload
 
 if TYPE_CHECKING:
     from .models.features import Feature
-    from .models.meta import FeatureOptions, ProductOptions
-    from .models.meta import CustomerData
+    from .models.meta import CustomerData, FeatureOptions, ProductOptions
 
-__all__ = ("Client", )
+__all__ = ("Client",)
 
 
 class Client:
@@ -52,11 +51,18 @@ class Client:
 
             import asyncio
 
-            from autumn.aio import Client
+            from autumn.aio import (
+                Client,
+            )
+
 
             async def main():
                 client = Client(token="your_api_key")
-                await client.attach(customer_id="john_doe", product_id="chat_messages")
+                await client.attach(
+                    customer_id="john_doe",
+                    product_id="chat_messages",
+                )
+
 
             asyncio.run(main())
 
@@ -116,7 +122,7 @@ class Client:
         reward: Optional[Union[str, List[str]]] = None,
     ) -> CheckoutResponse:
         """Checkout a customer for a product.
-        
+
         Parameters
         ----------
         customer_id: str
@@ -131,17 +137,16 @@ class Client:
             Whether to force the customer to checkout.
         entity_id: Optional[str]
             The ID of the entity to checkout.
-        customer_data: Optional[CustomerData] 
+        customer_data: Optional[CustomerData]
             The customer data to checkout.
         reward: Optional[str | List[str]]
             The reward to checkout. Can pass in an array too.
         """
 
         payload = _build_payload(locals(), self.checkout)
-        return self.http.request("POST",
-                                 "/checkout",
-                                 CheckoutResponse,
-                                 json=payload)
+        return self.http.request(
+            "POST", "/checkout", CheckoutResponse, json=payload
+        )
 
     def attach(
         self,
@@ -195,16 +200,17 @@ class Client:
             The response from the API.
         """
 
-        assert product_id is not None or product_ids is not None, (
-            "Either product_id or product_ids must be provided")
-        assert not (product_id is not None and product_ids is not None), (
-            "Only one of product_id or product_ids must be provided")
+        assert (
+            product_id is not None or product_ids is not None
+        ), "Either product_id or product_ids must be provided"
+        assert not (
+            product_id is not None and product_ids is not None
+        ), "Only one of product_id or product_ids must be provided"
 
         payload = _build_payload(locals(), self.attach)
-        return self.http.request("POST",
-                                 "/attach",
-                                 AttachResponse,
-                                 json=payload)
+        return self.http.request(
+            "POST", "/attach", AttachResponse, json=payload
+        )
 
     def check(
         self,
@@ -249,8 +255,9 @@ class Client:
             The response from the API.
         """
 
-        assert product_id is not None or feature_id is not None, (
-            "Either product_id or feature_id must be provided")
+        assert (
+            product_id is not None or feature_id is not None
+        ), "Either product_id or feature_id must be provided"
 
         payload = _build_payload(locals(), self.check)
         return self.http.request("POST", "/check", CheckResponse, json=payload)
@@ -296,7 +303,9 @@ class Client:
         :class:`~autumn.models.response.TrackResponse`
             The response from the API.
         """
-        assert feature_id or event_name, "Either feature_id or event_name must be provided"
+        assert (
+            feature_id or event_name
+        ), "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
 
@@ -305,7 +314,7 @@ class Client:
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
-        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d",
     ) -> QueryResponse:
         """
         Query usage analytics for a customer on a specific feature.

@@ -1,13 +1,11 @@
-import random
 import asyncio
-from typing import Type, TypeVar, Optional
+from typing import Optional, Type, TypeVar
 
 from pydantic import BaseModel
 
 from ..error import AutumnError, AutumnHTTPError
 from ..http import HTTPClient, _RetryRequestError
-from ..utils import _build_model, _check_response, ExponentialBackoff
-
+from ..utils import ExponentialBackoff, _build_model, _check_response
 
 try:
     import aiohttp
@@ -31,7 +29,7 @@ class AsyncHTTPClient:
         token: str,
         attempts: int,
         *,
-        session: Optional[aiohttp.ClientSession] = None
+        session: Optional[aiohttp.ClientSession] = None,
     ):
         self.base_url = base_url
         self.version = version
@@ -41,7 +39,9 @@ class AsyncHTTPClient:
 
         self._build_url = HTTPClient._build_url
 
-    async def request(self, method: str, path: str, type_: Type[T], **kwargs) -> T:
+    async def request(
+        self, method: str, path: str, type_: Type[T], **kwargs
+    ) -> T:
         if self.session is None:
             self.session = aiohttp.ClientSession()
 
@@ -68,7 +68,7 @@ class AsyncHTTPClient:
             else:
                 _check_response(resp.status, data)
                 return _build_model(type_, data)
-            
+
         # We should never get here. This is to appease type checkers.
         msg = f"Max retries reached for {method} {path}"
         raise AutumnHTTPError(msg, "max_retries_reached", 500)
