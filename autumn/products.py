@@ -182,7 +182,7 @@ class Products(Generic[T_HttpClient]):
         """
         params = {"customer_id": customer_id}
         return self._http.request(
-            "GET", f"/products", ListProductResponse, params=params
+            "GET", "/products", ListProductResponse, params=params
         )
 
     @overload

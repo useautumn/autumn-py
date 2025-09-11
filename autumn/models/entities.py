@@ -1,10 +1,9 @@
-from typing import Dict, List, Literal, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
 from .customers import CustomerFeature, CustomerInvoice, CustomerProduct
 from .env import AppEnv
-from .products import Product
 
 
 class Entity(BaseModel):

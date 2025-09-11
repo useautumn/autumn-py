@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from typing import TYPE_CHECKING, Optional
 
 from pydantic import BaseModel, ConfigDict
