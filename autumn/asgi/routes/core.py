@@ -58,7 +58,11 @@ async def billing_portal_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    kwargs = _build_kwargs(json, autumn.customers.get_billing_portal, ignore={"open_in_new_tab", "openInNewTab"})
+    kwargs = _build_kwargs(
+        json,
+        autumn.customers.get_billing_portal,
+        ignore={"open_in_new_tab", "openInNewTab"},
+    )
     response = await autumn.customers.get_billing_portal(customer_id, **kwargs)
     return _build_response(response)
 
@@ -67,7 +71,9 @@ async def checkout_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    kwargs = _build_kwargs(json, autumn.checkout, ignore={"open_in_new_tab", "openInNewTab"})
+    kwargs = _build_kwargs(
+        json, autumn.checkout, ignore={"open_in_new_tab", "openInNewTab"}
+    )
 
     response = await autumn.checkout(customer_id, **kwargs)
     return _build_response(response)
@@ -77,7 +83,9 @@ async def query_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    kwargs = _build_kwargs(json, autumn.query, ignore={"open_in_new_tab", "openInNewTab"})
+    kwargs = _build_kwargs(
+        json, autumn.query, ignore={"open_in_new_tab", "openInNewTab"}
+    )
 
     response = await autumn.query(customer_id=customer_id, **kwargs)
     return _build_response(response)
