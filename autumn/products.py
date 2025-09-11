@@ -15,7 +15,6 @@ from typing import (
 from .models.meta import Empty
 from .models.products import FreeTrial, ProductItem
 from .models.response import (
-    CancelResponse,
     CreateProductResponse,
     GetProductResponse,
     ListProductResponse,

@@ -16,4 +16,3 @@ class Entity(BaseModel):
     products: List[CustomerProduct]
     features: Dict[str, CustomerFeature]
     invoices: Optional[List[CustomerInvoice]] = None
-
