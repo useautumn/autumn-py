@@ -19,6 +19,13 @@ jobs:
               with:
                 python-version-file: "pyproject.toml"
 
+            - name: Install dependencies
+              run: |
+                uv pip install -r pyproject.toml --extra tests --extra aio
+
+            - name: Run Tests
+              run: uv run pytest
+
             - name: Build package
               run: uv build
 
