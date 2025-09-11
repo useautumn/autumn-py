@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional
 
+from .http import AsyncHTTPClient
 from ..client import Client
+from ..features import Features
 from ..customers import Customers
+from ..products import Products
 from ..entities import Entities
 from ..error import AutumnError
-from ..features import Features
-from ..products import Products
-from .http import AsyncHTTPClient
 
 try:
     import aiohttp
@@ -20,14 +20,13 @@ except ImportError:
 
 if TYPE_CHECKING:
     from typing_extensions import Self
-
-    from .shed import (
+    from .stubs import (
         AttachParams,
-        CancelParams,
-        CheckoutParams,
         CheckParams,
-        QueryParams,
         TrackParams,
+        CheckoutParams,
+        QueryParams,
+        CancelParams,
     )
 
 __all__ = ("AsyncClient",)
