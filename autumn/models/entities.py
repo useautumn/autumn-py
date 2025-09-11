@@ -2,8 +2,8 @@ from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel
 
-from .env import AppEnv
 from .customers import CustomerFeature, CustomerInvoice, CustomerProduct
+from .env import AppEnv
 from .products import Product
 
 
