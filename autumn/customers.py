@@ -49,7 +49,9 @@ class Customers(Generic[T_HttpClient]):
         self: "Customers[AsyncHTTPClient]", customer_id: str
     ) -> Coroutine[Any, Any, Customer]: ...
 
-    def get(self, customer_id) -> Union[Customer, Coroutine[Any, Any, Customer]]:
+    def get(
+        self, customer_id
+    ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Get a customer by their ID.
 
         |maybecoro|
@@ -78,7 +80,9 @@ class Customers(Generic[T_HttpClient]):
 
     def list(
         self, *, limit: int = 10, offset: int = 0
-    ) -> Union[ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]]:
+    ) -> Union[
+        ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]
+    ]:
         params = {"limit": limit, "offset": offset}
         return self._http.request(
             "GET", "/customers", ListCustomerResponse, params=params
@@ -188,7 +192,9 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.models.customers.Customer`
             The updated customer.
         """
-        payload = _build_payload(locals(), Customers.update, ignore={"customer_id"})
+        payload = _build_payload(
+            locals(), Customers.update, ignore={"customer_id"}
+        )
         return self._http.request(
             "POST", f"/customers/{customer_id}", Customer, json=payload
         )
@@ -201,7 +207,9 @@ class Customers(Generic[T_HttpClient]):
         self: "Customers[AsyncHTTPClient]", customer_id: str
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete(self, customer_id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete(
+        self, customer_id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete a customer.
 
         Parameters
@@ -239,7 +247,9 @@ class Customers(Generic[T_HttpClient]):
         customer_id: str,
         *,
         return_url: Optional[str] = None,
-    ) -> Union[BillingPortalResponse, Coroutine[Any, Any, BillingPortalResponse]]:
+    ) -> Union[
+        BillingPortalResponse, Coroutine[Any, Any, BillingPortalResponse]
+    ]:
         """Get a billing portal URL for a customer.
 
         |maybecoro|
@@ -280,7 +290,9 @@ class Customers(Generic[T_HttpClient]):
 
     def pricing_table(
         self, customer_id: str
-    ) -> Union[PricingTableResponse, Coroutine[Any, Any, PricingTableResponse]]:
+    ) -> Union[
+        PricingTableResponse, Coroutine[Any, Any, PricingTableResponse]
+    ]:
         """Get a pricing table for a customer.
 
         |maybecoro|

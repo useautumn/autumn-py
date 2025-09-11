@@ -31,7 +31,11 @@ from .routes.core import (
     track_route,
 )
 from .routes.customers import create_customer_route, pricing_table_route
-from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
+from .routes.entities import (
+    create_entity_route,
+    delete_entity_route,
+    get_entity_route,
+)
 from .routes.products import list_products_route
 
 if TYPE_CHECKING:
@@ -114,7 +118,9 @@ class AutumnASGI:
             ],
             middleware=[
                 Middleware(
-                    _StateMiddleware, client=self._client, identify=self._identify
+                    _StateMiddleware,
+                    client=self._client,
+                    identify=self._identify,
                 )
             ],
         )

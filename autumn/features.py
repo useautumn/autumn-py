@@ -35,12 +35,18 @@ class Features(Generic[T_HttpClient]):
 
     @overload
     def set_usage(
-        self: "Features[HTTPClient]", customer_id: str, feature_id: str, value: int
+        self: "Features[HTTPClient]",
+        customer_id: str,
+        feature_id: str,
+        value: int,
     ) -> Empty: ...
 
     @overload
     def set_usage(
-        self: "Features[AsyncHTTPClient]", customer_id: str, feature_id: str, value: int
+        self: "Features[AsyncHTTPClient]",
+        customer_id: str,
+        feature_id: str,
+        value: int,
     ) -> Coroutine[Any, Any, Empty]: ...
 
     def set_usage(

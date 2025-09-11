@@ -90,7 +90,9 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> Union[CreateProductResponse, Coroutine[Any, Any, CreateProductResponse]]:
+    ) -> Union[
+        CreateProductResponse, Coroutine[Any, Any, CreateProductResponse]
+    ]:
         """Create a new product.
 
         |maybecoro|
@@ -152,7 +154,9 @@ class Products(Generic[T_HttpClient]):
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
 
     @overload
-    def list(self: "Products[HTTPClient]", customer_id: str) -> ListProductResponse: ...
+    def list(
+        self: "Products[HTTPClient]", customer_id: str
+    ) -> ListProductResponse: ...
 
     @overload
     def list(
@@ -241,7 +245,9 @@ class Products(Generic[T_HttpClient]):
         """
 
         payload = _build_payload(locals(), self.update)  #  type: ignore
-        return self._http.request("POST", f"/products/{id}", Empty, json=payload)
+        return self._http.request(
+            "POST", f"/products/{id}", Empty, json=payload
+        )
 
     @overload
     def delete(self: "Products[HTTPClient]", id: str) -> Empty: ...
@@ -284,7 +290,9 @@ class Products(Generic[T_HttpClient]):
         self,
         customer_id: str,
         program_id: str,
-    ) -> Union[ReferralCodeResponse, Coroutine[Any, Any, ReferralCodeResponse]]:
+    ) -> Union[
+        ReferralCodeResponse, Coroutine[Any, Any, ReferralCodeResponse]
+    ]:
         """Get a referral code for a customer.
 
         |maybecoro|
@@ -331,7 +339,9 @@ class Products(Generic[T_HttpClient]):
         code: str,
         customer_id: str,
         reward_id: str,
-    ) -> Union[ReferralRedeemResponse, Coroutine[Any, Any, ReferralRedeemResponse]]:
+    ) -> Union[
+        ReferralRedeemResponse, Coroutine[Any, Any, ReferralRedeemResponse]
+    ]:
         """Redeem a referral code for a customer.
 
         |maybecoro|

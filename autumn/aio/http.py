@@ -40,7 +40,9 @@ class AsyncHTTPClient:
 
         self._build_url = HTTPClient._build_url
 
-    async def request(self, method: str, path: str, type_: Type[T], **kwargs) -> T:
+    async def request(
+        self, method: str, path: str, type_: Type[T], **kwargs
+    ) -> T:
         if self.session is None:
             self.session = aiohttp.ClientSession()
 

@@ -137,7 +137,9 @@ class Client:
         """
 
         payload = _build_payload(locals(), self.checkout)
-        return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
+        return self.http.request(
+            "POST", "/checkout", CheckoutResponse, json=payload
+        )
 
     def attach(
         self,
@@ -199,7 +201,9 @@ class Client:
         ), "Only one of product_id or product_ids must be provided"
 
         payload = _build_payload(locals(), self.attach)
-        return self.http.request("POST", "/attach", AttachResponse, json=payload)
+        return self.http.request(
+            "POST", "/attach", AttachResponse, json=payload
+        )
 
     def check(
         self,

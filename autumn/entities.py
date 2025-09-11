@@ -55,7 +55,10 @@ class Entities(Generic[T_HttpClient]):
     ) -> Coroutine[Any, Any, Entity]: ...
 
     def get(
-        self, customer_id: str, entity_id: str, expand: Optional[List[str]] = None
+        self,
+        customer_id: str,
+        entity_id: str,
+        expand: Optional[List[str]] = None,
     ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
         """Get an entity by their ID.
 
@@ -127,7 +130,9 @@ class Entities(Generic[T_HttpClient]):
             The created entity.
         """
 
-        payload = _build_payload(locals(), Entities.create, ignore={"customer_id"})
+        payload = _build_payload(
+            locals(), Entities.create, ignore={"customer_id"}
+        )
         return self._http.request(
             "POST", f"/customers/{customer_id}/entities", Entity, json=payload
         )
@@ -194,7 +199,9 @@ class Entities(Generic[T_HttpClient]):
         to_entity_id: str,
         product_id: str,
         from_entity_id: Optional[str] = None,
-    ) -> Union[TransferProductResponse, Coroutine[Any, Any, TransferProductResponse]]:
+    ) -> Union[
+        TransferProductResponse, Coroutine[Any, Any, TransferProductResponse]
+    ]:
         """Transfer a product from one entity to another.
 
         |maybecoro|
@@ -217,7 +224,9 @@ class Entities(Generic[T_HttpClient]):
             The result of the transfer operation.
         """
 
-        payload = _build_payload(locals(), Entities.transfer, ignore={"customer_id"})
+        payload = _build_payload(
+            locals(), Entities.transfer, ignore={"customer_id"}
+        )
         return self._http.request(
             "POST",
             f"/customers/{customer_id}/transfer",
