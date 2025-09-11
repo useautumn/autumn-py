@@ -5,10 +5,12 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel
 
-from .enums import AppEnv, FeatureType, ProductStatus
+from .env import AppEnv
 from .products import ProductItemInterval
 
 __all__ = (
+    "ProductStatus",
+    "FeatureType",
     "CustomerInvoice",
     "CustomerFeature",
     "CustomerProduct",
@@ -18,6 +20,20 @@ __all__ = (
     "GetPricingTableParams",
     "PricingTableProduct",
 )
+
+
+class ProductStatus(str, Enum):
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    TRIALING = "trialing"
+    SCHEDULED = "scheduled"
+
+
+class FeatureType(str, Enum):
+    STATIC = "static"
+    CONTINUOUS_USE = "continuous_use"
+    SINGLE_USE = "single_use"
+    BOOLEAN = "boolean"
 
 
 class CustomerInvoice(BaseModel):
