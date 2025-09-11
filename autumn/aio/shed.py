@@ -7,7 +7,7 @@ from autumn.models.response import CheckoutResponse
 if TYPE_CHECKING:
     from typing import Optional, List, Awaitable, Dict, Any, Union, Literal
 
-    from ..models.meta import AttachOption, AttachProductOption
+    from ..models.meta import ProductOptions, FeatureOptions
     from ..models.meta import CustomerData
     from ..models.response import (
         AttachResponse,
@@ -28,13 +28,14 @@ class AttachParams(Protocol):
         *,
         product_id: Optional[str] = None,
         product_ids: Optional[List[str]] = None,
-        products: Optional[List[AttachProductOption]] = None,
+        products: Optional[List[ProductOptions]] = None,
         success_url: Optional[str] = None,
         force_checkout: bool = False,
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
         free_trial: Optional[bool] = None,
-        options: Optional[List[AttachOption]] = None,
+        options: Optional[List[FeatureOptions]] = None,
+        reward: Optional[Union[str, List[str]]] = None,
     ) -> Awaitable[AttachResponse]:
         ...
 
@@ -80,13 +81,13 @@ class CheckoutParams(Protocol):
         customer_id: str,
         *,
         product_id: Optional[str] = None,
-        products: Optional[List[AttachProductOption]] = None,
+        products: Optional[List[ProductOptions]] = None,
         entity_id: Optional[str] = None,
-        options: Optional[List[AttachOption]] = None,
+        options: Optional[List[FeatureOptions]] = None,
         customer_data: Optional[CustomerData] = None,
         success_url: Optional[str] = None,
         checkout_session_params: Optional[Dict[str, Any]] = None,
-        reward: Optional[str] = None,
+        reward: Optional[Union[str, List[str]]] = None,
     ) -> Awaitable[CheckoutResponse]:
         ...
 

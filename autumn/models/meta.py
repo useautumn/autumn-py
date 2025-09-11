@@ -12,7 +12,8 @@ if TYPE_CHECKING:
 
     Metadata = Dict[str, Any]
 
-__all__ = ("Empty", "AppEnv", "AttachOption", "ProductOption", "CustomerData")
+__all__ = ("Empty", "AppEnv", "FeatureOptions", "ProductOptions",
+           "CustomerData")
 
 
 class Empty(BaseModel):
@@ -25,12 +26,12 @@ class AppEnv(str, Enum):
     LIVE = "live"
 
 
-class AttachOption(BaseModel):
+class FeatureOptions(BaseModel):
     feature_id: str
     quantity: int
 
 
-class ProductOption(BaseModel):
+class ProductOptions(BaseModel):
     product_id: str
     quantity: Optional[int] = None
 

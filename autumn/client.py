@@ -18,7 +18,7 @@ from .models.response import (
 
 if TYPE_CHECKING:
     from .models.features import Feature
-    from .models.meta import AttachOption, ProductOption
+    from .models.meta import FeatureOptions, ProductOptions
     from .models.meta import CustomerData
 
 __all__ = ("Client", )
@@ -106,13 +106,13 @@ class Client:
         customer_id: str,
         *,
         product_id: Optional[str] = None,
-        products: Optional[List[ProductOption]] = None,
+        products: Optional[List[ProductOptions]] = None,
         success_url: Optional[str] = None,
-        options: Optional[List[AttachOption]] = None,
+        options: Optional[List[FeatureOptions]] = None,
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
         checkout_session_params: Optional[Dict[str, Any]] = None,
-        reward: Optional[str] = None,
+        reward: Optional[Union[str, List[str]]] = None,
     ) -> CheckoutResponse:
         """Checkout a customer for a product.
         
@@ -122,7 +122,7 @@ class Client:
             The ID of the customer to checkout.
         product_id: Optional[str]
             The ID of the product to checkout.
-        products: Optional[List[ProductOption]]
+        products: Optional[List[ProductOptions]]
             The products to checkout.
         success_url: Optional[str]
             The URL to redirect to after a successful checkout.
@@ -132,6 +132,8 @@ class Client:
             The ID of the entity to checkout.
         customer_data: Optional[CustomerData] 
             The customer data to checkout.
+        reward: Optional[str | List[str]]
+            The reward to checkout. Can pass in an array too.
         """
 
         payload = _build_payload(locals(), self.checkout)
@@ -146,14 +148,15 @@ class Client:
         *,
         product_id: Optional[str] = None,
         product_ids: Optional[List[str]] = None,
-        products: Optional[List[ProductOption]] = None,
+        products: Optional[List[ProductOptions]] = None,
         success_url: Optional[str] = None,
         force_checkout: bool = False,
         features: Optional[List[Feature]] = None,
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
         free_trial: Optional[bool] = None,
-        options: Optional[List[AttachOption]] = None,
+        options: Optional[List[FeatureOptions]] = None,
+        reward: Optional[str | List[str]] = None,
     ) -> AttachResponse:
         """Attach a customer to a product.
 
@@ -181,9 +184,10 @@ class Client:
             The customer data to attach.
         free_trial: Optional[bool]
             Whether to attach a free trial.
-        options: Optional[List[AttachOption]]
+        options: Optional[List[FeatureOptions]]
             The options to attach.
-
+        reward: Optional[str | List[str]]
+            The reward to attach. Can pass in an array too.
         Returns
         -------
         :class:`~autumn.models.response.AttachResponse`
@@ -294,33 +298,6 @@ class Client:
         assert feature_id or event_name, "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
-
-    # def checkout(
-    #     self,
-    #     customer_id: str,
-    #     product_id: str,
-    #     *,
-    #     success_url: Optional[str] = None,
-    # ) -> CheckoutResponse:
-    #     """
-    #     Checkout a product for a customer.
-
-    #     Parameters
-    #     ----------
-    #     customer_id: str
-    #         The ID of the customer to checkout.
-    #     product_id: str
-    #         The ID of the product to checkout.
-    #     success_url: Optional[str]
-    #         The URL to redirect to after a successful checkout.
-
-    #     Returns
-    #     -------
-    #     :class:`~autumn.models.response.CheckoutResponse`
-    #         The response from the API.
-    #     """
-    #     payload = _build_payload(locals(), self.checkout)
-    #     return self.http.request("POST", "/checkout", CheckoutResponse, json=payload)
 
     def query(
         self,

@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from .meta import AppEnv, AttachOption, Cycle, QueryDP
+from .meta import AppEnv, FeatureOptions, QueryDP
 from .products import ProductItem, FreeTrial, Product
 from .customers import PricingTableProduct, Customer
 from .features import FeaturePreview
@@ -107,7 +107,7 @@ class CheckoutResponse(BaseModel):
     lines: List[CheckoutLine]
     total: float
     currency: str
-    options: List[AttachOption]
+    options: List[FeatureOptions]
     product: Optional[Product] = None
     current_product: Optional[Product] = None
     next_cycle: Optional[CheckoutNextCycle] = None

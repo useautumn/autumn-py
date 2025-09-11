@@ -8,13 +8,11 @@ from typing import (
     overload,
     Coroutine,
     Union,
-    Optional,
     TYPE_CHECKING,
 )
 
 from .models.balance import Balance
 from .models.meta import Empty
-from .models.features import Entity
 from .utils import _build_payload
 
 if TYPE_CHECKING:
