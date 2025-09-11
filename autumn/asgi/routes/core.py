@@ -15,9 +15,9 @@ async def attach_route(request: Request):
     customer_id = identify["customer_id"]
     customer_data = identify["customer_data"]
 
-    response = await autumn.attach(
-        customer_id, customer_data=CustomerData(**customer_data), **json
-    )
+    response = await autumn.attach(customer_id,
+                                   customer_data=CustomerData(**customer_data),
+                                   **json)
     return _build_response(response)
 
 
@@ -49,6 +49,8 @@ async def billing_portal_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
+    json.pop("open_in_new_tab", None)  # temp: fix
+    json.pop("openInNewTab", None)  # temp: fix
     response = await autumn.customers.get_billing_portal(customer_id, **json)
     return _build_response(response)
 
@@ -57,6 +59,8 @@ async def checkout_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
+    json.pop("open_in_new_tab", None)  # temp: fix
+    json.pop("openInNewTab", None)  # temp: fix
     response = await autumn.checkout(customer_id, **json)
     return _build_response(response)
 
@@ -65,6 +69,6 @@ async def query_route(request: Request):
     identify, autumn, json = await _extract(request)
 
     customer_id = identify["customer_id"]
-    json.pop("open_in_new_tab", None) # temp: fix
+    json.pop("open_in_new_tab", None)  # temp: fix
     response = await autumn.query(customer_id=customer_id, **json)
     return _build_response(response)
