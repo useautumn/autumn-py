@@ -10,6 +10,7 @@ from .models.products import *
 
 __title__ = "autumn"
 __version__ = "3.0.2"
+__version__ = "3.0.1"
 __license__ = "MIT"
 __author__ = "justanotherbyte"
 __copyright__ = "Copyright 2025 justanotherbyte"
