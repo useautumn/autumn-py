@@ -70,7 +70,9 @@ class Features(Generic[T_HttpClient]):
         :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
-        payload = _build_payload(locals(), Features.set_usage, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(
+            locals(), Features.set_usage, ignore={"customer_id"}
+        )
         return self._http.request(
             "POST",
             f"/customers/{customer_id}/balances",
@@ -112,7 +114,9 @@ class Features(Generic[T_HttpClient]):
             This is a placeholder type. Treat it as :class:`None`.
         """
 
-        payload = _build_payload(locals(), Features.set_balances, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(
+            locals(), Features.set_balances, ignore={"customer_id"}
+        )
         return self._http.request(
             "POST", f"/customers/{customer_id}/balances", Empty, json=payload
         )

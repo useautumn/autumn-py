@@ -51,11 +51,18 @@ class Client:
 
             import asyncio
 
-            from autumn.aio import Client
+            from autumn.aio import (
+                Client,
+            )
+
 
             async def main():
                 client = Client(token="your_api_key")
-                await client.attach(customer_id="john_doe", product_id="chat_messages")
+                await client.attach(
+                    customer_id="john_doe",
+                    product_id="chat_messages",
+                )
+
 
             asyncio.run(main())
 

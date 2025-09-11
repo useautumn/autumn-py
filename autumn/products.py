@@ -47,10 +47,10 @@ class Products(Generic[T_HttpClient]):
 
         product = client.products.create(
             id="chat_messages",
-            name="Chat Messages"
+            name="Chat Messages",
         )
 
-        print(product.name) # Chat Messages
+        print(product.name)  # Chat Messages
 
     """
 
