@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from typing import (
-    List,
-    Any,
-    TypeVar,
-    Generic,
-    overload,
-    Coroutine,
-    Union,
     TYPE_CHECKING,
+    Any,
+    Coroutine,
+    Generic,
+    List,
+    TypeVar,
+    Union,
+    overload,
 )
 
 from .models.balance import Balance
@@ -16,8 +16,8 @@ from .models.meta import Empty
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
 
@@ -34,17 +34,18 @@ class Features(Generic[T_HttpClient]):
         self._http = http
 
     @overload
-    def set_usage(self: "Features[HTTPClient]", customer_id: str,
-                  feature_id: str, value: int) -> Empty:
-        ...
+    def set_usage(
+        self: "Features[HTTPClient]", customer_id: str, feature_id: str, value: int
+    ) -> Empty: ...
 
     @overload
-    def set_usage(self: "Features[AsyncHTTPClient]", customer_id: str,
-                  feature_id: str, value: int) -> Coroutine[Any, Any, Empty]:
-        ...
+    def set_usage(
+        self: "Features[AsyncHTTPClient]", customer_id: str, feature_id: str, value: int
+    ) -> Coroutine[Any, Any, Empty]: ...
 
-    def set_usage(self, customer_id: str, feature_id: str,
-                  value: int) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def set_usage(
+        self, customer_id: str, feature_id: str, value: int
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the usage of a feature for a customer.
 
         |maybecoro|
@@ -63,9 +64,7 @@ class Features(Generic[T_HttpClient]):
         :class:`~autumn.models.response.Empty`
             This is a placeholder type. Treat it as :class:`None`.
         """
-        payload = _build_payload(locals(),
-                                 Features.set_usage,
-                                 ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(locals(), Features.set_usage, ignore={"customer_id"})  # type: ignore
         return self._http.request(
             "POST",
             f"/customers/{customer_id}/balances",
@@ -78,19 +77,17 @@ class Features(Generic[T_HttpClient]):
         self: "Features[HTTPClient]",
         customer_id: str,
         balances: List[Balance],
-    ) -> Empty:
-        ...
+    ) -> Empty: ...
 
     @overload
     def set_balances(
         self: "Features[AsyncHTTPClient]",
         customer_id: str,
         balances: List[Balance],
-    ) -> Coroutine[Any, Any, Empty]:
-        ...
+    ) -> Coroutine[Any, Any, Empty]: ...
 
     def set_balances(
-            self, customer_id: str, balances: List[Balance]
+        self, customer_id: str, balances: List[Balance]
     ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Set the balances of a customer.
 
@@ -109,10 +106,7 @@ class Features(Generic[T_HttpClient]):
             This is a placeholder type. Treat it as :class:`None`.
         """
 
-        payload = _build_payload(locals(),
-                                 Features.set_balances,
-                                 ignore={"customer_id"})  # type: ignore
-        return self._http.request("POST",
-                                  f"/customers/{customer_id}/balances",
-                                  Empty,
-                                  json=payload)
+        payload = _build_payload(locals(), Features.set_balances, ignore={"customer_id"})  # type: ignore
+        return self._http.request(
+            "POST", f"/customers/{customer_id}/balances", Empty, json=payload
+        )

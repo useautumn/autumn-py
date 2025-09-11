@@ -1,10 +1,9 @@
 import random
-from typing import Dict, Any, Callable, Type, TypeVar, Set
+from typing import Any, Callable, Dict, Set, Type, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-from .error import AutumnValidationError, AutumnHTTPError
-
+from .error import AutumnHTTPError, AutumnValidationError
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -78,6 +77,6 @@ class ExponentialBackoff:
 
     @property
     def bedtime(self):
-        raw_time = self._base ** self._state
+        raw_time = self._base**self._state
         jitter = self._rand.uniform(0, 1)
         return raw_time + jitter

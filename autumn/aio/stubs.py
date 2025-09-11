@@ -5,24 +5,22 @@ from typing import TYPE_CHECKING, Protocol
 from autumn.models.response import CheckoutResponse
 
 if TYPE_CHECKING:
-    from typing import Optional, List, Awaitable, Dict, Any, Union, Literal
+    from typing import Any, Awaitable, Dict, List, Literal, Optional, Union
 
-    from ..models.meta import ProductOptions, FeatureOptions
-    from ..models.meta import CustomerData
+    from ..models.meta import CustomerData, FeatureOptions, ProductOptions
     from ..models.response import (
         AttachResponse,
-        CheckResponse,
-        TrackResponse,
-        CheckoutResponse,
-        QueryResponse,
         CancelResponse,
+        CheckoutResponse,
+        CheckResponse,
+        QueryResponse,
+        TrackResponse,
     )
 
 __all__ = ("AttachParams", "CheckParams", "TrackParams", "CancelParams")
 
 
 class AttachParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
@@ -37,12 +35,10 @@ class AttachParams(Protocol):
         free_trial: Optional[bool] = None,
         options: Optional[List[FeatureOptions]] = None,
         reward: Optional[Union[str, List[str]]] = None,
-    ) -> Awaitable[AttachResponse]:
-        ...
+    ) -> Awaitable[AttachResponse]: ...
 
 
 class CheckParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
@@ -54,12 +50,10 @@ class CheckParams(Protocol):
         with_preview: bool = False,
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
-    ) -> Awaitable[CheckResponse]:
-        ...
+    ) -> Awaitable[CheckResponse]: ...
 
 
 class TrackParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
@@ -71,12 +65,10 @@ class TrackParams(Protocol):
         idempotency_key: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None,
         customer_data: Optional[CustomerData] = None,
-    ) -> Awaitable[TrackResponse]:
-        ...
+    ) -> Awaitable[TrackResponse]: ...
 
 
 class CheckoutParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
@@ -89,24 +81,20 @@ class CheckoutParams(Protocol):
         success_url: Optional[str] = None,
         checkout_session_params: Optional[Dict[str, Any]] = None,
         reward: Optional[Union[str, List[str]]] = None,
-    ) -> Awaitable[CheckoutResponse]:
-        ...
+    ) -> Awaitable[CheckoutResponse]: ...
 
 
 class QueryParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
         feature_id: Union[str, List[str]],
         *,
-        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
-    ) -> Awaitable[QueryResponse]:
-        ...
+        range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d",
+    ) -> Awaitable[QueryResponse]: ...
 
 
 class CancelParams(Protocol):
-
     def __call__(
         self,
         customer_id: str,
@@ -114,5 +102,4 @@ class CancelParams(Protocol):
         *,
         entity_id: Optional[str] = None,
         cancel_immediately: bool = False,
-    ) -> Awaitable[CancelResponse]:
-        ...
+    ) -> Awaitable[CancelResponse]: ...

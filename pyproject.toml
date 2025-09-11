@@ -19,11 +19,7 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 requires-python = ">=3.9"
-dependencies = [
-    "aiohttp>=3.12.15",
-    "pydantic>=2.11.7",
- "requests>=2.32.4",
-]
+dependencies = ["aiohttp>=3.12.15", "pydantic>=2.11.7", "requests>=2.32.4"]
 dynamic = ["version"]
 
 [project.urls]
@@ -50,13 +46,13 @@ asyncio_mode = "auto"
 typeCheckingMode = "standard"
 
 [tool.black]
-line-length = 125
+line-length = 88
 
 [tool.isort]
 profile = "black"
 combine_as_imports = true
 combine_star = true
-line_length = 125
+line_length = 88
 
 [build-system]
 requires = ["hatchling >= 1.26"]

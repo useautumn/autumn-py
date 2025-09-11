@@ -1,6 +1,6 @@
 from typing import Any, List
-from typing_extensions import Self
 
+from typing_extensions import Self
 
 __all__ = ("AutumnError", "AutumnValidationError")
 

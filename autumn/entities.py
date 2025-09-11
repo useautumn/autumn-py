@@ -1,30 +1,30 @@
 from __future__ import annotations
 
 from typing import (
-    Optional,
-    Dict,
+    TYPE_CHECKING,
     Any,
-    TypeVar,
+    Coroutine,
+    Dict,
     Generic,
+    List,
+    Optional,
+    TypeVar,
     Union,
     overload,
-    Coroutine,
-    TYPE_CHECKING,
-    List,
 )
 
+from .models.entities import Entity
 from .models.meta import Empty
-from .models.customers import Customer
-from .models.entities import Entity, TransferProductResult
+from .models.response import TransferProductResponse
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
 
-__all__ = ("Entities", )
+__all__ = ("Entities",)
 
 
 class Entities(Generic[T_HttpClient]):
@@ -39,24 +39,23 @@ class Entities(Generic[T_HttpClient]):
         self._http = http
 
     @overload
-    def get(self: "Entities[HTTPClient]",
-            customer_id: str,
-            entity_id: str,
-            expand: Optional[List[str]] = None) -> Entity:
-        ...
-
-    @overload
-    def get(self: "Entities[AsyncHTTPClient]",
-            customer_id: str,
-            entity_id: str,
-            expand: Optional[List[str]] = None) -> Coroutine[Any, Any, Entity]:
-        ...
-
     def get(
-        self,
+        self: "Entities[HTTPClient]",
         customer_id: str,
         entity_id: str,
-        expand: Optional[List[str]] = None
+        expand: Optional[List[str]] = None,
+    ) -> Entity: ...
+
+    @overload
+    def get(
+        self: "Entities[AsyncHTTPClient]",
+        customer_id: str,
+        entity_id: str,
+        expand: Optional[List[str]] = None,
+    ) -> Coroutine[Any, Any, Entity]: ...
+
+    def get(
+        self, customer_id: str, entity_id: str, expand: Optional[List[str]] = None
     ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
         """Get an entity by their ID.
 
@@ -83,7 +82,8 @@ class Entities(Generic[T_HttpClient]):
             "GET",
             f"/customers/{customer_id}/entities/{entity_id}",
             Entity,
-            params=params)
+            params=params,
+        )
 
     @overload
     def create(
@@ -92,8 +92,7 @@ class Entities(Generic[T_HttpClient]):
         id: str,
         feature_id: str,
         name: str,
-    ) -> Entity:
-        ...
+    ) -> Entity: ...
 
     @overload
     def create(
@@ -102,11 +101,11 @@ class Entities(Generic[T_HttpClient]):
         id: str,
         feature_id: str,
         name: str,
-    ) -> Coroutine[Any, Any, Entity]:
-        ...
+    ) -> Coroutine[Any, Any, Entity]: ...
 
-    def create(self, customer_id: str, id: str, feature_id: str,
-               name: str) -> Union[Entity, Coroutine[Any, Any, Entity]]:
+    def create(
+        self, customer_id: str, id: str, feature_id: str, name: str
+    ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
         """Create an entity for a customer.
 
         |maybecoro|
@@ -128,32 +127,28 @@ class Entities(Generic[T_HttpClient]):
             The created entity.
         """
 
-        payload = _build_payload(locals(),
-                                 Entities.create,
-                                 ignore={"customer_id"})  # type: ignore
-        return self._http.request("POST",
-                                  f"/customers/{customer_id}/entities",
-                                  Entity,
-                                  json=payload)
+        payload = _build_payload(locals(), Entities.create, ignore={"customer_id"})
+        return self._http.request(
+            "POST", f"/customers/{customer_id}/entities", Entity, json=payload
+        )
 
     @overload
     def delete(
         self: "Entities[HTTPClient]",
         customer_id: str,
         entity_id: str,
-    ) -> Empty:
-        ...
+    ) -> Empty: ...
 
     @overload
     def delete(
         self: "Entities[AsyncHTTPClient]",
         customer_id: str,
         entity_id: str,
-    ) -> Coroutine[Any, Any, Empty]:
-        ...
+    ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete(self, customer_id: str,
-               entity_id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete(
+        self, customer_id: str, entity_id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete an entity for a customer.
 
         |maybecoro|
@@ -172,7 +167,8 @@ class Entities(Generic[T_HttpClient]):
         """
 
         return self._http.request(
-            "DELETE", f"/customers/{customer_id}/entities/{entity_id}", Empty)
+            "DELETE", f"/customers/{customer_id}/entities/{entity_id}", Empty
+        )
 
     @overload
     def transfer(
@@ -181,8 +177,7 @@ class Entities(Generic[T_HttpClient]):
         to_entity_id: str,
         product_id: str,
         from_entity_id: Optional[str] = None,
-    ) -> TransferProductResult:
-        ...
+    ) -> TransferProductResponse: ...
 
     @overload
     def transfer(
@@ -191,17 +186,15 @@ class Entities(Generic[T_HttpClient]):
         to_entity_id: str,
         product_id: str,
         from_entity_id: Optional[str] = None,
-    ) -> Coroutine[Any, Any, TransferProductResult]:
-        ...
+    ) -> Coroutine[Any, Any, TransferProductResponse]: ...
 
     def transfer(
         self,
         customer_id: str,
         to_entity_id: str,
         product_id: str,
-        from_entity_id: Optional[str] = None
-    ) -> Union[TransferProductResult, Coroutine[Any, Any,
-                                                TransferProductResult]]:
+        from_entity_id: Optional[str] = None,
+    ) -> Union[TransferProductResponse, Coroutine[Any, Any, TransferProductResponse]]:
         """Transfer a product from one entity to another.
 
         |maybecoro|
@@ -215,7 +208,7 @@ class Entities(Generic[T_HttpClient]):
         product_id: str
             The ID of the product to transfer.
         from_entity_id: Optional[str]
-            The ID of the entity to transfer the product from. If not provided, 
+            The ID of the entity to transfer the product from. If not provided,
             transfers from the customer's general balance.
 
         Returns
@@ -224,10 +217,10 @@ class Entities(Generic[T_HttpClient]):
             The result of the transfer operation.
         """
 
-        payload = _build_payload(locals(),
-                                 Entities.transfer,
-                                 ignore={"customer_id"})  # type: ignore
-        return self._http.request("POST",
-                                  f"/customers/{customer_id}/transfer",
-                                  TransferProductResult,
-                                  json=payload)
+        payload = _build_payload(locals(), Entities.transfer, ignore={"customer_id"})
+        return self._http.request(
+            "POST",
+            f"/customers/{customer_id}/transfer",
+            TransferProductResponse,
+            json=payload,
+        )

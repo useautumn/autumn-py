@@ -8,22 +8,14 @@ from pydantic import BaseModel, ConfigDict
 from .products import ProductItem
 
 if TYPE_CHECKING:
-    from typing import Dict, Any
+    from typing import Any, Dict
 
     Metadata = Dict[str, Any]
 
-__all__ = ("Empty", "AppEnv", "FeatureOptions", "ProductOptions",
-           "CustomerData")
+__all__ = ("Empty", "FeatureOptions", "ProductOptions", "CustomerData")
 
 
-class Empty(BaseModel):
-    ...
-
-
-class AppEnv(str, Enum):
-    PRODUCTION = "production"
-    SANDBOX = "sandbox"
-    LIVE = "live"
+class Empty(BaseModel): ...
 
 
 class FeatureOptions(BaseModel):

@@ -1,8 +1,8 @@
-from typing import Literal, List, Dict, Optional
+from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel
 
-from .customers import CustomerProduct, CustomerFeature, CustomerInvoice
+from .customers import CustomerFeature, CustomerInvoice, CustomerProduct
 from .products import Product
 
 
@@ -16,6 +16,3 @@ class Entity(BaseModel):
     features: Dict[str, CustomerFeature]
     invoices: Optional[List[CustomerInvoice]] = None
 
-
-class TransferProductResult(BaseModel):
-    success: bool

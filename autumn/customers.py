@@ -1,25 +1,29 @@
 from __future__ import annotations
 
 from typing import (
-    Optional,
-    Dict,
+    TYPE_CHECKING,
     Any,
-    TypeVar,
+    Coroutine,
+    Dict,
     Generic,
+    Optional,
+    TypeVar,
     Union,
     overload,
-    Coroutine,
-    TYPE_CHECKING,
 )
 
-from .models.meta import Empty
 from .models.customers import Customer
-from .models.response import BillingPortalResponse, PricingTableResponse, ListCustomerResponse
+from .models.meta import Empty
+from .models.response import (
+    BillingPortalResponse,
+    ListCustomerResponse,
+    PricingTableResponse,
+)
 from .utils import _build_payload
 
 if TYPE_CHECKING:
-    from .http import HTTPClient
     from .aio.http import AsyncHTTPClient
+    from .http import HTTPClient
 
 T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
 
@@ -61,36 +65,24 @@ class Customers(Generic[T_HttpClient]):
             The customer.
         """
         return self._http.request("GET", f"/customers/{customer_id}", Customer)
-    
-    @overload
-    def list(
-        self: "Customers[HTTPClient]",
-        *,
-        limit: int = 10,
-        offset: int = 0
-    ) -> ListCustomerResponse:
-        ...
 
     @overload
     def list(
-        self: "Customers[AsyncHTTPClient]",
-        *,
-        limit: int = 10,
-        offset: int = 0
-    )-> Coroutine[Any, Any, ListCustomerResponse]:
-        ...
+        self: "Customers[HTTPClient]", *, limit: int = 10, offset: int = 0
+    ) -> ListCustomerResponse: ...
+
+    @overload
+    def list(
+        self: "Customers[AsyncHTTPClient]", *, limit: int = 10, offset: int = 0
+    ) -> Coroutine[Any, Any, ListCustomerResponse]: ...
 
     def list(
-        self,
-        *,
-        limit: int = 10,
-        offset: int = 0
+        self, *, limit: int = 10, offset: int = 0
     ) -> Union[ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]]:
-        params = {
-            "limit": limit,
-            "offset": offset
-        }
-        return self._http.request("GET", "/customers", ListCustomerResponse, params=params)
+        params = {"limit": limit, "offset": offset}
+        return self._http.request(
+            "GET", "/customers", ListCustomerResponse, params=params
+        )
 
     @overload
     def create(
@@ -145,7 +137,7 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.models.customers.Customer`
             The created customer.
         """
-        payload = _build_payload(locals(), self.create)  # type: ignore
+        payload = _build_payload(locals(), Customers.create)
         return self._http.request("POST", "/customers", Customer, json=payload)
 
     @overload
@@ -196,27 +188,20 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.models.customers.Customer`
             The updated customer.
         """
-        payload = _build_payload(locals(), self.update, ignore={"customer_id"})  # type: ignore
+        payload = _build_payload(locals(), Customers.update, ignore={"customer_id"})
         return self._http.request(
             "POST", f"/customers/{customer_id}", Customer, json=payload
         )
 
     @overload
-    def delete(
-        self: "Customers[HTTPClient]",
-        customer_id: str
-    ) -> Empty: ...
+    def delete(self: "Customers[HTTPClient]", customer_id: str) -> Empty: ...
 
     @overload
     def delete(
-        self: "Customers[AsyncHTTPClient]",
-        customer_id: str
+        self: "Customers[AsyncHTTPClient]", customer_id: str
     ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete(
-        self,
-        customer_id: str
-    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete(self, customer_id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete a customer.
 
         Parameters

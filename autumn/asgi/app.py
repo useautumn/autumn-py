@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Coroutine, Callable, TypedDict, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable, Coroutine, TypedDict
 
 try:
-    from starlette.routing import Router, Route
-    from starlette.responses import JSONResponse
     from starlette.middleware import Middleware
     from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.responses import JSONResponse
+    from starlette.routing import Route, Router
 except ImportError:
     from ..error import AutumnError
 
@@ -19,20 +19,20 @@ except ImportError:
 else:
     STARLETTE_INSTALLED = True
 
+from ..aio.client import AsyncClient
+from ..error import AutumnHTTPError
 from .routes.core import (
     attach_route,
-    check_route,
-    track_route,
+    billing_portal_route,
     cancel_route,
+    check_route,
     checkout_route,
     query_route,
-    billing_portal_route,
+    track_route,
 )
 from .routes.customers import create_customer_route, pricing_table_route
 from .routes.entities import create_entity_route, delete_entity_route, get_entity_route
 from .routes.products import list_products_route
-from ..aio.client import AsyncClient
-from ..error import AutumnHTTPError
 
 if TYPE_CHECKING:
     from starlette.requests import Request
@@ -90,9 +90,7 @@ class AutumnASGI:
                     methods={"POST"},
                 ),
                 Route("/checkout/", checkout_route, methods={"POST"}),
-                Route(
-                    "/customers/", create_customer_route, methods={"POST"}
-                ),
+                Route("/customers/", create_customer_route, methods={"POST"}),
                 Route(
                     "/customers/{customer_id:str}/entities/{entity_id:str}",
                     delete_entity_route,
@@ -132,5 +130,7 @@ class AutumnASGI:
         try:
             await self._router(scope, receive, send)
         except AutumnHTTPError as exc:
-            response = JSONResponse({"detail": str(exc)}, status_code=exc.status_code or 400)
+            response = JSONResponse(
+                {"detail": str(exc)}, status_code=exc.status_code or 400
+            )
             await response(scope, receive, send)
