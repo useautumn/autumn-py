@@ -26,6 +26,7 @@ if TYPE_CHECKING:
         TrackParams,
         CheckoutParams,
         QueryParams,
+        CancelParams,
     )
 
 __all__ = ("AsyncClient", )
@@ -70,6 +71,7 @@ class AsyncClient(Client):
     track: TrackParams  # type: ignore
     checkout: CheckoutParams  # type: ignore
     query: QueryParams  # type: ignore
+    cancel: CancelParams  # type: ignore
 
     def __init__(
         self,
@@ -96,8 +98,6 @@ class AsyncClient(Client):
         self.features = Features(self.http)
         self.products = Products(self.http)
         self.entities = Entities(self.http)
-
-        self.cancel = self.products.cancel
 
     async def __aenter__(self) -> Self:
         return self

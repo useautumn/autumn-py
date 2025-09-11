@@ -78,9 +78,8 @@ class ReferralRedeemResponse(BaseModel):
     reward_id: str
 
 
-class ProductCancelResponse(BaseModel):
+class CancelResponse(BaseModel):
     success: bool
-    message: str
     customer_id: str
     product_id: str
 

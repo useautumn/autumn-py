@@ -14,14 +14,9 @@ from typing import (
 
 from .models.meta import Empty
 from .models.products import ProductItem, FreeTrial
-from .models.response import (
-    CreateProductResponse,
-    GetProductResponse,
-    ReferralCodeResponse,
-    ReferralRedeemResponse,
-    ProductCancelResponse,
-    ListProductResponse
-)
+from .models.response import (CreateProductResponse, GetProductResponse,
+                              ReferralCodeResponse, ReferralRedeemResponse,
+                              CancelResponse, ListProductResponse)
 from .utils import _build_payload
 
 if TYPE_CHECKING:
@@ -68,7 +63,8 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> CreateProductResponse: ...
+    ) -> CreateProductResponse:
+        ...
 
     @overload
     def create(
@@ -80,7 +76,8 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> Coroutine[Any, Any, CreateProductResponse]: ...
+    ) -> Coroutine[Any, Any, CreateProductResponse]:
+        ...
 
     def create(
         self,
@@ -91,7 +88,8 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> Union[CreateProductResponse, Coroutine[Any, Any, CreateProductResponse]]:
+    ) -> Union[CreateProductResponse, Coroutine[Any, Any,
+                                                CreateProductResponse]]:
         """Create a new product.
 
         |maybecoro|
@@ -117,21 +115,24 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
         payload = _build_payload(locals(), self.create)  # type: ignore
-        return self._http.request(
-            "POST", "/products", CreateProductResponse, json=payload
-        )
+        return self._http.request("POST",
+                                  "/products",
+                                  CreateProductResponse,
+                                  json=payload)
 
     @overload
     def get(
         self: "Products[HTTPClient]",
         id: str,
-    ) -> GetProductResponse: ...
+    ) -> GetProductResponse:
+        ...
 
     @overload
     def get(
         self: "Products[AsyncHTTPClient]",
         id: str,
-    ) -> Coroutine[Any, Any, GetProductResponse]: ...
+    ) -> Coroutine[Any, Any, GetProductResponse]:
+        ...
 
     def get(
         self, id: str
@@ -153,14 +154,18 @@ class Products(Generic[T_HttpClient]):
         return self._http.request("GET", f"/products/{id}", GetProductResponse)
 
     @overload
-    def list(self: "Products[HTTPClient]", customer_id: str) -> ListProductResponse:
+    def list(self: "Products[HTTPClient]",
+             customer_id: str) -> ListProductResponse:
         ...
 
     @overload
-    def list(self: "Products[AsyncHTTPClient]", customer_id: str) -> Coroutine[Any, Any, ListProductResponse]:
+    def list(self: "Products[AsyncHTTPClient]",
+             customer_id: str) -> Coroutine[Any, Any, ListProductResponse]:
         ...
 
-    def list(self, customer_id: str) -> Union[ListProductResponse, Coroutine[Any, Any, ListProductResponse]]:
+    def list(
+        self, customer_id: str
+    ) -> Union[ListProductResponse, Coroutine[Any, Any, ListProductResponse]]:
         """List products for a customer.
 
         |maybecoro|
@@ -176,7 +181,10 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
         params = {"customer_id": customer_id}
-        return self._http.request("GET", f"/products", ListProductResponse, params=params)
+        return self._http.request("GET",
+                                  f"/products",
+                                  ListProductResponse,
+                                  params=params)
 
     @overload
     def update(
@@ -188,7 +196,8 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> Empty: ...
+    ) -> Empty:
+        ...
 
     @overload
     def update(
@@ -200,7 +209,8 @@ class Products(Generic[T_HttpClient]):
         is_default: bool = False,
         items: Optional[List[ProductItem]] = None,
         free_trial: Optional[FreeTrial] = None,
-    ) -> Coroutine[Any, Any, Empty]: ...
+    ) -> Coroutine[Any, Any, Empty]:
+        ...
 
     def update(
         self,
@@ -237,25 +247,21 @@ class Products(Generic[T_HttpClient]):
             This is a placeholder type. Treat it as :class:`None`.
         """
 
-        payload = _build_payload(locals(), self.update) # type: ignore
-        return self._http.request("POST", f"/products/{id}", Empty, json=payload)
+        payload = _build_payload(locals(), self.update)  # type: ignore
+        return self._http.request("POST",
+                                  f"/products/{id}",
+                                  Empty,
+                                  json=payload)
 
     @overload
-    def delete(
-        self: "Products[HTTPClient]",
-        id: str
-    ) -> Empty: ...
+    def delete(self: "Products[HTTPClient]", id: str) -> Empty:
+        ...
 
     @overload
-    def delete(
-        self: "Products[AsyncHTTPClient]",
-        id: str
-    ) -> Empty: ...
+    def delete(self: "Products[AsyncHTTPClient]", id: str) -> Empty:
+        ...
 
-    def delete(
-        self,
-        id: str
-    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete(self, id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete a product.
 
         |maybecoro|
@@ -277,20 +283,23 @@ class Products(Generic[T_HttpClient]):
         self: "Products[HTTPClient]",
         customer_id: str,
         program_id: str,
-    ) -> ReferralCodeResponse: ...
+    ) -> ReferralCodeResponse:
+        ...
 
     @overload
     def get_referral_code(
         self: "Products[AsyncHTTPClient]",
         customer_id: str,
         program_id: str,
-    ) -> Coroutine[Any, Any, ReferralCodeResponse]: ...
+    ) -> Coroutine[Any, Any, ReferralCodeResponse]:
+        ...
 
     def get_referral_code(
         self,
         customer_id: str,
         program_id: str,
-    ) -> Union[ReferralCodeResponse, Coroutine[Any, Any, ReferralCodeResponse]]:
+    ) -> Union[ReferralCodeResponse, Coroutine[Any, Any,
+                                               ReferralCodeResponse]]:
         """Get a referral code for a customer.
 
         |maybecoro|
@@ -308,7 +317,8 @@ class Products(Generic[T_HttpClient]):
             The response from the API.
         """
 
-        payload = _build_payload(locals(), self.get_referral_code)  # type: ignore
+        payload = _build_payload(locals(),
+                                 self.get_referral_code)  # type: ignore
         return self._http.request(
             "POST",
             "/referrals/code",
@@ -322,7 +332,8 @@ class Products(Generic[T_HttpClient]):
         code: str,
         customer_id: str,
         reward_id: str,
-    ) -> ReferralRedeemResponse: ...
+    ) -> ReferralRedeemResponse:
+        ...
 
     @overload
     def redeem_referral_code(
@@ -330,14 +341,16 @@ class Products(Generic[T_HttpClient]):
         code: str,
         customer_id: str,
         reward_id: str,
-    ) -> Coroutine[Any, Any, ReferralRedeemResponse]: ...
+    ) -> Coroutine[Any, Any, ReferralRedeemResponse]:
+        ...
 
     def redeem_referral_code(
         self,
         code: str,
         customer_id: str,
         reward_id: str,
-    ) -> Union[ReferralRedeemResponse, Coroutine[Any, Any, ReferralRedeemResponse]]:
+    ) -> Union[ReferralRedeemResponse, Coroutine[Any, Any,
+                                                 ReferralRedeemResponse]]:
         """Redeem a referral code for a customer.
 
         |maybecoro|
@@ -356,66 +369,11 @@ class Products(Generic[T_HttpClient]):
         :class:`~autumn.models.response.ReferralRedeemResponse`
             The response from the API.
         """
-        payload = _build_payload(locals(), self.redeem_referral_code)  # type: ignore
+        payload = _build_payload(locals(),
+                                 self.redeem_referral_code)  # type: ignore
         return self._http.request(
             "POST",
             "/referrals/redeem",
             ReferralRedeemResponse,
-            json=payload,
-        )
-
-    @overload
-    def cancel(
-        self: "Products[HTTPClient]",
-        customer_id: str,
-        product_id: str,
-        *,
-        entity_id: Optional[str] = None,
-        cancel_immediately: bool = False,
-    ) -> ProductCancelResponse: ...
-
-    @overload
-    def cancel(
-        self: "Products[AsyncHTTPClient]",
-        customer_id: str,
-        product_id: str,
-        *,
-        entity_id: Optional[str] = None,
-        cancel_immediately: bool = False,
-    ) -> Coroutine[Any, Any, ProductCancelResponse]: ...
-
-    def cancel(
-        self,
-        customer_id: str,
-        product_id: str,
-        *,
-        entity_id: Optional[str] = None,
-        cancel_immediately: bool = False,
-    ) -> Union[ProductCancelResponse, Coroutine[Any, Any, ProductCancelResponse]]:
-        """Cancel a product for a customer.
-
-        |maybecoro|
-
-        Parameters
-        ----------
-        customer_id: str
-            The ID of the customer to cancel the product for.
-        product_id: str
-            The ID of the product to cancel.
-        entity_id: Optional[str]
-            The ID of the entity to cancel the product for.
-        cancel_immediately: bool
-            Whether to cancel the product immediately. If false, the product will be cancelled at the end of the billing cycle.
-
-        Returns
-        -------
-        :class:`~autumn.models.response.ProductCancelResponse`
-            The response from the API.
-        """
-        payload = _build_payload(locals(), self.cancel_product)  # type: ignore
-        return self._http.request(
-            "POST",
-            "/cancel",
-            ProductCancelResponse,
             json=payload,
         )

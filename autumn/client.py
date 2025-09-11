@@ -14,6 +14,7 @@ from .models.response import (
     CheckoutResponse,
     TrackResponse,
     QueryResponse,
+    CancelResponse,
 )
 
 if TYPE_CHECKING:
@@ -325,3 +326,37 @@ class Client:
         """
         payload = _build_payload(locals(), self.query)
         return self.http.request("POST", "/query", QueryResponse, json=payload)
+
+    def cancel(
+        self,
+        customer_id: str,
+        product_id: str,
+        *,
+        entity_id: Optional[str] = None,
+        cancel_immediately: bool = False,
+    ) -> CancelResponse:
+        """Cancel a product for a customer.
+
+        Parameters
+        ----------
+        customer_id: str
+            The ID of the customer to cancel the product for.
+        product_id: str
+            The ID of the product to cancel.
+        entity_id: Optional[str]
+            The ID of the entity to cancel the product for.
+        cancel_immediately: bool
+            Whether to cancel the product immediately. If false, the product will be cancelled at the end of the billing cycle.
+
+        Returns
+        -------
+        :class:`~autumn.models.response.CancelResponse`
+            The response from the API.
+        """
+        payload = _build_payload(locals(), self.cancel)
+        return self.http.request(
+            "POST",
+            "/cancel",
+            CancelResponse,
+            json=payload,
+        )

@@ -15,9 +15,10 @@ if TYPE_CHECKING:
         TrackResponse,
         CheckoutResponse,
         QueryResponse,
+        CancelResponse,
     )
 
-__all__ = ("AttachParams", "CheckParams", "TrackParams")
+__all__ = ("AttachParams", "CheckParams", "TrackParams", "CancelParams")
 
 
 class AttachParams(Protocol):
@@ -101,4 +102,17 @@ class QueryParams(Protocol):
         *,
         range: Literal["24h", "7d", "30d", "90d", "last_cycle"] = "30d"
     ) -> Awaitable[QueryResponse]:
+        ...
+
+
+class CancelParams(Protocol):
+
+    def __call__(
+        self,
+        customer_id: str,
+        product_id: str,
+        *,
+        entity_id: Optional[str] = None,
+        cancel_immediately: bool = False,
+    ) -> Awaitable[CancelResponse]:
         ...
