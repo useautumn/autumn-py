@@ -201,3 +201,38 @@ Response models
 .. autoclass:: autumn.models.response.TransferProductResponse
    :members:
    :undoc-members:
+
+Meta models
+-----------
+
+.. autoclass:: autumn.models.meta.Empty
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.FeatureOptions
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.ProductOptions
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.CustomerData
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.AttachProductOptions
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.CheckoutLine
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.Cycle
+   :members:
+   :undoc-members:
+
+.. autoclass:: autumn.models.meta.QueryDP
+   :members:
+   :undoc-members:
