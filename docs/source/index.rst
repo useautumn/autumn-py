@@ -18,7 +18,7 @@ Features
 Installation
 ------------
 
-Currently, the latest Python SDK is not available on PyPi. It must be installed from our GitHub repository:
+The Python SDK is available to install from PyPi.
 
 .. code-block:: shell
 
