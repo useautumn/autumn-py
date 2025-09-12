@@ -42,6 +42,13 @@ Products
    :members:
    :undoc-members:
 
+Entities
+^^^^^^^^
+
+.. autoclass:: autumn.entities.Entities
+   :members:
+   :undoc-members:
+
 Exceptions
 ----------
 
