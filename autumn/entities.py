@@ -6,6 +6,7 @@ from typing import (
     Coroutine,
     Generic,
     List,
+    Literal,
     Optional,
     TypeVar,
     Union,
@@ -42,7 +43,7 @@ class Entities(Generic[T_HttpClient]):
         self: "Entities[HTTPClient]",
         customer_id: str,
         entity_id: str,
-        expand: Optional[List[str]] = None,
+        expand: Optional[List[Literal["invoices"]]] = None,
     ) -> Entity: ...
 
     @overload
@@ -50,14 +51,14 @@ class Entities(Generic[T_HttpClient]):
         self: "Entities[AsyncHTTPClient]",
         customer_id: str,
         entity_id: str,
-        expand: Optional[List[str]] = None,
+        expand: Optional[List[Literal["invoices"]]] = None,
     ) -> Coroutine[Any, Any, Entity]: ...
 
     def get(
         self,
         customer_id: str,
         entity_id: str,
-        expand: Optional[List[str]] = None,
+        expand: Optional[List[Literal["invoices"]]] = None,
     ) -> Union[Entity, Coroutine[Any, Any, Entity]]:
         """Get an entity by their ID.
 
@@ -69,7 +70,7 @@ class Entities(Generic[T_HttpClient]):
             The ID of the customer to get.
         entity_id: str
             The ID of the entity to get.
-        expand: Optional[List[str]]
+        expand: Optional[List[Literal["invoices"]]]
             Additional fields to expand in the response.
 
         Returns

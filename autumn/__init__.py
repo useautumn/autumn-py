@@ -9,7 +9,7 @@ from .models.meta import *
 from .models.products import *
 
 __title__ = "autumn"
-__version__ = "3.0.3"
+__version__ = "3.0.4"
 __license__ = "MIT"
 __author__ = "justanotherbyte"
 __copyright__ = "Copyright 2025 justanotherbyte"
