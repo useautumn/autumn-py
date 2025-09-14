@@ -37,5 +37,5 @@ async def get_entity_route(request: Request):
     if expand is not None:
         expand = expand.split(",")
 
-    response = await autumn.entities.get(customer_id, entity_id, expand)
+    response = await autumn.entities.get(customer_id, entity_id, expand=expand)  # type: ignore
     return _build_response(response)

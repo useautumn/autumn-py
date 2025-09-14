@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 T_HttpClient = TypeVar("T_HttpClient", "AsyncHTTPClient", "HTTPClient")
 
-__all__ = ("Customers", )
+__all__ = ("Customers",)
 
 
 class Customers(Generic[T_HttpClient]):
@@ -47,28 +47,53 @@ class Customers(Generic[T_HttpClient]):
     def get(
         self: "Customers[HTTPClient]",
         customer_id: str,
-        expand: Optional[List[Literal["invoices", "rewards", "trials_used",
-                                      "entities", "referrals",
-                                      "payment_method"]]] = None,
-    ) -> Customer:
-        ...
+        expand: Optional[
+            List[
+                Literal[
+                    "invoices",
+                    "rewards",
+                    "trials_used",
+                    "entities",
+                    "referrals",
+                    "payment_method",
+                ]
+            ]
+        ] = None,
+    ) -> Customer: ...
 
     @overload
     def get(
         self: "Customers[AsyncHTTPClient]",
         customer_id: str,
-        expand: Optional[List[Literal["invoices", "rewards", "trials_used",
-                                      "entities", "referrals",
-                                      "payment_method"]]] = None,
-    ) -> Coroutine[Any, Any, Customer]:
-        ...
+        expand: Optional[
+            List[
+                Literal[
+                    "invoices",
+                    "rewards",
+                    "trials_used",
+                    "entities",
+                    "referrals",
+                    "payment_method",
+                ]
+            ]
+        ] = None,
+    ) -> Coroutine[Any, Any, Customer]: ...
 
     def get(
         self,
         customer_id: str,
-        expand: Optional[List[Literal["invoices", "rewards", "trials_used",
-                                      "entities", "referrals",
-                                      "payment_method"]]] = None,
+        expand: Optional[
+            List[
+                Literal[
+                    "invoices",
+                    "rewards",
+                    "trials_used",
+                    "entities",
+                    "referrals",
+                    "payment_method",
+                ]
+            ]
+        ] = None,
     ) -> Union[Customer, Coroutine[Any, Any, Customer]]:
         """Get a customer by their ID.
 
@@ -89,37 +114,29 @@ class Customers(Generic[T_HttpClient]):
         params = {}
         if expand is not None:
             params["expand"] = expand
-        return self._http.request("GET",
-                                  f"/customers/{customer_id}",
-                                  Customer,
-                                  params=params)
+        return self._http.request(
+            "GET", f"/customers/{customer_id}", Customer, params=params
+        )
 
     @overload
-    def list(self: "Customers[HTTPClient]",
-             *,
-             limit: int = 10,
-             offset: int = 0) -> ListCustomerResponse:
-        ...
+    def list(
+        self: "Customers[HTTPClient]", *, limit: int = 10, offset: int = 0
+    ) -> ListCustomerResponse: ...
 
     @overload
-    def list(self: "Customers[AsyncHTTPClient]",
-             *,
-             limit: int = 10,
-             offset: int = 0) -> Coroutine[Any, Any, ListCustomerResponse]:
-        ...
+    def list(
+        self: "Customers[AsyncHTTPClient]", *, limit: int = 10, offset: int = 0
+    ) -> Coroutine[Any, Any, ListCustomerResponse]: ...
 
     def list(
-        self,
-        *,
-        limit: int = 10,
-        offset: int = 0
-    ) -> Union[ListCustomerResponse, Coroutine[Any, Any,
-                                               ListCustomerResponse]]:
+        self, *, limit: int = 10, offset: int = 0
+    ) -> Union[
+        ListCustomerResponse, Coroutine[Any, Any, ListCustomerResponse]
+    ]:
         params = {"limit": limit, "offset": offset}
-        return self._http.request("GET",
-                                  "/customers",
-                                  ListCustomerResponse,
-                                  params=params)
+        return self._http.request(
+            "GET", "/customers", ListCustomerResponse, params=params
+        )
 
     @overload
     def create(
@@ -130,8 +147,7 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-    ) -> Customer:
-        ...
+    ) -> Customer: ...
 
     @overload
     def create(
@@ -142,8 +158,7 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         stripe_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-    ) -> Coroutine[Any, Any, Customer]:
-        ...
+    ) -> Coroutine[Any, Any, Customer]: ...
 
     def create(
         self,
@@ -187,8 +202,7 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         email: Optional[str] = None,
         fingerprint: Optional[str] = None,
-    ) -> Customer:
-        ...
+    ) -> Customer: ...
 
     @overload
     def update(
@@ -198,8 +212,7 @@ class Customers(Generic[T_HttpClient]):
         name: Optional[str] = None,
         email: Optional[str] = None,
         fingerprint: Optional[str] = None,
-    ) -> Coroutine[Any, Any, Customer]:
-        ...
+    ) -> Coroutine[Any, Any, Customer]: ...
 
     def update(
         self,
@@ -229,25 +242,24 @@ class Customers(Generic[T_HttpClient]):
         :class:`~autumn.models.customers.Customer`
             The updated customer.
         """
-        payload = _build_payload(locals(),
-                                 Customers.update,
-                                 ignore={"customer_id"})
-        return self._http.request("POST",
-                                  f"/customers/{customer_id}",
-                                  Customer,
-                                  json=payload)
+        payload = _build_payload(
+            locals(), Customers.update, ignore={"customer_id"}
+        )
+        return self._http.request(
+            "POST", f"/customers/{customer_id}", Customer, json=payload
+        )
 
     @overload
-    def delete(self: "Customers[HTTPClient]", customer_id: str) -> Empty:
-        ...
+    def delete(self: "Customers[HTTPClient]", customer_id: str) -> Empty: ...
 
     @overload
-    def delete(self: "Customers[AsyncHTTPClient]",
-               customer_id: str) -> Coroutine[Any, Any, Empty]:
-        ...
+    def delete(
+        self: "Customers[AsyncHTTPClient]", customer_id: str
+    ) -> Coroutine[Any, Any, Empty]: ...
 
-    def delete(self,
-               customer_id: str) -> Union[Empty, Coroutine[Any, Any, Empty]]:
+    def delete(
+        self, customer_id: str
+    ) -> Union[Empty, Coroutine[Any, Any, Empty]]:
         """Delete a customer.
 
         Parameters
@@ -270,8 +282,7 @@ class Customers(Generic[T_HttpClient]):
         customer_id: str,
         *,
         return_url: Optional[str] = None,
-    ) -> BillingPortalResponse:
-        ...
+    ) -> BillingPortalResponse: ...
 
     @overload
     def get_billing_portal(
@@ -279,16 +290,16 @@ class Customers(Generic[T_HttpClient]):
         customer_id: str,
         *,
         return_url: Optional[str] = None,
-    ) -> Coroutine[Any, Any, BillingPortalResponse]:
-        ...
+    ) -> Coroutine[Any, Any, BillingPortalResponse]: ...
 
     def get_billing_portal(
         self,
         customer_id: str,
         *,
         return_url: Optional[str] = None,
-    ) -> Union[BillingPortalResponse, Coroutine[Any, Any,
-                                                BillingPortalResponse]]:
+    ) -> Union[
+        BillingPortalResponse, Coroutine[Any, Any, BillingPortalResponse]
+    ]:
         """Get a billing portal URL for a customer.
 
         |maybecoro|
@@ -307,7 +318,7 @@ class Customers(Generic[T_HttpClient]):
         """
         payload = _build_payload(
             locals(),
-            self.get_billing_portal,  # type: ignore
+            Customers.get_billing_portal,
             ignore={"customer_id"},
         )
         return self._http.request(
@@ -318,20 +329,20 @@ class Customers(Generic[T_HttpClient]):
         )
 
     @overload
-    def pricing_table(self: "Customers[HTTPClient]",
-                      customer_id: str) -> PricingTableResponse:
-        ...
+    def pricing_table(
+        self: "Customers[HTTPClient]", customer_id: str
+    ) -> PricingTableResponse: ...
 
     @overload
     def pricing_table(
-            self: "Customers[AsyncHTTPClient]",
-            customer_id: str) -> Coroutine[Any, Any, PricingTableResponse]:
-        ...
+        self: "Customers[AsyncHTTPClient]", customer_id: str
+    ) -> Coroutine[Any, Any, PricingTableResponse]: ...
 
     def pricing_table(
         self, customer_id: str
-    ) -> Union[PricingTableResponse, Coroutine[Any, Any,
-                                               PricingTableResponse]]:
+    ) -> Union[
+        PricingTableResponse, Coroutine[Any, Any, PricingTableResponse]
+    ]:
         """Get a pricing table for a customer.
 
         |maybecoro|
