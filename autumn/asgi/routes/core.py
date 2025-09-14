@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from ...utils import _build_payload as _build_kwargs
 from ...models.meta import CustomerData
+from ...utils import _build_payload as _build_kwargs
 from . import _build_response, _extract
 
 if TYPE_CHECKING:
