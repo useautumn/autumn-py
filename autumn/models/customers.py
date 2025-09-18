@@ -68,6 +68,7 @@ class CustomerProduct(BaseModel):
     subscription_ids: Optional[List[str]] = None
     current_period_start: Optional[int] = None
     current_period_end: Optional[int] = None
+    quantity: Optional[int] = None
 
 
 class Customer(BaseModel):
