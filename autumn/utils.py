@@ -9,8 +9,13 @@ T = TypeVar("T", bound=BaseModel)
 
 
 def _snake_to_camel(snake_str: str) -> str:
-    components = snake_str.split("_")
-    return components[0] + "".join(x.title() for x in components[1:])
+    """
+    Convert snake_case string to camelCase string.
+    """
+    components = [c for c in snake_str.split("_") if c]
+    return (
+        components[0] + "".join(x.title() for x in components[1:]) if components else ""
+    )
 
 
 def _decompose_value(value: Any) -> Any:
@@ -26,14 +31,19 @@ def _build_payload(
     scope: Dict[str, Any], method: Callable, *, ignore: Set[str] = set()
 ) -> Dict[str, Any]:
     params = method.__code__.co_varnames
-    camel_case_params = [_snake_to_camel(p) for p in params]
+
+    camel_to_snake_param_map = {}
+    for p in params:
+        camel_case = _snake_to_camel(p)
+        if camel_case != p:
+            camel_to_snake_param_map[camel_case] = p
+
     payload: Dict[str, Any] = {}
 
     for key, value in scope.items():
         payload_param = key
-        if payload_param in camel_case_params:
-            index = camel_case_params.index(payload_param)
-            payload_param = params[index]
+        if payload_param in camel_to_snake_param_map:
+            payload_param = camel_to_snake_param_map[payload_param]
 
         if (
             payload_param != "self"
