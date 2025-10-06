@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock
 import pytest
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
+from typing import Optional
 
 from autumn.asgi.routes import core
 from autumn.client import Client
@@ -23,12 +24,12 @@ class DummyRequest:
         return getattr(self, "_json", None)
 
 
-def _setup_http_mock(autumn: Client, mock_response: BaseModel | None) -> None:
+def _setup_http_mock(autumn: Client, mock_response: Optional[BaseModel]) -> None:
     autumn.http.request = AsyncMock(return_value=mock_response)  # type: ignore
 
 
 def _prepare_request(
-    json_payload=None, mock_response: BaseModel | None = None
+    json_payload=None, mock_response: Optional[BaseModel] = None
 ) -> DummyRequest:
     autumn = Client(token=DUMMY_AUTUMN_SECRET_KEY)
 
