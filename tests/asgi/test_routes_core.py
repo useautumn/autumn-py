@@ -24,7 +24,7 @@ class DummyRequest:
 
 
 def _setup_http_mock(autumn: Client, mock_response: BaseModel | None) -> None:
-    autumn.http.request = AsyncMock(return_value=mock_response)
+    autumn.http.request = AsyncMock(return_value=mock_response)  # type: ignore
 
 
 def _prepare_request(
@@ -62,7 +62,7 @@ async def test_attach_route_with_product_id():
 
     request = _prepare_request(json_payload, mock_response)
 
-    response = await core.check_route(request)  # type: ignore
+    response = await core.attach_route(request)  # type: ignore
 
     assert isinstance(response, JSONResponse)
 
