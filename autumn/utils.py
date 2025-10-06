@@ -14,7 +14,9 @@ def _snake_to_camel(snake_str: str) -> str:
     """
     components = [c for c in snake_str.split("_") if c]
     return (
-        components[0] + "".join(x.title() for x in components[1:]) if components else ""
+        components[0] + "".join(x.title() for x in components[1:])
+        if components
+        else ""
     )
 
 
