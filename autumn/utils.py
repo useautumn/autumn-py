@@ -1,3 +1,4 @@
+import re
 import random
 from typing import Any, Callable, Dict, Set, Type, TypeVar
 
@@ -8,16 +9,10 @@ from .error import AutumnHTTPError, AutumnValidationError
 T = TypeVar("T", bound=BaseModel)
 
 
+_CONV_RE = re.compile(r"_([a-z])")
+
 def _snake_to_camel(snake_str: str) -> str:
-    """
-    Convert snake_case string to camelCase string.
-    """
-    components = [c for c in snake_str.split("_") if c]
-    return (
-        components[0] + "".join(x.title() for x in components[1:])
-        if components
-        else ""
-    )
+    return _CONV_RE.sub(lambda match: match.group(1).upper(), snake_str)
 
 
 def _decompose_value(value: Any) -> Any:
