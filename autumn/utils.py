@@ -1,5 +1,5 @@
-import re
 import random
+import re
 from typing import Any, Callable, Dict, Set, Type, TypeVar
 
 from pydantic import BaseModel, ValidationError
@@ -10,6 +10,7 @@ T = TypeVar("T", bound=BaseModel)
 
 
 _CONV_RE = re.compile(r"_([a-z])")
+
 
 def _snake_to_camel(snake_str: str) -> str:
     return _CONV_RE.sub(lambda match: match.group(1).upper(), snake_str)
