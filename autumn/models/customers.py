@@ -58,6 +58,19 @@ class CustomerFeature(BaseModel):
     breakdown: Optional[List[Dict[str, Any]]] = None
 
 
+class ReferredCustomer(BaseModel):
+    id: str
+    name: Optional[str] = None
+    email: Optional[str] = None
+
+
+class CustomerReferral(BaseModel):
+    program_id: str
+    customer: ReferredCustomer
+    reward_applied: bool
+    created_at: int
+
+
 class CustomerProduct(BaseModel):
     id: str
     name: Optional[str] = None
@@ -83,6 +96,8 @@ class Customer(BaseModel):
     products: List[CustomerProduct]
     features: Dict[str, CustomerFeature]
     invoices: Optional[List[CustomerInvoice]] = None
+    payment_method: Optional[Any] = None
+    referrals: Optional[List[CustomerReferral]] = None
 
 
 class PriceInfo(BaseModel):
