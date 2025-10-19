@@ -79,6 +79,7 @@ class CheckoutParams(Protocol):
         options: Optional[List[FeatureOptions]] = None,
         customer_data: Optional[CustomerData] = None,
         success_url: Optional[str] = None,
+        force_checkout: bool = False,
         checkout_session_params: Optional[Dict[str, Any]] = None,
         reward: Optional[Union[str, List[str]]] = None,
     ) -> Awaitable[CheckoutResponse]: ...

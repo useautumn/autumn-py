@@ -115,6 +115,7 @@ class Client:
         product_id: Optional[str] = None,
         products: Optional[List[ProductOptions]] = None,
         success_url: Optional[str] = None,
+        force_checkout: bool = False,
         options: Optional[List[FeatureOptions]] = None,
         entity_id: Optional[str] = None,
         customer_data: Optional[CustomerData] = None,
