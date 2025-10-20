@@ -43,6 +43,7 @@ class CustomerInvoice(BaseModel):
     total: float
     currency: str
     created_at: int
+    hosted_invoice_url: str
 
 
 class CustomerFeature(BaseModel):
