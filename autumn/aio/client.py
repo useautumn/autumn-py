@@ -30,7 +30,7 @@ if TYPE_CHECKING:
         TrackParams,
     )
 
-__all__ = ("AsyncClient",)
+__all__ = ("AsyncClient", )
 
 
 class AsyncClient(Client):
@@ -77,12 +77,13 @@ class AsyncClient(Client):
     def __init__(
         self,
         token: str,
+        version: str = "1.2",
         *,
         base_url: Optional[str] = None,
         max_retries: int = 5,
         session: Optional[aiohttp.ClientSession] = None,
     ) -> None:
-        from .. import BASE_URL, VERSION
+        from .. import BASE_URL
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
@@ -90,7 +91,7 @@ class AsyncClient(Client):
         attempts = max_retries + 1
         self.http = AsyncHTTPClient(
             _base_url,
-            VERSION,
+            version,
             token,
             attempts=attempts,
             session=session,

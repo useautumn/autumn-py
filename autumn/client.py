@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from .models.features import Feature
     from .models.meta import CustomerData, FeatureOptions, ProductOptions
 
-__all__ = ("Client",)
+__all__ = ("Client", )
 
 
 class Client:
@@ -92,17 +92,18 @@ class Client:
     def __init__(
         self,
         token: str,
+        version: str = "1.2",
         *,
         base_url: Optional[str] = None,
         max_retries: int = 5,
     ):
-        from . import BASE_URL, VERSION
+        from . import BASE_URL
 
         _base_url = base_url or BASE_URL
         _base_url = _base_url.rstrip("/")
 
         attempts = max_retries + 1  # account for the original request
-        self.http = HTTPClient(_base_url, VERSION, token, attempts=attempts)
+        self.http = HTTPClient(_base_url, version, token, attempts=attempts)
         self.customers = Customers(self.http)
         self.features = Features(self.http)
         self.products = Products(self.http)
@@ -145,9 +146,10 @@ class Client:
         """
 
         payload = _build_payload(locals(), self.checkout)
-        return self.http.request(
-            "POST", "/checkout", CheckoutResponse, json=payload
-        )
+        return self.http.request("POST",
+                                 "/checkout",
+                                 CheckoutResponse,
+                                 json=payload)
 
     def attach(
         self,
@@ -201,17 +203,16 @@ class Client:
             The response from the API.
         """
 
-        assert (
-            product_id is not None or product_ids is not None
-        ), "Either product_id or product_ids must be provided"
-        assert not (
-            product_id is not None and product_ids is not None
-        ), "Only one of product_id or product_ids must be provided"
+        assert (product_id is not None or product_ids is not None
+                ), "Either product_id or product_ids must be provided"
+        assert not (product_id is not None and product_ids is not None
+                    ), "Only one of product_id or product_ids must be provided"
 
         payload = _build_payload(locals(), self.attach)
-        return self.http.request(
-            "POST", "/attach", AttachResponse, json=payload
-        )
+        return self.http.request("POST",
+                                 "/attach",
+                                 AttachResponse,
+                                 json=payload)
 
     def check(
         self,
@@ -256,9 +257,8 @@ class Client:
             The response from the API.
         """
 
-        assert (
-            product_id is not None or feature_id is not None
-        ), "Either product_id or feature_id must be provided"
+        assert (product_id is not None or feature_id is not None
+                ), "Either product_id or feature_id must be provided"
 
         payload = _build_payload(locals(), self.check)
         return self.http.request("POST", "/check", CheckResponse, json=payload)
@@ -304,9 +304,8 @@ class Client:
         :class:`~autumn.models.response.TrackResponse`
             The response from the API.
         """
-        assert (
-            feature_id or event_name
-        ), "Either feature_id or event_name must be provided"
+        assert (feature_id or
+                event_name), "Either feature_id or event_name must be provided"
         payload = _build_payload(locals(), self.track)
         return self.http.request("POST", "/track", TrackResponse, json=payload)
 
