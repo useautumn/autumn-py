@@ -92,7 +92,7 @@ class Client:
     def __init__(
         self,
         token: str,
-        version: str = "1.2",
+        version: str = "v1",
         *,
         base_url: Optional[str] = None,
         max_retries: int = 5,
